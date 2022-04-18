@@ -1,0 +1,39 @@
+#login-form-container:first-child, #registration-form-container:first-child {
+  /* font-family: 'Noto Serif', Georgia, 'Bitstream Vera Serif', 'Times New Roman', Times, serif; */
+  background-image: url("../images/Slice 1.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.bg-white {
+  background-color: #e6e6e6;
+}
+
+.btn-blue-tinted {
+  background-color: #007cba;
+  color: #f7f9fb !important;
+}
+
+.btn-blue-tinted-1 {
+  color: #000000 !important;
+  background-color: #b3e6ff !important;
+}
+.navbrand-header-text {
+  font-weight: 700;
+}
+
+.bt-button {
+  border: 0;
+}
+
+/* .form-control{
+    color: #d4d8dc !important;
+}
+
+.form-control:focus{
+    color: #4f4f50 !important;
+} */
+
+.dataTables_wrapper {
+  padding: 5px !important;
+}
