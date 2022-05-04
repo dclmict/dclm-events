@@ -1,0 +1,26 @@
+# Services
+services:
+
+  # Nginx Service
+  nginx1.21:
+    container_name: ddc_nginx
+    image: opeoniye/nginx:1.21
+    ports:
+      - 1001:80
+    volumes:
+      - .:/var/www/events
+      - ./.docker/nginx/events.conf:/etc/nginx/conf.d/default.conf
+    restart: always
+    depends_on:
+      - php8.1
+
+  # PHP8.1 Service
+  php8.1:
+    container_name: ddc_php
+    image: opeoniye/php-fpm:8.1
+    working_dir: /var/www/events
+    volumes:
+      - .:/var/www/events
+      - ./.docker/php8.1/php.ini:/usr/local/etc/php/php.ini
+      - ./.docker/php8.1/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+    restart: always

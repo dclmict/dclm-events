@@ -97,7 +97,7 @@ if(isset($_POST['getmydp'])){
     $cachePath = 'cache/temp/'. time().'_my-dp.jpg';
 	//$cachePath = 'cache/temp/_my-dp.jpg';
 
-    $image->fit(320,320);
+    $image->fit(340,340);
 
     // create empty canvas
     $width = $image->getWidth();
@@ -120,8 +120,8 @@ if(isset($_POST['getmydp'])){
     //circle($cx, $cy, $r, $color, $filled=false)
     $user = [
         'text'   => substr($userName, 0, 21),
-        'x'      => 689,
-        'y'      => 443,
+        'x'      => 253,
+        'y'      => 635,
         'size'   => 22,
         'angle'  => 0,
         'color'  => (isset($color)) ? $color : "#C32148",
@@ -130,15 +130,16 @@ if(isset($_POST['getmydp'])){
 
     $distName = (isset($dist)) ? $dist : "Deeper Life Bible Chuch - Close to you";
     $dist = [
-        'text'   => "@ ".substr($distName, 0, 46),
-        'x'      => 698,
-        'y'      => 977,
+        // 'text'   => "@ ".substr($distName, 0, 46),
+        'text'   => "@ ".substr($distName, 0, 41),
+        'x'      => 775,
+        'y'      => 955,
         'size'   => 14,
         'angle'  => 0,
         'color'  => (isset($color)) ? $color : "#C32148",
         'pos'    => "center",
     ];
-    $myDP = Image::make('img/easter_retreat_base.jpg');
+    $myDP = Image::make('img/dominion2022_base.jpg');
     //Write Name
     $myDP->text($user['text'], $user['x'], $user['y'], function($font) use($color) {
         $font->file("fonts/Raleway-ExtraBold.ttf");
@@ -159,7 +160,7 @@ if(isset($_POST['getmydp'])){
     });
 
 	//Add Image
-	$myDP->insert($image, 'top-left', 517, 68);
+	$myDP->insert($image, 'top-left', 74, 263);
 	$quality  = (isset($quality)) ? $quality : 70;
     $myDP->save($cachePath, $quality, 'jpg');
 
@@ -303,10 +304,10 @@ div#myImage {
 	position: absolute;
     /*background-color: #fff;*/
     background-color: transparent;
-    top: 6.2%;
-    left: 47.8%;
-    height: 30%;
-    width: 30%;
+    top: 25.3%;
+    left: 7.6%;
+    height: 29.9%;
+    width: 29.9%;
     z-index: 2;
     overflow: hidden;
     text-align: center;
@@ -321,11 +322,12 @@ img#myImageTag {
 	font-size: 12px;
     font-size: calc(12px + 50%);
     position: absolute;
-    background-color: #f3efd2;
-    top: 38%;
-    left: 42%;
+    background-color: #f1f7fb;
+    top: 56.7%;
+    left: 4.5%;
     height: 5%;
-    width: 44%;
+    width: 36.5%;
+    z-index: 2;
     z-index: 2;
     overflow: hidden;
     text-align: center;
@@ -339,11 +341,11 @@ img#myImageTag {
 	font-size: 12px;
     font-size: calc(12px + 27%);
     position: absolute;
-    background-color: #f7f7f7;
-    top: 88.5%;
-    left: 36%;
+    background-color: #fefbfd;
+    top: 86.4%;
+    left: 45.6%;
     height: 4.3%;
-    width: 57%;
+    width: 51.5%;
     z-index: 2;
     text-align: center;
     font-weight: 600;
@@ -366,7 +368,7 @@ img#myImageTag {
 
     <main class="form-getLetter">
         <div class="baseImg-wrap">
-            <img src="img/easter_retreat_base.jpg" class="w-100">
+            <img src="img/dominion2022_base.jpg" class="w-100">
             <div class="myImage" id="myImage">
                 <img id="myImageTag" src="./img/plus.png" alt="myImageTag" height="105" class="w-auto h-100"/>
             </div>
