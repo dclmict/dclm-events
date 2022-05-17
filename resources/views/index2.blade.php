@@ -421,7 +421,7 @@ src="https://www.facebook.com/tr?id=663155374846887&ev=PageView&noscript=1"
                                 
 
 
-                                <div id="menu1" class="tab-pane fade">
+                                <!--<div id="menu1" class="tab-pane fade">
 
                                     <div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
                                         <div class="panel panel-default lgx-panel">
@@ -429,27 +429,27 @@ src="https://www.facebook.com/tr?id=663155374846887&ev=PageView&noscript=1"
                                                 <div class="panel-title">
                                                     <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne2" aria-expanded="true" aria-controls="collapseOne2">
                                                         <div class="lgx-single-schedule">
-                                                            <!-- <div class="author author-multi">
+                                                            <! <div class="author author-multi">
                                                                 <img src="assets/img/schedule/speaker1.jpg" alt="Speaker"/>
                                                                 <img src="assets/img/schedule/speaker2.jpg" alt="Speaker"/>
                                                                 <img src="assets/img/schedule/speaker3.jpg" alt="Speaker"/>
-                                                            </div> -->
+                                                            </div> --
                                                             <div class="schedule-info">
                                                                 <h4 class="time">09:00 <span>Am</span> - 10.30 <span>Am</span></h4>
                                                                 <h3 class="title">The Wait is Over! Stony Brook Captures First Conference Title</h3>
-                                                                <!-- <h4 class="author-info">By <span>Joanna Smith</span> , <span>Riaz Sagar</span> & <span>Devid Smith</span> , Design Apple</h4> -->
+                                                                <!- <h4 class="author-info">By <span>Joanna Smith</span> , <span>Riaz Sagar</span> & <span>Devid Smith</span> , Design Apple</h4> --
                                                             </div>
                                                         </div>
                                                     </a>
                                                 </div>
                                             </div>
                                             <div id="collapseOne2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                                                <!-- <div class="panel-body">
+                                                <!- <div class="panel-body">
                                                     <p class="text">
                                                         Meh synth Schlitz, tempor duis single-origin coffee ea next level ethnic fingerstache fanny pack nostrud. Photo booth anim 8-bit hella, PBR 3 wolf moon beard Helvetica. Salvia esse flexitarian Truffaut synth art party deep v chillwave.
                                                     </p>
                                                     <h4 class="location"><strong>Location:</strong>  Hall 1, Building A , Golden Street , <span>Southafrica</span> </h4>
-                                                </div> -->
+                                                </div> --
                                             </div>
                                         </div>
                                         <div class="panel panel-default lgx-panel">
@@ -457,9 +457,9 @@ src="https://www.facebook.com/tr?id=663155374846887&ev=PageView&noscript=1"
                                                 <div class="panel-title">
                                                     <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo2" aria-expanded="true" aria-controls="collapseTwo2">
                                                         <div class="lgx-single-schedule">
-                                                            <!-- <div class="author">
+                                                            <!- <div class="author">
                                                                 <img src="assets/img/schedule/speaker1.jpg" alt="Speaker"/>
-                                                            </div> -->
+                                                            </div> --
                                                             <div class="schedule-info">
                                                                 <h4 class="time">09:00 <span>Am</span> - 10.30 <span>Am</span></h4>
                                                                 <h3 class="title">Digital World Event Introduction</h3>
@@ -506,10 +506,10 @@ src="https://www.facebook.com/tr?id=663155374846887&ev=PageView&noscript=1"
                                         </div>
                                     </div>
 
-                                </div>
+                                </div> -->
 
 
-                                <div id="menu2" class="tab-pane fade">
+                                <!--<div id="menu2" class="tab-pane fade">
 
                                     <div class="panel-group" id="accordion3" role="tablist" aria-multiselectable="true">
                                         <div class="panel panel-default lgx-panel">
@@ -592,10 +592,10 @@ src="https://www.facebook.com/tr?id=663155374846887&ev=PageView&noscript=1"
                                         </div>
                                     </div>
 
-                                </div>
+                                </div> -->
 
 
-                                <div id="menu3" class="tab-pane fade">
+                                <!--<div id="menu3" class="tab-pane fade">
 
                                     <div class="panel-group" id="accordion4" role="tablist" aria-multiselectable="true">
                                         <div class="panel panel-default lgx-panel">
@@ -678,16 +678,17 @@ src="https://www.facebook.com/tr?id=663155374846887&ev=PageView&noscript=1"
                                         </div>
                                     </div>
 
-                                </div>
+                                </div> -->
+
                             </div>
                         </div>
                     </div>
                 </div>
                 <!--//.ROW-->
-                <div class="section-btn-area schedule-btn-area">
+                <!--<div class="section-btn-area schedule-btn-area">
                     <a class="lgx-btn lgx-btn-big" href="speakers.html"><span>Download Schedule (PDF)</span></a>
                     <a class="lgx-btn lgx-btn-red lgx-btn-big" href="speakers.html"><span>Connect via facebook</span></a>
-                </div>
+                </div>-->
             </div>
             <!-- //.CONTAINER -->
         </div>
@@ -847,11 +848,11 @@ src="https://www.facebook.com/tr?id=663155374846887&ev=PageView&noscript=1"
 <!-- SKILLS SCRIPT  -->
 <script src="assets/libs/jquery.validate.js"></script>
 
-<!-- if load google maps then load this api, change api key as it may expire for limit cross as this is provided with any theme -->
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDIKbFTvAyZuB8CuFqSIEVEHmbqfDm6UD8"></script>
+<!-- if load google maps then load this api, change api key as it may expire for limit cross as this is provided with any theme 
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDIKbFTvAyZuB8CuFqSIEVEHmbqfDm6UD8"></script>-->
 
-<!-- CUSTOM GOOGLE MAP -->
-<script type="text/javascript" src="assets/libs/gmap/jquery.googlemap.js"></script>
+<!-- CUSTOM GOOGLE MAP
+<script type="text/javascript" src="assets/libs/gmap/jquery.googlemap.js"></script> -->
 
 <!-- adding magnific popup js library -->
 <script type="text/javascript" src="assets/libs/maginificpopup/jquery.magnific-popup.min.js"></script>

@@ -8339,7 +8339,7 @@ button:hover:after {
 .lgx-schedule {
     background: #3D95E2;
 }
-.lgx-schedule .lgx-inner {
+/**.lgx-schedule .lgx-inner {
     background: url(../img/schedule-bg-pattern.png) bottom center no-repeat;
     -webkit-background-size: 100% auto, cover;
     -o-background-size: 100% auto, cover;
@@ -8352,7 +8352,7 @@ button:hover:after {
     -o-background-size: 100% auto, cover;
     -moz-background-size: 100% auto, cover;
     background-size: 100% auto, cover;
-}
+} **/
 .lgx-schedule-black {
     background: #1b273d;
 }
@@ -10913,7 +10913,7 @@ blockquote.lgx-testi-single:before {
 .lgx-subscribe-form .lgx-btn:hover {
     background: #ec398b;
 }
-.lgx-footer {
+/**.lgx-footer {
     background: url(../img/footer-bg.jpg) bottom center no-repeat;
     -webkit-background-size: cover;
     -o-background-size: cover;
@@ -10921,7 +10921,7 @@ blockquote.lgx-testi-single:before {
     background-size: cover;
     color: #fff;
     text-align: center;
-}
+} **/
 .lgx-footer .lgx-inner-footer {
     background: rgba(85, 75, 185, 0.95);
 }
