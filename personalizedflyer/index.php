@@ -162,7 +162,7 @@ if(isset($_POST['getmydp'])){
         $font->valign('middle');
         $font->angle(0);
     });
-    
+
     //Write Location
     $myDP->text($dist['text'], $dist['x'], $dist['y'], function($font) use($color) {
         $font->file("fonts/Raleway-ExtraBold.ttf");
@@ -392,13 +392,13 @@ img#myImageTag {
     .myChurch{
         font-size: 2.2vw;
         line-height: 2;
-    }        
+    }
 }
 .form-select, .form-control {
     border-radius: 1rem 0 !important;
     border: 1px solid #000;
 }
-.form-select:focus, 
+.form-select:focus,
 .form-control:focus {
     color: #212529;
     background-color: ;

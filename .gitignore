@@ -9,12 +9,14 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
-
+*.bck
 
 # folders
 _
 /node_modules
 /public/hot
+/public
+/personalizedflyer/cache
 /public/storage
 /storage/*.key
 /vendor
