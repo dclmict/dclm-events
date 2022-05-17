@@ -45,6 +45,7 @@ if(isset($_GET['purge'])){
 //http://www.workwithcolor.com/color-chart-full-01.htm
 */
 $colors = [
+    '#FF8C00'         =>   'Dark Orange',
     '#002E63' =>    'Cool Black',
     '#E32636' =>   'Alizarin',
     '#FFBF00'  =>   'Amber',
@@ -97,7 +98,7 @@ if(isset($_POST['getmydp'])){
     $cachePath = 'cache/temp/'. time().'_my-dp.jpg';
 	//$cachePath = 'cache/temp/_my-dp.jpg';
 
-    $image->fit(340,340);
+    $image->fit(389,389);
 
     // create empty canvas
     $width = $image->getWidth();
@@ -110,7 +111,6 @@ if(isset($_POST['getmydp'])){
     });
 
     $image->mask($mask, false);
-    //$image->save($cachePath."circled.jpg");
 
 	/***********************/
 
@@ -120,8 +120,8 @@ if(isset($_POST['getmydp'])){
     //circle($cx, $cy, $r, $color, $filled=false)
     $user = [
         'text'   => substr($userName, 0, 21),
-        'x'      => 253,
-        'y'      => 635,
+        'x'      => 550,
+        'y'      => 627,
         'size'   => 22,
         'angle'  => 0,
         'color'  => (isset($color)) ? $color : "#C32148",
@@ -132,23 +132,37 @@ if(isset($_POST['getmydp'])){
     $dist = [
         // 'text'   => "@ ".substr($distName, 0, 46),
         'text'   => "@ ".substr($distName, 0, 41),
-        'x'      => 775,
-        'y'      => 955,
+        'x'      => 695,
+        'y'      => 972,
         'size'   => 14,
         'angle'  => 0,
         'color'  => (isset($color)) ? $color : "#C32148",
         'pos'    => "center",
     ];
-    $myDP = Image::make('img/dominion2022_base.jpg');
+
+    $myDP = Image::make('img/Jesus-Power-base.jpg');
+
+    // $myDP->insert($image, 'top-left', 336, 203);
+
     //Write Name
+    $myDP->text($user['text'], $user['x']+2, $user['y']+2, function($font) use($color) {
+        $font->file("fonts/KaushanScript-Regular.ttf");
+        $font->size(36);
+        $font->color('#000' /*$color*/);
+        $font->align('center');
+        $font->valign('middle');
+        $font->angle(0);
+    });
+
     $myDP->text($user['text'], $user['x'], $user['y'], function($font) use($color) {
-        $font->file("fonts/Raleway-ExtraBold.ttf");
-        $font->size(30);
+        $font->file("fonts/KaushanScript-Regular.ttf");
+        $font->size(36);
         $font->color($color);
         $font->align('center');
         $font->valign('middle');
         $font->angle(0);
     });
+    
     //Write Location
     $myDP->text($dist['text'], $dist['x'], $dist['y'], function($font) use($color) {
         $font->file("fonts/Raleway-ExtraBold.ttf");
@@ -160,7 +174,8 @@ if(isset($_POST['getmydp'])){
     });
 
 	//Add Image
-	$myDP->insert($image, 'top-left', 74, 263);
+	// $myDP->insert($image, 'top-left', 348, 213);
+    $myDP->insert($image, 'top-left', 336, 203);
 	$quality  = (isset($quality)) ? $quality : 70;
     $myDP->save($cachePath, $quality, 'jpg');
 
@@ -190,6 +205,9 @@ if(isset($_POST['getmydp'])){
 <link rel="icon" href="dclm-logo.png" sizes="120x120" type="image/png">
 <meta name="theme-color" content="#7952b3">
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
 
 <style>
 html,body { height: 100%;}
@@ -301,13 +319,13 @@ body {background: #f5f5f5 url(./img/gs-bg.jpg) fixed no-repeat top right /cover;
 
 
 div#myImage {
-	position: absolute;
-    /*background-color: #fff;*/
+    position: absolute;
+    /* background-color: #fff; */
     background-color: transparent;
-    top: 25.3%;
-    left: 7.6%;
-    height: 29.9%;
-    width: 29.9%;
+    top: 18.7%;
+    left: 31.3%;
+    height: 35.9%;
+    width: 35.9%;
     z-index: 2;
     overflow: hidden;
     text-align: center;
@@ -319,15 +337,16 @@ img#myImageTag {
 }
 
 .myName {
-	font-size: 12px;
+    font-family: 'Kaushan Script', cursive;
+    /* text-shadow: 2px 2px 2px #000; */
+    font-size: 12px;
     font-size: calc(12px + 50%);
     position: absolute;
-    background-color: #f1f7fb;
-    top: 56.7%;
-    left: 4.5%;
-    height: 5%;
-    width: 36.5%;
-    z-index: 2;
+    background-color: transparent;
+    top: 56.6%;
+    left: 31.5%;
+    height: 4.5%;
+    width: 37.3%;
     z-index: 2;
     overflow: hidden;
     text-align: center;
@@ -336,16 +355,17 @@ img#myImageTag {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    /* border-bottom: 3px solid #fff;*/
 }
 .myChurch {
-	font-size: 12px;
+    font-size: 12px;
     font-size: calc(12px + 27%);
     position: absolute;
-    background-color: #fefbfd;
-    top: 86.4%;
-    left: 45.6%;
-    height: 4.3%;
-    width: 51.5%;
+    background-color: #fdfffe;
+    top: 88%;
+    left: 36%;
+    height: 3.9%;
+    width: 57%;
     z-index: 2;
     text-align: center;
     font-weight: 600;
@@ -353,14 +373,39 @@ img#myImageTag {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    border-radius: 8px;
+}
+.myChurch {
+    font-size: calc(12px + 27%);
+    line-height: 1.6;
 }
 @media(max-width: 767px){
-    .myName, .myChurch{
+/*  .myName, .myChurch{
         font-size: 2.2vw;
         line-height: 2;
+    }*/
+    .myName{
+        font-size: 3.1vw;
+        line-height: 1;
+        color: #fa9236;
     }
+    .myChurch{
+        font-size: 2.2vw;
+        line-height: 2;
+    }        
 }
-
+.form-select, .form-control {
+    border-radius: 1rem 0 !important;
+    border: 1px solid #000;
+}
+.form-select:focus, 
+.form-control:focus {
+    color: #212529;
+    background-color: ;
+    border-color: ##002386;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgb(8 66 152 / 36%);
+}
 
 </style>
 </head>
@@ -368,8 +413,9 @@ img#myImageTag {
 
     <main class="form-getLetter">
         <div class="baseImg-wrap">
-            <img src="img/dominion2022_base.jpg" class="w-100">
-            <div class="myImage" id="myImage">
+            <img src="img/Jesus-Power-base.jpg" class="w-100">
+            <div class="myImage rounded-0_" id="myImage">
+                <!-- <img id="myImageTag" src="./img/plus.png" alt="myImageTag" height="105" class="w-100 h-auto"/> -->
                 <img id="myImageTag" src="./img/plus.png" alt="myImageTag" height="105" class="w-auto h-100"/>
             </div>
             <div class="myName"></div>
@@ -385,8 +431,8 @@ img#myImageTag {
         </div>
 
         <div class="form-floating mb-1">
-          <input type="text" class="form-control" id="district" name="district" placeholder="Your District Location" required>
-          <label for="district">Your District Location</label>
+          <input type="text" class="form-control" id="district" name="district" placeholder="Global Crusade Location" required>
+          <label for="district">Global Crusade Location</label>
         </div>
 
         <div class="custom-file d-block w-100 mb-2">
@@ -473,7 +519,8 @@ $(document).ready(function(){
         var color = $(this).find('option:selected').val();
         color  = color.replace('0x', '#');
         console.log(color);
-        $('.myName, .myChurch').css('color', color);
+        // $('.myName, .myChurch').css('color', color);
+        $('.myName_, .myChurch').css('color', color);
         $('#color').css({'background-color':color, 'color':'#fff'});
     });
 

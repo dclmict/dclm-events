@@ -4,7 +4,11 @@ services:
   # Nginx Service
   events:
     container_name: events.dclm.org
-    image: wyveo/nginx-php-fpm:php74
+    build:
+      context: ./.docker
+      args:
+        HOST_UID: $HOST_UID
+    image: opeoniye/bams-laravel
     working_dir: /var/www/events
     ports:
       - 1001:80
