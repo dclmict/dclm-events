@@ -14,8 +14,6 @@ yarn-error.log
 # folders
 _
 /node_modules
-/public/hot
-/public
 /personalizedflyer/cache
 /public/storage
 /storage/*.key
