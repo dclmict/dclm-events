@@ -13,7 +13,7 @@
     <meta name="keywords" content="Event,  Conference, Registration, Kumuyi, EVENT @if($program)| {{ strtoupper($program->name) }}@endif"/>
     <meta name="author" content="dclm.org"/>
 
-    <style>
+    <!-- <style>
         .is-invalid{
             border: 1px solid !important;
             border-color: red !important;
@@ -37,7 +37,7 @@
             margin:1.3em !important;
             padding: 0.4em !important
         }
-    </style>
+    </style> -->
 
     <!-- twitter card starts from here, if you don't need remove this section -->
     <meta name="twitter:card" content="summary"/>
@@ -110,17 +110,17 @@
 <!--HEADER-->
 <header>
     <div id="lgx-header" class="lgx-header">
-        <div class="lgx-header-position"> <!--lgx-header-position-fixed lgx-header-position-white lgx-header-fixed-container lgx-header-fixed-container-gap lgx-header-position-white-->
-            <div class="lgx-container-fluid"> <!--lgx-container-fluid-->
+        <div class="lgx-header-position">
+            <div class="lgx-container-fluid">
                 <nav class="navbar navbar-default lgx-navbar">
-                    <!--<div class="navbar-header">
+                    <div class="navbar-header">
                         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                             <span class="sr-only">Toggle navigation</span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                    </div> -->
+                    </div> 
                     <div id="navbar" class="navbar-collapse collapse">
                         <div class="lgx-nav-right navbar-right">
                             <div class="lgx-cart-area">
@@ -128,13 +128,18 @@
                             </div>
                         </div>
                         <ul class="nav navbar-nav lgx-nav navbar-right">
-                        <li>
-                                <a class="lgx-scroll" href="/">Home </a></li>
-                            <li
                             <li>
-                                <a class="lgx-scroll" href="personalizedflyer">Personalyzed Flyer</a></li>
+                                <a class="lgx-scroll" href="/">Home </a>
+                            </li>
                             <li>
-                                <a class="lgx-scroll" href="#lgx-news">Testimonies</a></li>
+                                <a class="lgx-scroll" href="personalizedflyer">Personalyzed Flyer</a>
+                            </li>
+                            <li>
+                                <a class="lgx-scroll" href="#lgx-news">Testimonies</a>
+                            </li>
+                            <li>
+                                <a class="lgx-scroll" href="login">Login</a>
+                            </li>
                         </ul>
                     </div><!--/.nav-collapse -->
                 </nav>
@@ -202,14 +207,14 @@ src="https://www.facebook.com/tr?id=663155374846887&ev=PageView&noscript=1"
     <div class="lgx-countdown">
         <div class="lgx-inner-countdown">
             <div class="countdown-left-info">
-                <h2 class="title">Hurry Up!</h2>
-                <h3 class="subtitle">Get Ready For The Crusade</h3>
-                <p class="date">24 - 29 March, 2022.</p>
+                <h2 class="title">Be Prepared!</h2>
+                <h3 class="subtitle">And Get Ready For the Crusade</h3>
+                <p class="date">24 - 29 May, 2022.</p>
             </div>
             <div class="countdown-right">
                 <div class="lgx-countdown-area lgx-countdown-simple">
                     <!-- Date Format :"Y/m/d" || For Example: 1017/10/5  -->
-                    <div id="lgx-countdown" data-date="2022/3/29"></div>
+                    <div id="lgx-countdown" data-date="2022/5/24"></div>
                 </div>
             </div>
         </div><!-- //.INNER -->
@@ -220,7 +225,7 @@ src="https://www.facebook.com/tr?id=663155374846887&ev=PageView&noscript=1"
 @include("layouts.form")
 
 
-<!--SCHEDULE-->
+<!--SCHEDULE
 <section>
     <div id="lgx-schedule" class="lgx-schedule lgx-schedule-white">
         <div class="lgx-inner">
@@ -229,7 +234,7 @@ src="https://www.facebook.com/tr?id=663155374846887&ev=PageView&noscript=1"
                     <div class="col-xs-12">
                         <div class="lgx-heading">
                             <h2 class="heading">Event Schedule</h2>
-                            <!-- <h3 class="subheading">Welcome to the dedicated to building remarkable Schedule!</h3> -->
+                            <!- <h3 class="subheading">Welcome to the dedicated to building remarkable Schedule!</h3> -
                         </div>
                     </div>
                 </div>
@@ -237,464 +242,126 @@ src="https://www.facebook.com/tr?id=663155374846887&ev=PageView&noscript=1"
                     <div class="col-xs-12">
                         <div class="lgx-tab lgx-tab-vertical">
                             <ul class="nav nav-pills lgx-nav lgx-nav-nogap lgx-nav-colorful">
-                                <li class="active"><a data-toggle="pill" href="#home"><h3>First <span>Day</span></h3> <p><span>24 </span>March, 2022</p></a></li>
-                                <li><h3>Second <span>Day</span></h3> <p><span>25 </span>March, 2022</p></a></li>
-                                <li><a data-toggle="pill" href="#"><h3>Third <span>Day</span></h3> <p><span>26 </span>March, 2022</p></a></li>
-                                <li><a data-toggle="pill" href="#"><h3>Fourth <span>Day</span></h3> <p><span>27 </span>March, 2022</p></a></li>
-                                <li><a data-toggle="pill" href="#"><h3>Fifth <span>Day</span></h3> <p><span>28 </span>March, 2022</p></a></li>
-                                <li><a data-toggle="pill" href="#"><h3>Final <span>Day</span></h3> <p><span>29 </span>March, 2022</p></a></li>
-                                <!-- <li><a data-toggle="pill" href="#menu1"><h3>Second <span>Day</span></h3> <p><span>27 </span>December, 2021</p></a></li>
-                                <li><a data-toggle="pill" href="#menu2"><h3>Third <span>Day</span></h3> <p><span>28 </span>December, 2021</p></a></li>
-                                <li><a data-toggle="pill" href="#menu3"><h3>Fourth <span>Day</span></h3> <p><span>29 </span>December, 2021</p></a></li>
-                                <li><a data-toggle="pill" href="#menu1"><h3>Fifth <span>Day</span></h3> <p><span>30 </span>December, 2021</p></a></li>
-                                <li><a data-toggle="pill" href="#menu2"><h3>Final <span>Day</span></h3> <p><span>31 </span>December, 2021</p></a></li> -->
+                                <li class="active"><a data-toggle="pill" href="#home"><h3>First <span>Day</span></h3> <p><span>24 </span>May, 2022</p></a></li>
+                                <li><h3>Second <span>Day</span></h3> <p><span>25 </span>May, 2022</p></a></li>
+                                <li><a data-toggle="pill" href="#"><h3>Third <span>Day</span></h3> <p><span>26 </span>May, 2022</p></a></li>
+                                <li><a data-toggle="pill" href="#"><h3>Fourth <span>Day</span></h3> <p><span>27 </span>May, 2022</p></a></li>
+                                <li><a data-toggle="pill" href="#"><h3>Fifth <span>Day</span></h3> <p><span>28 </span>May, 2022</p></a></li>
+                                <li><a data-toggle="pill" href="#"><h3>Final <span>Day</span></h3> <p><span>29 </span>May, 2022</p></a></li>
                             </ul>
                             <div class="tab-content lgx-tab-content">
-
-
                                 <div id="home" class="tab-pane fade in active">
-
                                     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                                         <div class="panel panel-default lgx-panel">
                                             <div class="panel-heading" role="tab" id="headingOne">
                                                 <div class="panel-title">
                                                     <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                                         <div class="lgx-single-schedule">
-                                                            <!-- <div class="author">
-                                                                <img src="assets/img/schedule/speaker1.jpg" alt="Speaker"/>
-                                                            </div> -->
                                                             <div class="schedule-info">
                                                                 <h4 class="time">1600 <span>GMT</span> </h4>
                                                                 <h3 class="title">Day One</h3>
-                                                                <!-- <h4 class="author-info">By <span>Riaz Sagar</span> , Logichunt Inc.</h4> -->
                                                             </div>
                                                         </div>
                                                     </a>
                                                 </div>
                                             </div>
-                                            <!-- <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                                                <div class="panel-body">
-                                                    <p class="text">
-                                                        Meh synth Schlitz, tempor duis single-origin coffee ea next level ethnic fingerstache fanny pack nostrud. Photo booth anim 8-bit hella, PBR 3 wolf moon beard Helvetica. Salvia esse flexitarian Truffaut synth art party deep v chillwave.
-                                                    </p>
-                                                    <h4 class="location"><strong>Location:</strong>  Hall 1, Building A , Golden Street , <span>Southafrica</span> </h4>
-                                                </div>
-                                            </div> -->
                                         </div>
                                         <div class="panel panel-default lgx-panel">
                                             <div class="panel-heading" role="tab" id="headingTwo">
                                                 <div class="panel-title">
                                                     <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                                                         <div class="lgx-single-schedule">
-                                                            <!-- <div class="author">
-                                                                <img src="assets/img/schedule/speaker2.jpg" alt="Speaker"/>
-                                                            </div> -->
+                                                           
                                                             <div class="schedule-info">
                                                                 <h4 class="time">1600 <span>GMT</span> </h4>
                                                                 <h3 class="title">Day Two</h3>
-                                                                <!-- <h4 class="author-info">By <span>Joanna Smith</span> , Design Apple</h4> -->
+                                                               
                                                             </div>
                                                         </div>
                                                     </a>
                                                 </div>
                                             </div>
-                                            <!-- <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                                                <div class="panel-body">
-                                                    <p class="text">
-                                                        Meh synth Schlitz, tempor duis single-origin coffee ea next level ethnic fingerstache fanny pack nostrud. Photo booth anim 8-bit hella, PBR 3 wolf moon beard Helvetica. Salvia esse flexitarian Truffaut synth art party deep v chillwave.
-                                                    </p>
-                                                    <h4 class="location"><strong>Location:</strong>  Hall 1, Building A , Golden Street , <span>Southafrica</span> </h4>
-                                                </div>
-                                            </div> -->
                                         </div>
                                         <div class="panel panel-default lgx-panel">
                                             <div class="panel-heading" role="tab" id="headingThree">
                                                 <div class="panel-title">
                                                     <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
                                                         <div class="lgx-single-schedule">
-                                                            <!-- <div class="author author-multi">
-                                                                <img src="assets/img/schedule/speaker1.jpg" alt="Speaker"/>
-                                                                <img src="assets/img/schedule/speaker2.jpg" alt="Speaker"/>
-                                                                <img src="assets/img/schedule/speaker3.jpg" alt="Speaker"/>
-                                                                <img src="assets/img/schedule/speaker4.jpg" alt="Speaker"/>
-                                                            </div> -->
                                                             <div class="schedule-info">
                                                                 <h4 class="time">1600 <span>GMT</span> </h4>
                                                                 <h3 class="title">Day Three</h3>
-                                                                <!-- <h4 class="author-info">By <span>Joanna Smith</span> , <span>Riaz Sagar</span> & <span>Devid Smith</span> , Design Apple</h4> -->
+                                                                
                                                             </div>
                                                         </div>
                                                     </a>
                                                 </div>
                                             </div>
-                                           <!--  <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                                                <div class="panel-body">
-                                                    <p class="text">
-                                                        Meh synth Schlitz, tempor duis single-origin coffee ea next level ethnic fingerstache fanny pack nostrud. Photo booth anim 8-bit hella, PBR 3 wolf moon beard Helvetica. Salvia esse flexitarian Truffaut synth art party deep v chillwave.
-                                                    </p>
-                                                    <h4 class="location"><strong>Location:</strong>  Hall 1, Building A , Golden Street , <span>Southafrica</span> </h4>
-                                                </div>
-                                            </div> -->
                                         </div>
                                         <div class="panel panel-default lgx-panel">
                                             <div class="panel-heading" role="tab" id="headingfour">
                                                 <div class="panel-title">
                                                     <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapsefour" aria-expanded="true" aria-controls="collapsefour">
                                                         <div class="lgx-single-schedule">
-                                                            <!-- <div class="author">
-                                                                <img src="assets/img/schedule/speaker4.jpg" alt="Speaker"/>
-                                                            </div> -->
+                                                            
                                                             <div class="schedule-info">
                                                             <h4 class="time">700 AND 1600 <span>GMT</span></h4>
                                                                 <h3 class="title">Day Four</h3>
-                                                                <!-- <h4 class="author-info">By <span>Joanna Smith</span> , Design Apple</h4> -->
+                                                                
                                                             </div>
                                                         </div>
                                                     </a>
                                                 </div>
                                             </div>
-                                           <!--  <div id="collapsefour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                                                <div class="panel-body">
-                                                    <p class="text">
-                                                        Meh synth Schlitz, tempor duis single-origin coffee ea next level ethnic fingerstache fanny pack nostrud. Photo booth anim 8-bit hella, PBR 3 wolf moon beard Helvetica. Salvia esse flexitarian Truffaut synth art party deep v chillwave.
-                                                    </p>
-                                                    <h4 class="location"><strong>Location:</strong>  Hall 1, Building A , Golden Street , <span>Southafrica</span> </h4>
-                                                </div>
-                                            </div> -->
                                         </div>
                                         <div class="panel panel-default lgx-panel">
                                             <div class="panel-heading" role="tab" id="headingfive">
                                                 <div class="panel-title">
                                                     <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapsefive" aria-expanded="true" aria-controls="collapsefive">
                                                         <div class="lgx-single-schedule">
-                                                            <!-- <div class="author">
-                                                                <img src="assets/img/schedule/speaker5.jpg" alt="Speaker"/>
-                                                            </div> -->
+                                                            
                                                             <div class="schedule-info">
                                                                 <h4 class="time">1600 <span>GMT</span> </h4>
                                                                 <h3 class="title">Day Five</h3>
-                                                                <!-- <h4 class="author-info">By <span>Joanna Smith</span> , Design Apple</h4> -->
+                                                               
                                                             </div>
                                                         </div>
                                                     </a>
                                                 </div>
                                             </div>
-                                            <!-- <div id="collapsefive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                                                <div class="panel-body">
-                                                    <p class="text">
-                                                        Meh synth Schlitz, tempor duis single-origin coffee ea next level ethnic fingerstache fanny pack nostrud. Photo booth anim 8-bit hella, PBR 3 wolf moon beard Helvetica. Salvia esse flexitarian Truffaut synth art party deep v chillwave.
-                                                    </p>
-                                                    <h4 class="location"><strong>Location:</strong>  Hall 1, Building A , Golden Street , <span>Southafrica</span> </h4>
-                                                </div>
-                                            </div> -->
                                         </div>
                                          <div class="panel panel-default lgx-panel">
                                             <div class="panel-heading" role="tab" id="headingfour">
                                                 <div class="panel-title">
                                                     <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapsefour" aria-expanded="true" aria-controls="collapsefour">
                                                         <div class="lgx-single-schedule">
-                                                            <!-- <div class="author">
-                                                                <img src="assets/img/schedule/speaker4.jpg" alt="Speaker"/>
-                                                            </div> -->
+                                                            
                                                             <div class="schedule-info">
                                                                 <h4 class="time">1600 <span>GMT</span></h4>
                                                                 <h3 class="title">Final Day</h3>
-                                                                <!-- <h4 class="author-info">By <span>Joanna Smith</span> , Design Apple</h4> -->
+                                                                
                                                             </div>
                                                         </div>
                                                     </a>
                                                 </div>
                                             </div>
-                                           <!--  <div id="collapsefour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                                                <div class="panel-body">
-                                                    <p class="text">
-                                                        Meh synth Schlitz, tempor duis single-origin coffee ea next level ethnic fingerstache fanny pack nostrud. Photo booth anim 8-bit hella, PBR 3 wolf moon beard Helvetica. Salvia esse flexitarian Truffaut synth art party deep v chillwave.
-                                                    </p>
-                                                    <h4 class="location"><strong>Location:</strong>  Hall 1, Building A , Golden Street , <span>Southafrica</span> </h4>
-                                                </div>
-                                            </div> -->
                                         </div>
                                     </div>
-
                                 </div>
-
-                                
-
-
-                                <!--<div id="menu1" class="tab-pane fade">
-
-                                    <div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
-                                        <div class="panel panel-default lgx-panel">
-                                            <div class="panel-heading" role="tab" id="headingOne2">
-                                                <div class="panel-title">
-                                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne2" aria-expanded="true" aria-controls="collapseOne2">
-                                                        <div class="lgx-single-schedule">
-                                                            <! <div class="author author-multi">
-                                                                <img src="assets/img/schedule/speaker1.jpg" alt="Speaker"/>
-                                                                <img src="assets/img/schedule/speaker2.jpg" alt="Speaker"/>
-                                                                <img src="assets/img/schedule/speaker3.jpg" alt="Speaker"/>
-                                                            </div> --
-                                                            <div class="schedule-info">
-                                                                <h4 class="time">09:00 <span>Am</span> - 10.30 <span>Am</span></h4>
-                                                                <h3 class="title">The Wait is Over! Stony Brook Captures First Conference Title</h3>
-                                                                <!- <h4 class="author-info">By <span>Joanna Smith</span> , <span>Riaz Sagar</span> & <span>Devid Smith</span> , Design Apple</h4> --
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div id="collapseOne2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                                                <!- <div class="panel-body">
-                                                    <p class="text">
-                                                        Meh synth Schlitz, tempor duis single-origin coffee ea next level ethnic fingerstache fanny pack nostrud. Photo booth anim 8-bit hella, PBR 3 wolf moon beard Helvetica. Salvia esse flexitarian Truffaut synth art party deep v chillwave.
-                                                    </p>
-                                                    <h4 class="location"><strong>Location:</strong>  Hall 1, Building A , Golden Street , <span>Southafrica</span> </h4>
-                                                </div> --
-                                            </div>
-                                        </div>
-                                        <div class="panel panel-default lgx-panel">
-                                            <div class="panel-heading" role="tab" id="headingTwo2">
-                                                <div class="panel-title">
-                                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo2" aria-expanded="true" aria-controls="collapseTwo2">
-                                                        <div class="lgx-single-schedule">
-                                                            <!- <div class="author">
-                                                                <img src="assets/img/schedule/speaker1.jpg" alt="Speaker"/>
-                                                            </div> --
-                                                            <div class="schedule-info">
-                                                                <h4 class="time">09:00 <span>Am</span> - 10.30 <span>Am</span></h4>
-                                                                <h3 class="title">Digital World Event Introduction</h3>
-                                                                <h4 class="author-info">By <span>Joanna Smith</span> , Design Apple</h4>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div id="collapseTwo2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                                                <div class="panel-body">
-                                                    <p class="text">
-                                                        Meh synth Schlitz, tempor duis single-origin coffee ea next level ethnic fingerstache fanny pack nostrud. Photo booth anim 8-bit hella, PBR 3 wolf moon beard Helvetica. Salvia esse flexitarian Truffaut synth art party deep v chillwave.
-                                                    </p>
-                                                    <h4 class="location"><strong>Location:</strong>  Hall 1, Building A , Golden Street , <span>Southafrica</span> </h4>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="panel panel-default lgx-panel">
-                                            <div class="panel-heading" role="tab" id="headingThree2">
-                                                <div class="panel-title">
-                                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree2" aria-expanded="true" aria-controls="collapseThree2">
-                                                        <div class="lgx-single-schedule">
-                                                            <div class="author">
-                                                                <img src="assets/img/schedule/speaker1.jpg" alt="Speaker"/>
-                                                            </div>
-                                                            <div class="schedule-info">
-                                                                <h4 class="time">09:00 <span>Am</span> - 10.30 <span>Am</span></h4>
-                                                                <h3 class="title">Digital World Event Introduction</h3>
-                                                                <h4 class="author-info">By <span>Joanna Smith</span> , Design Apple</h4>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div id="collapseThree2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                                                <div class="panel-body">
-                                                    <p class="text">
-                                                        Meh synth Schlitz, tempor duis single-origin coffee ea next level ethnic fingerstache fanny pack nostrud. Photo booth anim 8-bit hella, PBR 3 wolf moon beard Helvetica. Salvia esse flexitarian Truffaut synth art party deep v chillwave.
-                                                    </p>
-                                                    <h4 class="location"><strong>Location:</strong>  Hall 1, Building A , Golden Street , <span>Southafrica</span> </h4>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div> -->
-
-
-                                <!--<div id="menu2" class="tab-pane fade">
-
-                                    <div class="panel-group" id="accordion3" role="tablist" aria-multiselectable="true">
-                                        <div class="panel panel-default lgx-panel">
-                                            <div class="panel-heading" role="tab" id="headingOne3">
-                                                <div class="panel-title">
-                                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion3" href="#collapseOne3" aria-expanded="true" aria-controls="collapseOne3">
-                                                        <div class="lgx-single-schedule">
-                                                            <div class="author">
-                                                                <img src="assets/img/schedule/speaker1.jpg" alt="Speaker"/>
-                                                            </div>
-                                                            <div class="schedule-info">
-                                                                <h4 class="time">09:00 <span>Am</span> - 10.30 <span>Am</span></h4>
-                                                                <h3 class="title">Digital World Event Introduction</h3>
-                                                                <h4 class="author-info">By <span>Joanna Smith</span> , Design Apple</h4>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div id="collapseOne3" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                                                <div class="panel-body">
-                                                    <p class="text">
-                                                        Meh synth Schlitz, tempor duis single-origin coffee ea next level ethnic fingerstache fanny pack nostrud. Photo booth anim 8-bit hella, PBR 3 wolf moon beard Helvetica. Salvia esse flexitarian Truffaut synth art party deep v chillwave.
-                                                    </p>
-                                                    <h4 class="location"><strong>Location:</strong>  Hall 1, Building A , Golden Street , <span>Southafrica</span> </h4>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="panel panel-default lgx-panel">
-                                            <div class="panel-heading" role="tab" id="headingTwo3">
-                                                <div class="panel-title">
-                                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion3" href="#collapseTwo3" aria-expanded="true" aria-controls="collapseTwo3">
-                                                        <div class="lgx-single-schedule">
-                                                            <div class="author">
-                                                                <img src="assets/img/schedule/speaker1.jpg" alt="Speaker"/>
-                                                            </div>
-                                                            <div class="schedule-info">
-                                                                <h4 class="time">09:00 <span>Am</span> - 10.30 <span>Am</span></h4>
-                                                                <h3 class="title">Digital World Event Introduction</h3>
-                                                                <h4 class="author-info">By <span>Joanna Smith</span> , Design Apple</h4>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div id="collapseTwo3" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                                                <div class="panel-body">
-                                                    <p class="text">
-                                                        Meh synth Schlitz, tempor duis single-origin coffee ea next level ethnic fingerstache fanny pack nostrud. Photo booth anim 8-bit hella, PBR 3 wolf moon beard Helvetica. Salvia esse flexitarian Truffaut synth art party deep v chillwave.
-                                                    </p>
-                                                    <h4 class="location"><strong>Location:</strong>  Hall 1, Building A , Golden Street , <span>Southafrica</span> </h4>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="panel panel-default lgx-panel">
-                                            <div class="panel-heading" role="tab" id="headingThree3">
-                                                <div class="panel-title">
-                                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion3" href="#collapseThree3" aria-expanded="true" aria-controls="collapseThree3">
-                                                        <div class="lgx-single-schedule">
-                                                            <div class="author">
-                                                                <img src="assets/img/schedule/speaker1.jpg" alt="Speaker"/>
-                                                            </div>
-                                                            <div class="schedule-info">
-                                                                <h4 class="time">09:00 <span>Am</span> - 10.30 <span>Am</span></h4>
-                                                                <h3 class="title">Digital World Event Introduction</h3>
-                                                                <h4 class="author-info">By <span>Joanna Smith</span> , Design Apple</h4>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div id="collapseThree3" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                                                <div class="panel-body">
-                                                    <p class="text">
-                                                        Meh synth Schlitz, tempor duis single-origin coffee ea next level ethnic fingerstache fanny pack nostrud. Photo booth anim 8-bit hella, PBR 3 wolf moon beard Helvetica. Salvia esse flexitarian Truffaut synth art party deep v chillwave.
-                                                    </p>
-                                                    <h4 class="location"><strong>Location:</strong>  Hall 1, Building A , Golden Street , <span>Southafrica</span> </h4>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div> -->
-
-
-                                <!--<div id="menu3" class="tab-pane fade">
-
-                                    <div class="panel-group" id="accordion4" role="tablist" aria-multiselectable="true">
-                                        <div class="panel panel-default lgx-panel">
-                                            <div class="panel-heading" role="tab" id="headingOne4">
-                                                <div class="panel-title">
-                                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion4" href="#collapseOne4" aria-expanded="true" aria-controls="collapseOne4">
-                                                        <div class="lgx-single-schedule">
-                                                            <div class="author">
-                                                                <img src="assets/img/schedule/speaker1.jpg" alt="Speaker"/>
-                                                            </div>
-                                                            <div class="schedule-info">
-                                                                <h4 class="time">09:00 <span>Am</span> - 10.30 <span>Am</span></h4>
-                                                                <h3 class="title">Digital World Event Introduction</h3>
-                                                                <h4 class="author-info">By <span>Joanna Smith</span> , Design Apple</h4>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div id="collapseOne4" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne4">
-                                                <div class="panel-body">
-                                                    <p class="text">
-                                                        Meh synth Schlitz, tempor duis single-origin coffee ea next level ethnic fingerstache fanny pack nostrud. Photo booth anim 8-bit hella, PBR 3 wolf moon beard Helvetica. Salvia esse flexitarian Truffaut synth art party deep v chillwave.
-                                                    </p>
-                                                    <h4 class="location"><strong>Location:</strong>  Hall 1, Building A , Golden Street , <span>Southafrica</span> </h4>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="panel panel-default lgx-panel">
-                                            <div class="panel-heading" role="tab" id="headingTwo4">
-                                                <div class="panel-title">
-                                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion4" href="#collapseTwo4" aria-expanded="true" aria-controls="collapseTwo4">
-                                                        <div class="lgx-single-schedule">
-                                                            <div class="author">
-                                                                <img src="assets/img/schedule/speaker1.jpg" alt="Speaker"/>
-                                                            </div>
-                                                            <div class="schedule-info">
-                                                                <h4 class="time">09:00 <span>Am</span> - 10.30 <span>Am</span></h4>
-                                                                <h3 class="title">Digital World Event Introduction</h3>
-                                                                <h4 class="author-info">By <span>Joanna Smith</span> , Design Apple</h4>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div id="collapseTwo4" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo4">
-                                                <div class="panel-body">
-                                                    <p class="text">
-                                                        Meh synth Schlitz, tempor duis single-origin coffee ea next level ethnic fingerstache fanny pack nostrud. Photo booth anim 8-bit hella, PBR 3 wolf moon beard Helvetica. Salvia esse flexitarian Truffaut synth art party deep v chillwave.
-                                                    </p>
-                                                    <h4 class="location"><strong>Location:</strong>  Hall 1, Building A , Golden Street , <span>Southafrica</span> </h4>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="panel panel-default lgx-panel">
-                                            <div class="panel-heading" role="tab" id="headingThree4">
-                                                <div class="panel-title">
-                                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion4" href="#collapseThree4" aria-expanded="true" aria-controls="collapseThree4">
-                                                        <div class="lgx-single-schedule">
-                                                            <div class="author">
-                                                                <img src="assets/img/schedule/speaker1.jpg" alt="Speaker"/>
-                                                            </div>
-                                                            <div class="schedule-info">
-                                                                <h4 class="time">09:00 <span>Am</span> - 10.30 <span>Am</span></h4>
-                                                                <h3 class="title">Digital World Event Introduction</h3>
-                                                                <h4 class="author-info">By <span>Joanna Smith</span> , Design Apple</h4>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div id="collapseThree4" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree4">
-                                                <div class="panel-body">
-                                                    <p class="text">
-                                                        Meh synth Schlitz, tempor duis single-origin coffee ea next level ethnic fingerstache fanny pack nostrud. Photo booth anim 8-bit hella, PBR 3 wolf moon beard Helvetica. Salvia esse flexitarian Truffaut synth art party deep v chillwave.
-                                                    </p>
-                                                    <h4 class="location"><strong>Location:</strong>  Hall 1, Building A , Golden Street , <span>Southafrica</span> </h4>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div> -->
-
                             </div>
                         </div>
                     </div>
                 </div>
-                <!--//.ROW-->
-                <!--<div class="section-btn-area schedule-btn-area">
+                <-//.ROW-
+                <!-<div class="section-btn-area schedule-btn-area">
                     <a class="lgx-btn lgx-btn-big" href="speakers.html"><span>Download Schedule (PDF)</span></a>
                     <a class="lgx-btn lgx-btn-red lgx-btn-big" href="speakers.html"><span>Connect via facebook</span></a>
-                </div>-->
+                </div>-
             </div>
-            <!-- //.CONTAINER -->
+            <!- //.CONTAINER -
         </div>
-        <!-- //.INNER -->
+        <!- //.INNER -
     </div>
-</section>
+</section> -->
 <!--SCHEDULE END-->
 
 
@@ -715,14 +382,14 @@ src="https://www.facebook.com/tr?id=663155374846887&ev=PageView&noscript=1"
                         <div class="col-xs-12 col-sm-6">
                             <div class="lgx-single-news">
                                 <figure>
-                                    <a href="testimony1.html"><img src="assets/img/news/news1.jpg" alt=""></a>
+                                    <a href="#"><img src="assets/img/news/news1.jpg" alt=""></a>
                                 </figure>
                                 <div class="single-news-info">
                                     <div class="meta-wrapper">
                                         <span>June 25, 2021</span>
                                         <span>by <a href="#">Bro David Oladipo</a></span>
                                     </div>
-                                    <h3 class="title"><a href="testimony1.html">Prostrate Enlargment Healed</a></h3>
+                                    <h3 class="title"><a href="#">Prostrate Enlargment Healed</a></h3>
                                     <!-- <a class="lgx-btn lgx-btn-white lgx-btn-sm" href="testimony1.html"><span>Read More</span></a> -->
                                 </div>
                             </div>
@@ -730,7 +397,7 @@ src="https://www.facebook.com/tr?id=663155374846887&ev=PageView&noscript=1"
                         <div class="col-xs-12 col-sm-6">
                             <div class="lgx-single-news">
                                 <figure>
-                                    <a href="testimony2.html"><img src="assets/img/news/news3.jpg" alt=""></a>
+                                    <a href="#"><img src="assets/img/news/news3.jpg" alt=""></a>
                                 </figure>
                                 <div class="single-news-info">
                                     <div class="meta-wrapper">
@@ -738,7 +405,7 @@ src="https://www.facebook.com/tr?id=663155374846887&ev=PageView&noscript=1"
                                         <span>by <a href="#">OJOMA SHARON MERCY</a></span>
 
                                     </div>
-                                    <h3 class="title"><a href="news-single.html">HOW GOD SAVED ME FROM THE HANDS OF KIDNAPPERS</a></h3>
+                                    <h3 class="title"><a href="#">HOW GOD SAVED ME FROM THE HANDS OF KIDNAPPERS</a></h3>
                                     <!-- <a class="lgx-btn lgx-btn-white lgx-btn-sm" href="testimony2.html"><span>Read More</span></a> -->
                                 </div>
                             </div>
@@ -750,18 +417,13 @@ src="https://www.facebook.com/tr?id=663155374846887&ev=PageView&noscript=1"
     </section>
     <!--News END-->
 
-
-
-
-
-
     <!--FOOTER-->
     <footer>
         <div id="lgx-footer" class="lgx-footer lgx-footer-black"> <!--lgx-footer-white-->
             <div class="lgx-inner-footer">
-                <div class="lgx-subscriber-area"> <!--lgx-subscriber-area-indiv-->
+                <!--<div class="lgx-subscriber-area"> 
                     <div class="container">
-                        <div class="lgx-subscriber-inner">  <!--lgx-subscriber-inner-indiv-->
+                        <div class="lgx-subscriber-inner"> 
                             <h3 class="subscriber-title">Join Newsletter</h3>
                             <form class="lgx-subscribe-form" >
                                 <div class="form-group form-group-email">
@@ -770,10 +432,10 @@ src="https://www.facebook.com/tr?id=663155374846887&ev=PageView&noscript=1"
                                 <div class="form-group form-group-submit">
                                     <button type="submit" name="lgx-submit" id="lgx-submit" class="lgx-btn lgx-submit"><span>Subscribe</span></button>
                                 </div>
-                            </form> <!--//.SUBSCRIBE-->
+                            </form> <-//.SUBSCRIBE-
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <div class="container">
                     <div class="lgx-footer-area lgx-footer-area-center">
                         <div class="lgx-footer-single">
@@ -831,8 +493,6 @@ src="https://www.facebook.com/tr?id=663155374846887&ev=PageView&noscript=1"
         </div>
     </footer>
     <!--FOOTER END-->
-
-
 </div>
 <!--//.LGX SITE CONTAINER-->
 <!-- *** ADD YOUR SITE SCRIPT HERE *** -->

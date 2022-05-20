@@ -33,12 +33,12 @@
                                 <div id="phone_number-field" class="col-md-6 col-lg-6 my-1">
                                     <label class="form-label" for="phone_number">Phone Number</label>
                                     <input type="text" class="form-control" id="phone_number" name="phone_number"
-                                           placeholder="+227 70* *** ****"/>
+                                           placeholder="+234 80* *** ****"/>
                                 </div>
                                 <div id="whatsapp_number-field" class="col-md-6 col-lg-6 my-1">
                                     <label class="form-label" for="whatsapp_number">Whatsapp Number</label>
                                     <input type="text" class="form-control" id="whatsapp_number" name="whatsapp_number"
-                                           placeholder="+227 70* *** ****"/>
+                                           placeholder="+234 80* *** ****"/>
                                 </div>
                             </div>
                         </div>
@@ -91,3 +91,4 @@
         </div>
     </div>
 @endif
+        
