@@ -54,7 +54,7 @@
 
     <!-- facebook open graph starts from here, if you don't need then delete open graph related  -->
     <meta property="og:title" content="@if($program)| {{ strtoupper($program->name) }}@endif"/>
-    <meta property="og:url" content="http://events.dclm.org"/>
+    <meta property="og:url" content="https://events.dclm.org"/>
     <meta property="og:locale" content="en_US"/>
     <meta property="og:site_name" content="DCLM Events Registration Form"/>
     <!--meta property="fb:admins" content="" /-->  <!-- use this if you have  -->
@@ -132,7 +132,7 @@
                                 <a class="lgx-scroll" href="/">Home </a>
                             </li>
                             <li>
-                                <a class="lgx-scroll" href="personalizedflyer">Personalyzed Flyer</a>
+                                <a class="lgx-scroll" href="personalizedflyer/">Personalyzed Flyer</a>
                             </li>
                             <li>
                                 <a class="lgx-scroll" href="#lgx-news">Testimonies</a>
@@ -207,14 +207,14 @@ src="https://www.facebook.com/tr?id=663155374846887&ev=PageView&noscript=1"
     <div class="lgx-countdown">
         <div class="lgx-inner-countdown">
             <div class="countdown-left-info">
-                <h2 class="title">Be Prepared!</h2>
-                <h3 class="subtitle">And Get Ready For the Crusade</h3>
-                <p class="date">24 - 29 May, 2022.</p>
+                <h2 class="title">Get Ready to Fly!</h2>
+                <h3 class="subtitle">It is time for Supernatural Deliverance</h3>
+                <p class="date">23 - 28 June, 2022.</p>
             </div>
             <div class="countdown-right">
                 <div class="lgx-countdown-area lgx-countdown-simple">
                     <!-- Date Format :"Y/m/d" || For Example: 1017/10/5  -->
-                    <div id="lgx-countdown" data-date="2022/5/24"></div>
+                    <div id="lgx-countdown" data-date="2022/6/23"></div>
                 </div>
             </div>
         </div><!-- //.INNER -->
