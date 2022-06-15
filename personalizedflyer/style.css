@@ -1,0 +1,196 @@
+html,body { height: 100%;}
+
+body {
+  display: flex;
+  align-items: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #f5f5f5;
+}
+body {background: #f5f5f5 url(./img/gs-bg.jpg) fixed no-repeat top right /cover;}
+
+.bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+@media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+      font-size: 3.5rem;
+    }
+}
+
+.form-getLetter {
+    width: 100%;
+    max-width: 720px;
+    padding: 15px;
+    margin: auto;
+    background-color: rgb(121 94 149 / 45%);
+    border-radius: 5px;
+    position: relative;
+}
+
+.form-control {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #212529;
+    background-color: #fff;
+    border-radius: .1rem !important;
+}
+.form-getLetter .form-floating:focus-within {
+  z-index: 2;
+}
+
+.form-getLetter input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.form-getLetter input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.toasts-top-right.fixed {
+    position: fixed;
+    font-size: 12px;
+}
+.toast {
+    width: 350px;
+    max-width: 100%;
+    font-size: 12px !important;
+}
+.toast-header {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: .25rem .75rem;
+    color: #6c757d;
+    background-color: rgba(255,255,255,.85);
+    background-clip: padding-box;
+    border-bottom: 1px solid rgba(0,0,0,.05);
+    border-top-left-radius: calc(.25rem - 1px);
+    border-top-right-radius: calc(.25rem - 1px);
+}
+.toasts-top-right {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1040;
+}
+.toast-header .btn-close {
+    background: none;
+    padding: 0;
+    background-color: transparent;
+    border: 0;
+}
+.letter-box img {
+    object-fit: cover;
+    width: auto;
+    height: 380px;
+}
+.bg-fb{background-color:#6045B6}
+.bg-tw{background-color:#46A5E7}
+.bg-wa{background-color:#00BD29}
+.btn{color: #fff !important}
+
+.baseImg-wrap {
+    position: relative;
+}
+
+
+div#myImage {
+    position: absolute;
+    /* background-color: #fff; */
+    background-color: transparent;
+    top: 15.5%;
+    left: 34%;
+    height: 32%;
+    width: 32%;
+    z-index: 2;
+    overflow: hidden;
+    text-align: center;
+    border-radius: 75%;
+}
+
+img#myImageTag {
+/*  opacity: 0.5;*/
+}
+
+.myName {
+    font-family: 'Kaushan Script', cursive;
+    /* text-shadow: 2px 2px 2px #000; */
+    font-size: 12px;
+    font-size: calc(12px + 50%);
+    position: absolute;
+    background-color: transparent;
+    top: 48.9%;
+    left: 31.5%;
+    height: 4.5%;
+    width: 37.3%;
+    z-index: 2;
+    overflow: hidden;
+    text-align: center;
+    font-weight: 600;
+    line-height: 1.6;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* border-bottom: 3px solid #fff;*/
+}
+.myChurch {
+    font-size: 12px;
+    font-size: calc(12px + 27%);
+    position: absolute;
+    background-color: #ffc1072b;
+    top: 85.3%;
+    left: 42.9%;
+    height: 3.3%;
+    width: 51.4%;
+    z-index: 2;
+    text-align: center;
+    font-weight: 600;
+    line-height: 1.6;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-radius: 1px;
+}
+.myChurch {
+    font-size: calc(12px + 27%);
+    line-height: 1.6;
+}
+@media(max-width: 767px){
+/*  .myName, .myChurch{
+        font-size: 2.2vw;
+        line-height: 2;
+    }*/
+    .myName{
+        font-size: 3.1vw;
+        line-height: 1;
+        color: #fa9236;
+    }
+    .myChurch{
+        font-size: 2.2vw;
+        line-height: 2;
+    }
+}
+.form-select, .form-control {
+    border-radius: 1rem 0 !important;
+    border: 1px solid #000;
+}
+.form-select:focus,
+.form-control:focus {
+    color: #212529;
+    background-color: ;
+    border-color: ##002386;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgb(8 66 152 / 36%);
+}

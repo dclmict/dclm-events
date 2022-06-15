@@ -45,9 +45,9 @@ if(isset($_GET['purge'])){
 //http://www.workwithcolor.com/color-chart-full-01.htm
 */
 $colors = [
-    '#FF8C00'         =>   'Dark Orange',
-    '#002E63' =>    'Cool Black',
     '#E32636' =>   'Alizarin',
+    '#FF8C00' =>   'Dark Orange',
+    '#002E63' =>    'Cool Black',
     '#FFBF00'  =>   'Amber',
     '#8DB600'  =>   'Apple Green',
     '#000000' =>     'Black',
@@ -98,7 +98,7 @@ if(isset($_POST['getmydp'])){
     $cachePath = 'cache/temp/'. time().'_my-dp.jpg';
 	//$cachePath = 'cache/temp/_my-dp.jpg';
 
-    $image->fit(389,389);
+    $image->fit(343,343);
 
     // create empty canvas
     $width = $image->getWidth();
@@ -120,8 +120,8 @@ if(isset($_POST['getmydp'])){
     //circle($cx, $cy, $r, $color, $filled=false)
     $user = [
         'text'   => substr($userName, 0, 21),
-        'x'      => 550,
-        'y'      => 627,
+        'x'      => 540,
+        'y'      => 550,
         'size'   => 22,
         'angle'  => 0,
         'color'  => (isset($color)) ? $color : "#C32148",
@@ -132,28 +132,28 @@ if(isset($_POST['getmydp'])){
     $dist = [
         // 'text'   => "@ ".substr($distName, 0, 46),
         'text'   => "@ ".substr($distName, 0, 41),
-        'x'      => 695,
-        'y'      => 972,
+        'x'      => 741,
+        'y'      => 941,
         'size'   => 14,
         'angle'  => 0,
         'color'  => (isset($color)) ? $color : "#C32148",
         'pos'    => "center",
     ];
 
-    $myDP = Image::make('img/Jesus-Power-base.jpg');
+    $myDP = Image::make('img/ilorin.jpg');
 
     // $myDP->insert($image, 'top-left', 336, 203);
 
+    //Write Name Text Shadow
+    // $myDP->text($user['text'], $user['x']+2, $user['y']+2, function($font) use($color) {
+    //     $font->file("fonts/KaushanScript-Regular.ttf");
+    //     $font->size(36);
+    //     $font->color('#000' /*$color*/);
+    //     $font->align('center');
+    //     $font->valign('middle');
+    //     $font->angle(0);
+    // });
     //Write Name
-    $myDP->text($user['text'], $user['x']+2, $user['y']+2, function($font) use($color) {
-        $font->file("fonts/KaushanScript-Regular.ttf");
-        $font->size(36);
-        $font->color('#000' /*$color*/);
-        $font->align('center');
-        $font->valign('middle');
-        $font->angle(0);
-    });
-
     $myDP->text($user['text'], $user['x'], $user['y'], function($font) use($color) {
         $font->file("fonts/KaushanScript-Regular.ttf");
         $font->size(36);
@@ -166,7 +166,7 @@ if(isset($_POST['getmydp'])){
     //Write Location
     $myDP->text($dist['text'], $dist['x'], $dist['y'], function($font) use($color) {
         $font->file("fonts/Raleway-ExtraBold.ttf");
-        $font->size(25);
+        $font->size(20);
         $font->color($color);
         $font->align('center');
         $font->valign('middle');
@@ -175,7 +175,7 @@ if(isset($_POST['getmydp'])){
 
 	//Add Image
 	// $myDP->insert($image, 'top-left', 348, 213);
-    $myDP->insert($image, 'top-left', 336, 203);
+    $myDP->insert($image, 'top-left', 369, 169);
 	$quality  = (isset($quality)) ? $quality : 70;
     $myDP->save($cachePath, $quality, 'jpg');
 
@@ -208,204 +208,10 @@ if(isset($_POST['getmydp'])){
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="style.css">
 
 <style>
-html,body { height: 100%;}
 
-body {
-  display: flex;
-  align-items: center;
-  padding-top: 40px;
-  padding-bottom: 40px;
-  background-color: #f5f5f5;
-}
-body {background: #f5f5f5 url(./img/gs-bg.jpg) fixed no-repeat top right /cover;}
-
-.bd-placeholder-img {
-    font-size: 1.125rem;
-    text-anchor: middle;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    user-select: none;
-}
-@media (min-width: 768px) {
-    .bd-placeholder-img-lg {
-      font-size: 3.5rem;
-    }
-}
-
-.form-getLetter {
-    width: 100%;
-    max-width: 720px;
-    padding: 15px;
-    margin: auto;
-    background-color: rgb(121 94 149 / 45%);
-    border-radius: 5px;
-    position: relative;
-}
-
-.form-control {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #212529;
-    background-color: #fff;
-    border-radius: .1rem !important;
-}
-.form-getLetter .form-floating:focus-within {
-  z-index: 2;
-}
-
-.form-getLetter input[type="email"] {
-  margin-bottom: -1px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
-}
-
-.form-getLetter input[type="password"] {
-  margin-bottom: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}
-
-.toasts-top-right.fixed {
-    position: fixed;
-    font-size: 12px;
-}
-.toast {
-    width: 350px;
-    max-width: 100%;
-    font-size: 12px !important;
-}
-.toast-header {
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-align-items: center;
-    -ms-flex-align: center;
-    align-items: center;
-    padding: .25rem .75rem;
-    color: #6c757d;
-    background-color: rgba(255,255,255,.85);
-    background-clip: padding-box;
-    border-bottom: 1px solid rgba(0,0,0,.05);
-    border-top-left-radius: calc(.25rem - 1px);
-    border-top-right-radius: calc(.25rem - 1px);
-}
-.toasts-top-right {
-    position: absolute;
-    left: 0;
-    top: 0;
-    z-index: 1040;
-}
-.toast-header .btn-close {
-    background: none;
-    padding: 0;
-    background-color: transparent;
-    border: 0;
-}
-.letter-box img {
-    object-fit: cover;
-    width: auto;
-    height: 380px;
-}
-.bg-fb{background-color:#6045B6}
-.bg-tw{background-color:#46A5E7}
-.bg-wa{background-color:#00BD29}
-.btn{color: #fff !important}
-
-.baseImg-wrap {
-    position: relative;
-}
-
-
-div#myImage {
-    position: absolute;
-    /* background-color: #fff; */
-    background-color: transparent;
-    top: 18.7%;
-    left: 31.3%;
-    height: 35.9%;
-    width: 35.9%;
-    z-index: 2;
-    overflow: hidden;
-    text-align: center;
-    border-radius: 75%;
-}
-
-img#myImageTag {
-/*	opacity: 0.5;*/
-}
-
-.myName {
-    font-family: 'Kaushan Script', cursive;
-    /* text-shadow: 2px 2px 2px #000; */
-    font-size: 12px;
-    font-size: calc(12px + 50%);
-    position: absolute;
-    background-color: transparent;
-    top: 56.6%;
-    left: 31.5%;
-    height: 4.5%;
-    width: 37.3%;
-    z-index: 2;
-    overflow: hidden;
-    text-align: center;
-    font-weight: 600;
-    line-height: 1.6;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    /* border-bottom: 3px solid #fff;*/
-}
-.myChurch {
-    font-size: 12px;
-    font-size: calc(12px + 27%);
-    position: absolute;
-    background-color: #fdfffe;
-    top: 88%;
-    left: 36%;
-    height: 3.9%;
-    width: 57%;
-    z-index: 2;
-    text-align: center;
-    font-weight: 600;
-    line-height: 1.6;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    border-radius: 8px;
-}
-.myChurch {
-    font-size: calc(12px + 27%);
-    line-height: 1.6;
-}
-@media(max-width: 767px){
-/*  .myName, .myChurch{
-        font-size: 2.2vw;
-        line-height: 2;
-    }*/
-    .myName{
-        font-size: 3.1vw;
-        line-height: 1;
-        color: #fa9236;
-    }
-    .myChurch{
-        font-size: 2.2vw;
-        line-height: 2;
-    }
-}
-.form-select, .form-control {
-    border-radius: 1rem 0 !important;
-    border: 1px solid #000;
-}
-.form-select:focus,
-.form-control:focus {
-    color: #212529;
-    background-color: ;
-    border-color: ##002386;
-    outline: 0;
-    box-shadow: 0 0 0 0.25rem rgb(8 66 152 / 36%);
-}
 
 </style>
 </head>
@@ -413,7 +219,7 @@ img#myImageTag {
 
     <main class="form-getLetter">
         <div class="baseImg-wrap">
-            <img src="img/Jesus-Power-base.jpg" class="w-100">
+            <img src="img/ilorin.jpg" class="w-100">
             <div class="myImage rounded-0_" id="myImage">
                 <!-- <img id="myImageTag" src="./img/plus.png" alt="myImageTag" height="105" class="w-100 h-auto"/> -->
                 <img id="myImageTag" src="./img/plus.png" alt="myImageTag" height="105" class="w-auto h-100"/>
