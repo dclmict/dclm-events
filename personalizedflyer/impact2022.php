@@ -95,10 +95,10 @@ if(isset($_POST['getmydp'])){
 	$image = Image::make($image);
 	$image->orientate();
 	$image->encode('jpg');
-    $cachePath = 'cache/temp/'. time().'_my-dp.jpg';
+    $cachePath = 'cache/temp/'. time().'_my-impact-dp.jpg';
 	//$cachePath = 'cache/temp/_my-dp.jpg';
 
-    $image->fit(343,343);
+    $image->fit(261,261);
 
     // create empty canvas
     $width = $image->getWidth();
@@ -121,7 +121,7 @@ if(isset($_POST['getmydp'])){
     $user = [
         'text'   => substr($userName, 0, 21),
         'x'      => 540,
-        'y'      => 550,
+        'y'      => 410,
         'size'   => 22,
         'angle'  => 0,
         'color'  => (isset($color)) ? $color : "#C32148",
@@ -132,15 +132,15 @@ if(isset($_POST['getmydp'])){
     $dist = [
         // 'text'   => "@ ".substr($distName, 0, 46),
         'text'   => "@ ".substr($distName, 0, 41),
-        'x'      => 560,
-        'y'      => 941,
+        'x'      => 690,
+        'y'      => 940,
         'size'   => 14,
         'angle'  => 0,
         'color'  => (isset($color)) ? $color : "#C32148",
         'pos'    => "center",
     ];
 
-    $myDP = Image::make('img/ilorin2.jpg');
+    $myDP = Image::make('img/impact2022.jpg');
 
     // $myDP->insert($image, 'top-left', 336, 203);
 
@@ -175,7 +175,7 @@ if(isset($_POST['getmydp'])){
 
 	//Add Image
 	// $myDP->insert($image, 'top-left', 348, 213);
-    $myDP->insert($image, 'top-left', 369, 169);
+    $myDP->insert($image, 'top-left', 411, 111);
 	$quality  = (isset($quality)) ? $quality : 70;
     $myDP->save($cachePath, $quality, 'jpg');
 
@@ -191,7 +191,7 @@ if(isset($_POST['getmydp'])){
 <meta name="description" content="Deeper Life Bible Chuch Global Crusade DP Maker">
 <meta name="author" content="DCLM SMAT">
 <meta name="generator" content="DCLM SMAT">
-<title>Global Crusade DP Maker - DCLM</title>
+<title>IMAPCT ACADEMY 2022 DP Maker - DCLM</title>
 
 <!-- Bootstrap core CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -211,19 +211,43 @@ if(isset($_POST['getmydp'])){
 <link rel="stylesheet" type="text/css" href="style.css">
 
 <style>
-
+div#myImage {
+    background-color: transparent;
+    top: 10.3%;
+    left: 38.1%;
+    height: 24.1%;
+    width: 24.1%;
+}    
+.myName {
+    background-color: #fdf3d3;
+    top: 35.5%;
+    left: 33.5%;
+    height: 4.5%;
+    width: 32.9%;
+    z-index: 2;
+}    
+.myChurch {
+    font-size: 12px;
+    font-size: calc(12px + 27%);
+    top: 85.3%;
+    left: 37.6%;
+    height: 3.3%;
+    width: 53.5%;
+}
 
 </style>
 </head>
   <body class="bodyWrap">
 
     <main class="form-getLetter">
-          <p class="text-end">
-              <a href="impact2022.php" class="btn btn-primary btn-sm mr-auto">Make 'IMPACT ACADEMY' DP Here
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="#FFFFFF" d="M13 18v-4h-7v-4h7v-4l6 6-6 6zm-1-16c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12z"/></svg></a>
-          </p>          
+
+                  <p class="text-end">
+              <a href="index.php" class="btn btn-warning btn-sm mr-auto">
+              Make Global Crusade DP Here
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="#FFFFFF" d="M13 18v-4h-7v-4h7v-4l6 6-6 6zm-1-16c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12z"/></svg></a>
+          </p> 
         <div class="baseImg-wrap">
-            <img src="img/ilorin2.jpg" class="w-100">
+            <img src="img/impact2022.jpg" class="w-100">
             <div class="myImage rounded-0_" id="myImage">
                 <!-- <img id="myImageTag" src="./img/plus.png" alt="myImageTag" height="105" class="w-100 h-auto"/> -->
                 <img id="myImageTag" src="./img/plus.png" alt="myImageTag" height="105" class="w-auto h-100"/>
@@ -241,8 +265,8 @@ if(isset($_POST['getmydp'])){
         </div>
 
         <div class="form-floating mb-1">
-          <input type="text" class="form-control" id="district" name="district" placeholder="Global Crusade Location" required>
-          <label for="district">Global Crusade Location</label>
+          <input type="text" class="form-control" id="district" name="district" placeholder="Location" required>
+          <label for="district">Location</label>
         </div>
 
         <div class="custom-file d-block w-100 mb-2">
@@ -303,13 +327,11 @@ if(isset($_POST['getmydp'])){
       </div>
 
       <center class="mt-3">
-          <p>You can do more! <br>To download <strong>"IMPACT ACADEMY"</strong> DP, click the button below</p>
+          <p>You can do more! <br>To download <strong>"Global Crusade"</strong> DP, click the button below</p>
           <p>
-              <a href="impact2022.php" class="btn btn-success btn-sm mb-1" target="_blank">Make 'IMPACT ACADEMY' DP</a>
+              <a href="index.php" class="btn btn-success btn-sm mb-1" target="_blank">Make 'Global Crusade' DP</a>
           </p>          
       </center>
-
-
 
     </div>
 </div><!--//#toastsContainerTopRight-->

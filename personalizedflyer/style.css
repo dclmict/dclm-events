@@ -130,7 +130,7 @@ img#myImageTag {
     font-size: 12px;
     font-size: calc(12px + 50%);
     position: absolute;
-    background-color: transparent;
+    background-color: #fdf3d3;
     top: 48.9%;
     left: 31.5%;
     height: 4.5%;
@@ -151,7 +151,7 @@ img#myImageTag {
     position: absolute;
     background-color: #ffc1072b;
     top: 85.3%;
-    left: 42.9%;
+    left: 26.6%;
     height: 3.3%;
     width: 51.4%;
     z-index: 2;
