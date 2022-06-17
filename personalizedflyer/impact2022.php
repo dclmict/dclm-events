@@ -241,10 +241,14 @@ div#myImage {
 
     <main class="form-getLetter">
 
-                  <p class="text-end">
-              <a href="index.php" class="btn btn-warning btn-sm mr-auto">
-              Make Global Crusade DP Here
+        <p class="text-end">
+            <a href="index.php" class="btn btn-warning btn-sm mr-auto">
+                Make Global Crusade DP Here
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="#FFFFFF" d="M13 18v-4h-7v-4h7v-4l6 6-6 6zm-1-16c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12z"/></svg></a>
+            <a href="letter.php" class="btn btn-primary btn-sm mr-auto">
+                Download Customized Letter
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="#FFFFFF" d="M13 18v-4h-7v-4h7v-4l6 6-6 6zm-1-16c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12z"/></svg></a>                
+
           </p> 
         <div class="baseImg-wrap">
             <img src="img/impact2022.jpg" class="w-100">
@@ -302,6 +306,10 @@ div#myImage {
         </div>
 
         <button name="getmydp" class="w-100 btn btn-lg btn-danger mt-3" type="submit">Make My DP</button>
+        <hr>
+            <a href="letter.php" class="btn btn-primary btn-sm m-auto d-block">
+                Download Customized Letter
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="#FFFFFF" d="M13 18v-4h-7v-4h7v-4l6 6-6 6zm-1-16c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12z"/></svg></a>         
       </form>
     </main>
 
@@ -329,7 +337,7 @@ div#myImage {
       <center class="mt-3">
           <p>You can do more! <br>To download <strong>"Global Crusade"</strong> DP, click the button below</p>
           <p>
-              <a href="index.php" class="btn btn-success btn-sm mb-1" target="_blank">Make 'Global Crusade' DP</a>
+            <a href="index.php" class="btn btn-success btn-sm mb-1" target="_blank">Make 'Global Crusade' DP</a>
           </p>          
       </center>
 

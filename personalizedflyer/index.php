@@ -221,6 +221,9 @@ if(isset($_POST['getmydp'])){
           <p class="text-end">
               <a href="impact2022.php" class="btn btn-primary btn-sm mr-auto">Make 'IMPACT ACADEMY' DP Here
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="#FFFFFF" d="M13 18v-4h-7v-4h7v-4l6 6-6 6zm-1-16c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12z"/></svg></a>
+            <a href="letter.php" class="btn btn-success btn-sm mr-auto">
+                Download 'IMPACT ACADEMY' Customized Letter
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="#FFFFFF" d="M13 18v-4h-7v-4h7v-4l6 6-6 6zm-1-16c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12z"/></svg></a>                
           </p>          
         <div class="baseImg-wrap">
             <img src="img/ilorin2.jpg" class="w-100">
