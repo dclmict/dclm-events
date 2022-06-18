@@ -14,7 +14,9 @@ yarn-error.log
 # folders
 _
 /node_modules
-/personalizedflyer/cache
+/personalizedflyer/*.zip
+/personalizedflyer/cache/temp/*.jpg
+/personalizedflyer/cache/letter/*.jpg
 /storage/*.key
 /vendor
 /.idea

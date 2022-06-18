@@ -50,7 +50,7 @@ if(isset($_POST['getLetter'])){
 		// @$date = filter_var(str_replace('','',$_POST['setDate']), FILTER_SANITIZE_STRING);
 		@$date = date('l, F d, Y', strtotime($_POST['setDate']));
 		$text4  = Text::from($date.", at ")
-	        ->position(280, 693)
+	        ->position(300, 733)
 	        ->font(12, __DIR__ . '/fonts/Raleway-ExtraBold.ttf')
 	        ->color(24, 54, 92);		
 	}
@@ -64,12 +64,12 @@ if(isset($_POST['getLetter'])){
 
 	// $text  = Text::from("Dear ".$name.",")
 	$text  = Text::from($name.",")
-		        ->position(150, 300)
+		        ->position(150, 290)
 		        ->font(22, __DIR__ . '/fonts/sweet purple.otf')
 		        ->color(24, 54, 92);
 
 	$text2  = Text::from($location)
-		        ->position(102, 715)
+		        ->position(100, 759)
 		        ->font(12, __DIR__ . '/fonts/Raleway-ExtraBold.ttf')
 		        ->color(24, 54, 92);
 
@@ -238,7 +238,7 @@ user-select: none;
 	  <form action="" method="POST">
 		<img class="mb-4" src="dclm-logo.png" alt="" width="72">
 		<h1 class="h6 mb-3 fw-bold text-light">Please enter your invitee's details</h1>
-		<?php //print date('Hi') ;?>
+		<?php //print date('Hi'); ?>
 		<div class="form-floating">
 		  <input type="text" class="form-control" id="fullname" name="fullname" placeholder="Fullname">
 		  <label for="fullname">Fullname</label>
@@ -249,22 +249,22 @@ user-select: none;
 		  <input type="text" class="form-control" id="address" name="address" maxlength="34" placeholder="Location Address">
 		  <label for="address">Location Address</label>
 		</div>
-		<?if($allowLocation == 10){?>
+		<?php if($allowLocation == 10){ ?>
 		<div class="form-floating mt-1">
 		  <input type="text" class="form-control" id="address2" name="address2" maxlength="70" placeholder="Address Line 2">
 		  <label for="address2">Address Line 2</label>
 		</div>
-		<? } ?>
+		<?php } ?>
 
-		<?if($customDateLocal == 1){?>
+		<?php if($customDateLocal == 1){ ?>
 		<div class="form-floating mt-1">
 		  <!-- <input type="date" class="form-control" id="setDate" name="setDate" maxlength="34" placeholder="Event Date(ex: January 5 - 6)"> -->
 		  <input type="date" class="form-control" id="setDate" name="setDate">
 		  <label for="setDate">Event Date</label>
 		</div>
-		<? } ?>
+		<?php } ?>
 
-		<?if($use_database == 1){?>
+		<?php if($use_database == 1){ ?>
 		<div class="form-floating">
 		  <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone Number">
 		  <label for="phone">Phone Number</label>
@@ -273,13 +273,13 @@ user-select: none;
 		<div class="form-floating">
 		  <select class="form-select" id="state" name="state">
 			<option selected disabled>Select State</option>
-			<?php foreach($states as $state){?>
+			<?php foreach($states as $state){ ?>
 				<option><?php print $state;?></option>
-			<? } ?>
+			<?php } ?>
 		  </select>
 		  <label for="state" class="form-label">Select State:</label>
 		</div>
-		<? } ?>
+		<?php } ?>
 		<button name="getLetter" class="w-100 btn btn-lg btn-primary mt-3" type="submit">Submit</button>
 		<!-- <a href="<?php print $script_url;?>/letter.php?setlocal=yes" class="btn btn-sm btn-danger mt-1">Get a Letter with Custom Location</a> -->
 		<a href="<?php print $script_url;?>/letter.php?setlocal=yes&setDate=yes" class="btn btn-sm btn-warning mt-1">Letter with Custom Date & Location</a>
@@ -310,16 +310,16 @@ user-select: none;
 		</button>
 	  </div>
 	  <div class="toast-body">
-	  	<p class="mx-2">Click on the button below to Download Letter for <b><?php @print $name?></b></p>
-	  	<a href=".<?php print $filename?>.jpg" target="_blank" class="btn btn-success btn-sm mb-1 me-auto" download>Download Letter</a>
+	  	<p class="mx-2">Click on the button below to Download Letter for <b><?php @print $name; ?></b></p>
+	  	<a href=".<?php print $filename; ?>.jpg" target="_blank" class="btn btn-success btn-sm mb-1 me-auto" download>Download Letter</a>
 	  	<span class="btn btn-danger btn-sm m-auto mb-1 closeToast" data-bs-dismiss="toast">Close</span>
 		<div class="letter-box">
-			<img src=".<?php print $filename?>.jpg" class="m-auto border rounded">
+			<img src=".<?php print $filename; ?>.jpg" class="m-auto border rounded">
 		</div>
 	  </div>
 	</div>
 </div><!--//#toastsContainerTopRight-->
-<? } ?>
+<?php } ?>
 
 <script>
 $(document).ready(function(){
@@ -343,15 +343,4 @@ $(document).ready(function(){
 
   </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
 
