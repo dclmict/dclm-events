@@ -44,19 +44,6 @@ $states = ["Abia","Adamawa","Akwa Ibom","Anambra","Bauchi","Bayelsa","Benue","Bo
 if(isset($_POST['getLetter'])){
 
 
-	function getAddr(){
-		$str = "Deeper Life Bible Church, Mechanic Village, Kurmi Mashi, Kaduna";
-		$str2 = explode('|', wordwrap($str,20,'|'));
-		$addr_1 = $str2[0];
-		unset($str2[0]);
-		$addr_2 = implode(' ', $str2);
-			$address = (object)[
-				'addr_1' => $addr_1,
-				'addr_2' => $addr_2,
-			];
-			return $address;
-	}
-
 
 	$name = filter_var($_POST['fullname'], FILTER_SANITIZE_STRING);
 	@$location = filter_var($_POST['address'], FILTER_SANITIZE_STRING);
@@ -77,17 +64,31 @@ if(isset($_POST['getLetter'])){
 
 	$shareURL = $_SERVER['SERVER_NAME'] . $filename .".jpg";
 
+
+	function getAddr($location){
+		$str = $location;
+		$str2 = explode('|', wordwrap($str,20,'|'));
+		$addr_1 = $str2[0];
+		unset($str2[0]);
+		$addr_2 = implode(' ', $str2);
+			$address = (object)[
+				'addr_1' => $addr_1,
+				'addr_2' => $addr_2,
+			];
+			return $address;
+	}
+
 	$text  = Text::from($name.",")
 		        ->position(150, 288)
 		        ->font(12, __DIR__ . '/fonts/Raleway-SemiBold.ttf')
 		        ->color(24, 54, 92);
 
-	$text2  = Text::from(getAddr()->addr_2)
+	$text2  = Text::from(getAddr($location)->addr_2)
 		        ->position(100, 759)
 		        ->font(12, __DIR__ . '/fonts/Raleway-SemiBold.ttf')
 		        ->color(24, 54, 92);
 
-	$text3  = Text::from(getAddr()->addr_1)
+	$text3  = Text::from(getAddr($location)->addr_1)
 		        ->position(540, 736)
 		        ->font(12, __DIR__ . '/fonts/Raleway-SemiBold.ttf')
 		        ->color(24, 54, 92);
