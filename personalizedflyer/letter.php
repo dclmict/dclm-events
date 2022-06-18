@@ -251,7 +251,7 @@ user-select: none;
 		</div>
 		<?php if($allowLocation == 10){ ?>
 		<div class="form-floating mt-1">
-		  <input type="text" class="form-control" id="address2" name="address2" maxlength="70" placeholder="Address Line 2">
+		  <input type="text" class="form-control" id="address2" name="address2" maxlength="180" placeholder="Address Line 2">
 		  <label for="address2">Address Line 2</label>
 		</div>
 		<?php } ?>
