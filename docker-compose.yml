@@ -2,19 +2,24 @@
 services:
 
   # Nginx Service
-  events:
-    container_name: events.dclm.org
-    # build:
-    #   context: ./.docker
-    #   args:
-    #     HOST_UID: $HOST_UID
-    image: opeoniye/nginx-php:7.4
-    working_dir: /var/www/events
+  dclm-events-app:
+    container_name: dclm-events-app
+    image: opeoniye/nginx-php-fpm
+    environment:
+      GIT_REPO: ${GIT_REPO}
+      GIT_EMAIL: ${GIT_EMAIL}
+      GIT_NAME: ${GIT_NAME}
+      GIT_BRANCH: ${GIT_BRANCH}
+      GIT_PERSONAL_TOKEN: ${GIT_PERSONAL_TOKEN}
+      WEBROOT: ${WEBROOT}
     ports:
       - 1002:80
+    networks:
+      - dclm_events
     volumes:
-      - .:/var/www/events
       - ./.docker/events.conf:/etc/nginx/sites-available/default.conf
-      - ./.docker/php8.1/php.ini:/usr/local/etc/php/php.ini
-      - ./.docker/php8.1/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
     restart: always
+
+networks:
+  dclm_events:
+    name: dclm_events
