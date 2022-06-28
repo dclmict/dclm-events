@@ -11,10 +11,10 @@ services:
     image: opeoniye/nginx-php:7.4
     working_dir: /var/www/events
     ports:
-      - 1001:80
+      - 1002:80
     volumes:
       - .:/var/www/events
-      - ./.docker/nginx/events.conf:/etc/nginx/conf.d/default.conf
+      - ./.docker/events.conf:/etc/nginx/sites-available/default.conf
       - ./.docker/php8.1/php.ini:/usr/local/etc/php/php.ini
       - ./.docker/php8.1/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
     restart: always
