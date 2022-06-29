@@ -13,13 +13,12 @@ yarn-error.log
 
 # folders
 _
-/node_modules
-/personalizedflyer/*.zip
-/personalizedflyer/cache/temp/*.jpg
-/personalizedflyer/cache/letter/*.jpg
-/storage/*.key
-#/public/storage
-/vendor
-/.idea
-/.vagrant
-/.vscode
+node_modules
+personalizedflyer/*.zip
+personalizedflyer/cache/temp/*.jpg
+personalizedflyer/cache/letter/*.jpg
+storage/*.key
+vendor
+.idea
+.vagrant
+.vscode
