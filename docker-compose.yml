@@ -4,7 +4,7 @@ services:
   # Nginx Service
   dclm-events-app:
     container_name: dclm-events-app
-    image: opeoniye/nginx-php-fpm
+    image: richarvey/nginx-php-fpm:1.9.1
     environment:
       GIT_REPO: ${GIT_REPO}
       GIT_EMAIL: ${GIT_EMAIL}
