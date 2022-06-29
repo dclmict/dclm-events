@@ -18,7 +18,7 @@ _
 /personalizedflyer/cache/temp/*.jpg
 /personalizedflyer/cache/letter/*.jpg
 /storage/*.key
-/public/storage
+#/public/storage
 /vendor
 /.idea
 /.vagrant
