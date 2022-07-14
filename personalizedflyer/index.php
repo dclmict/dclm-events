@@ -45,14 +45,17 @@ if(isset($_GET['purge'])){
 //http://www.workwithcolor.com/color-chart-full-01.htm
 */
 $colors = [
-    '#E32636' =>   'Alizarin',
-    '#FF8C00' =>   'Dark Orange',
-    '#002E63' =>    'Cool Black',
-    '#FFBF00'  =>   'Amber',
-    '#8DB600'  =>   'Apple Green',
-    '#000000' =>     'Black',
-    '#C32148' =>    'Bright Maroon',
-    '#00009C' =>    'Duke Blue',
+    '#17668C' => 'Default Color',
+    '#2798D4' => 'Picton Blue',
+    '#71A6D2' => 'Iceberg',
+    '#E32636' => 'Alizarin',
+    '#FF8C00' => 'Dark Orange',
+    '#002E63' => 'Cool Black',
+    '#FFBF00' => 'Amber',
+    '#8DB600' => 'Apple Green',
+    '#000000' => 'Black',
+    '#C32148' => 'Bright Maroon',
+    '#00009C' => 'Duke Blue',
 ];
 
 if(isset($_POST['getmydp'])){
@@ -98,7 +101,7 @@ if(isset($_POST['getmydp'])){
     $cachePath = 'cache/temp/'. time().'_my-dp.jpg';
 	//$cachePath = 'cache/temp/_my-dp.jpg';
 
-    $image->fit(343,343);
+    $image->fit(297,297);
 
     // create empty canvas
     $width = $image->getWidth();
@@ -120,8 +123,8 @@ if(isset($_POST['getmydp'])){
     //circle($cx, $cy, $r, $color, $filled=false)
     $user = [
         'text'   => substr($userName, 0, 21),
-        'x'      => 540,
-        'y'      => 550,
+        'x'      => 541,
+        'y'      => 510,
         'size'   => 22,
         'angle'  => 0,
         'color'  => (isset($color)) ? $color : "#C32148",
@@ -130,9 +133,8 @@ if(isset($_POST['getmydp'])){
 
     $distName = (isset($dist)) ? $dist : "Deeper Life Bible Chuch - Close to you";
     $dist = [
-        // 'text'   => "@ ".substr($distName, 0, 46),
         'text'   => "@ ".substr($distName, 0, 41),
-        'x'      => 560,
+        'x'      => 544,
         'y'      => 941,
         'size'   => 14,
         'angle'  => 0,
@@ -140,7 +142,7 @@ if(isset($_POST['getmydp'])){
         'pos'    => "center",
     ];
 
-    $myDP = Image::make('img/ilorin2.jpg');
+    $myDP = Image::make('img/ikorodu.jpg');
 
     // $myDP->insert($image, 'top-left', 336, 203);
 
@@ -175,7 +177,7 @@ if(isset($_POST['getmydp'])){
 
 	//Add Image
 	// $myDP->insert($image, 'top-left', 348, 213);
-    $myDP->insert($image, 'top-left', 369, 169);
+    $myDP->insert($image, 'top-left', 384, 177);
 	$quality  = (isset($quality)) ? $quality : 70;
     $myDP->save($cachePath, $quality, 'jpg');
 
@@ -218,7 +220,7 @@ if(isset($_POST['getmydp'])){
   <body class="bodyWrap">
 
     <main class="form-getLetter">
-          <p class="text-end">
+          <p class="text-end d-none">
               <a href="impact2022.php" class="btn btn-primary btn-sm mr-auto">Make 'IMPACT ACADEMY' DP Here
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="#FFFFFF" d="M13 18v-4h-7v-4h7v-4l6 6-6 6zm-1-16c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12z"/></svg></a>
             <a href="letter.php" class="btn btn-success btn-sm mr-auto">
@@ -226,7 +228,7 @@ if(isset($_POST['getmydp'])){
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="#FFFFFF" d="M13 18v-4h-7v-4h7v-4l6 6-6 6zm-1-16c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12z"/></svg></a>                
           </p>          
         <div class="baseImg-wrap">
-            <img src="img/ilorin2.jpg" class="w-100">
+            <img src="img/ikorodu.jpg" class="w-100">
             <div class="myImage rounded-0_" id="myImage">
                 <!-- <img id="myImageTag" src="./img/plus.png" alt="myImageTag" height="105" class="w-100 h-auto"/> -->
                 <img id="myImageTag" src="./img/plus.png" alt="myImageTag" height="105" class="w-auto h-100"/>
@@ -305,7 +307,7 @@ if(isset($_POST['getmydp'])){
         </div>
       </div>
 
-      <center class="mt-3">
+      <center class="mt-3 d-none">
           <p>You can do more! <br>To download <strong>"IMPACT ACADEMY"</strong> DP, click the button below</p>
           <p>
               <a href="impact2022.php" class="btn btn-success btn-sm mb-1" target="_blank">Make 'IMPACT ACADEMY' DP</a>
@@ -342,7 +344,7 @@ $(document).ready(function(){
         var color = $(this).find('option:selected').val();
         color  = color.replace('0x', '#');
         console.log(color);
-        // $('.myName, .myChurch').css('color', color);
+        $('.myName, .myChurch').css('color', color);
         $('.myName_, .myChurch').css('color', color);
         $('#color').css({'background-color':color, 'color':'#fff'});
     });
