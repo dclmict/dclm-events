@@ -29,7 +29,7 @@ $use_database = 0;
 if(isset($_GET['setlocal']) and $_GET['setlocal'] == 'yes'){
 	$allowLocation = 1;
 }else{
-	$allowLocation = 0;
+	$allowLocation = 1;
 }
 
 if(isset($_GET['setDate']) and $_GET['setDate'] == 'yes'){
@@ -79,7 +79,6 @@ if(isset($_POST['getLetter'])){
 	$text  = Text::from($name.",")
 		        ->position(118, 259)
 		        ->font(12, __DIR__ . '/fonts/Raleway-SemiBold.ttf')
-		        // ->color(24, 54, 92);
 		        ->color(73, 73, 73);
 
 	$text2  = Text::from(getAddr($location)->addr_1)
@@ -96,13 +95,13 @@ if(isset($_POST['getLetter'])){
 	if($allowLocation == 1 && $customDateLocal == 1){
 		(new TextToImage(__DIR__ . '/img/impact2-letter-dated.jpg'))->addTexts($text, $text2, $text3, $text4)->render(__DIR__ . $filename.'.jpg');
 	}
-	elseif($allowLocation == 1 and getAddr($location)->addr_2 != ''){
+	if($allowLocation == 1 && getAddr($location)->addr_2 != ''){
 		(new TextToImage(__DIR__ . '/img/impact2-letter-extended.jpg'))->addTexts($text, $text2, $text3)->render(__DIR__ . $filename.'.jpg');
 	}
-	elseif($allowLocation == 1){
+	if($allowLocation == 1){
 		(new TextToImage(__DIR__ . '/img/impact2-letter.jpg'))->addTexts($text, $text2)->render(__DIR__ . $filename.'.jpg');
 	}
-	elseif($allowLocation == 0){
+	if($allowLocation == 0){
 		(new TextToImage(__DIR__ . '/img/impact2-letter.jpg'))->addTexts($text)->render(__DIR__ . $filename.'.jpg');
 	}
 
@@ -263,7 +262,7 @@ user-select: none;
 
 		
 		<div class="form-floating mt-1">
-		  <input type="text" class="form-control" id="address" name="address" maxlength="180" placeholder="Location Address" value="Location Address">
+		  <input type="text" class="form-control" id="address" name="address" maxlength="180" placeholder="Location Address">
 		  <label for="address">Location Address</label>
 		</div>
 		
