@@ -43,8 +43,6 @@ $states = ["Abia","Adamawa","Akwa Ibom","Anambra","Bauchi","Bayelsa","Benue","Bo
 
 if(isset($_POST['getLetter'])){
 
-
-
 	$name = filter_var($_POST['fullname'], FILTER_SANITIZE_STRING);
 	@$location = filter_var($_POST['address'], FILTER_SANITIZE_STRING);
 	// @$location2 = filter_var($_POST['address2'], FILTER_SANITIZE_STRING);
