@@ -95,6 +95,7 @@ if(isset($_POST['getLetter'])){
 	if($allowLocation == 1 && $customDateLocal == 1){
 		(new TextToImage(__DIR__ . '/img/impact2-letter-dated.jpg'))->addTexts($text, $text2, $text3, $text4)->render(__DIR__ . $filename.'.jpg');
 	}
+
 	if($allowLocation == 1 && getAddr($location)->addr_2 != ''){
 		(new TextToImage(__DIR__ . '/img/impact2-letter-extended.jpg'))->addTexts($text, $text2, $text3)->render(__DIR__ . $filename.'.jpg');
 	}
