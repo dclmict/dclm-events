@@ -262,7 +262,7 @@ user-select: none;
 		</div>
 
 		
-		<div class="form-floating mt-1 d-none">
+		<div class="form-floating mt-1">
 		  <input type="text" class="form-control" id="address" name="address" maxlength="180" placeholder="Location Address" value="Location Address">
 		  <label for="address">Location Address</label>
 		</div>
