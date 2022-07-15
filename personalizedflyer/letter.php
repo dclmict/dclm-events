@@ -29,7 +29,7 @@ $use_database = 0;
 if(isset($_GET['setlocal']) and $_GET['setlocal'] == 'yes'){
 	$allowLocation = 1;
 }else{
-	$allowLocation = 1;
+	$allowLocation = 0;
 }
 
 if(isset($_GET['setDate']) and $_GET['setDate'] == 'yes'){
@@ -262,8 +262,8 @@ user-select: none;
 		</div>
 
 		
-		<div class="form-floating mt-1">
-		  <input type="text" class="form-control" id="address" name="address" maxlength="180" placeholder="Location Address">
+		<div class="form-floating mt-1 d-none">
+		  <input type="text" class="form-control" id="address" name="address" maxlength="180" placeholder="Location Address" value="Location Address">
 		  <label for="address">Location Address</label>
 		</div>
 		
