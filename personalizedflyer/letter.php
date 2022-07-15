@@ -65,7 +65,7 @@ if(isset($_POST['getLetter'])){
 
 	function getAddr($location){
 		$str = $location;
-		$str2 = explode('|', wordwrap($str,20,'|'));
+		$str2 = explode('|', wordwrap($str,53,'|'));
 		$addr_1 = $str2[0];
 		unset($str2[0]);
 		$addr_2 = implode(' ', $str2);
@@ -82,22 +82,25 @@ if(isset($_POST['getLetter'])){
 		        // ->color(24, 54, 92);
 		        ->color(73, 73, 73);
 
-	$text2  = Text::from(getAddr($location)->addr_2)
-		        ->position(100, 759)
+	$text2  = Text::from(getAddr($location)->addr_1)
+		        ->position(249, 362)
 		        ->font(12, __DIR__ . '/fonts/Raleway-SemiBold.ttf')
-		        ->color(24, 54, 92);
+		        ->color(73, 73, 73);
 
-	$text3  = Text::from(getAddr($location)->addr_1)
-		        ->position(540, 736)
+	$text3  = Text::from(getAddr($location)->addr_2)
+		        ->position(45, 385)
 		        ->font(12, __DIR__ . '/fonts/Raleway-SemiBold.ttf')
-		        ->color(24, 54, 92);
+		        ->color(73, 73, 73);
 
 
 	if($allowLocation == 1 && $customDateLocal == 1){
 		(new TextToImage(__DIR__ . '/img/impact2-letter-dated.jpg'))->addTexts($text, $text2, $text3, $text4)->render(__DIR__ . $filename.'.jpg');
 	}
+	elseif($allowLocation == 1 and getAddr($location)->addr_2 != ''){
+		(new TextToImage(__DIR__ . '/img/impact2-letter-extended.jpg'))->addTexts($text, $text2, $text3)->render(__DIR__ . $filename.'.jpg');
+	}
 	elseif($allowLocation == 1){
-		(new TextToImage(__DIR__ . '/img/impact2-letter.jpg'))->addTexts($text, $text2, $text3)->render(__DIR__ . $filename.'.jpg');
+		(new TextToImage(__DIR__ . '/img/impact2-letter.jpg'))->addTexts($text, $text2)->render(__DIR__ . $filename.'.jpg');
 	}
 	elseif($allowLocation == 0){
 		(new TextToImage(__DIR__ . '/img/impact2-letter.jpg'))->addTexts($text)->render(__DIR__ . $filename.'.jpg');
@@ -264,7 +267,7 @@ user-select: none;
 		  <label for="address">Location Address</label>
 		</div>
 		<?php if($allowLocation != 0){ ?>
-		<div class="form-floating mt-1">
+		<div class="form-floating mt-1 d-none">
 		  <input type="text" class="form-control" id="address2" name="address2" maxlength="180" placeholder="Address Line 2">
 		  <label for="address2">Address Line 2</label>
 		</div>
