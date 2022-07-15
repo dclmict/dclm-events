@@ -29,7 +29,7 @@ $use_database = 0;
 if(isset($_GET['setlocal']) and $_GET['setlocal'] == 'yes'){
 	$allowLocation = 1;
 }else{
-	$allowLocation = 0;
+	$allowLocation = 1;
 }
 
 if(isset($_GET['setDate']) and $_GET['setDate'] == 'yes'){
@@ -79,10 +79,9 @@ if(isset($_POST['getLetter'])){
 	}
 
 	$text  = Text::from($name.",")
-		        ->position(118, 259)
+		        ->position(150, 288)
 		        ->font(12, __DIR__ . '/fonts/Raleway-SemiBold.ttf')
-		        // ->color(24, 54, 92);
-		        ->color(73, 73, 73);
+		        ->color(24, 54, 92);
 
 	$text2  = Text::from(getAddr($location)->addr_2)
 		        ->position(100, 759)
@@ -261,18 +260,18 @@ user-select: none;
 		</div>
 
 		
-		<div class="form-floating mt-1 d-none">
-		  <input type="text" class="form-control" id="address" name="address" maxlength="180" placeholder="Location Address" value="Location Address">
+		<div class="form-floating mt-1">
+		  <input type="text" class="form-control" id="address" name="address" maxlength="180" placeholder="Location Address">
 		  <label for="address">Location Address</label>
 		</div>
-		<?php if($allowLocation != 0){ ?>
+		<?php if($allowLocation == 10){ ?>
 		<div class="form-floating mt-1">
 		  <input type="text" class="form-control" id="address2" name="address2" maxlength="180" placeholder="Address Line 2">
 		  <label for="address2">Address Line 2</label>
 		</div>
 		<?php } ?>
 
-		<?php if($customDateLocal != 0){ ?>
+		<?php if($customDateLocal == 1){ ?>
 		<div class="form-floating mt-1">
 		  <!-- <input type="date" class="form-control" id="setDate" name="setDate" maxlength="34" placeholder="Event Date(ex: January 5 - 6)"> -->
 		  <input type="date" class="form-control" id="setDate" name="setDate">
@@ -298,7 +297,7 @@ user-select: none;
 		<?php } ?>
 		<button name="getLetter" class="w-100 btn btn-lg btn-primary mt-3" type="submit">Submit</button>
 		<!-- <a href="<?php print $script_url;?>/letter.php?setlocal=yes" class="btn btn-sm btn-danger mt-1">Get a Letter with Custom Location</a> -->
-		<a href="<?php print $script_url;?>/letter.php?setlocal=yes&setDate=yes" class="btn btn-sm btn-warning mt-1 d-none">Letter with Custom Date & Location</a>
+		<a href="<?php print $script_url;?>/letter.php?setlocal=yes&setDate=yes" class="btn btn-sm btn-warning mt-1">Letter with Custom Date & Location</a>
 	  </form>
 	  
 	  <hr class="my-4">
@@ -306,8 +305,7 @@ user-select: none;
     <p class="text-center mt-3 d-flex">
         <a href="index.php" class="btn btn-primary btn-sm mr-auto">Global Crusade DP
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="#FFFFFF" d="M13 18v-4h-7v-4h7v-4l6 6-6 6zm-1-16c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12z"/></svg></a>
-      
-      <a href="impact2022.php" class="btn btn-success btn-sm mr-auto d-none">
+      <a href="impact2022.php" class="btn btn-success btn-sm mr-auto">
           Impact Academy DP
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="#FFFFFF" d="M13 18v-4h-7v-4h7v-4l6 6-6 6zm-1-16c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12z"/></svg></a>                
     </p> 
