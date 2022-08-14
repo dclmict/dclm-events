@@ -110,10 +110,10 @@ div#myImage {
     position: absolute;
     /* background-color: #fff; */
     background-color: transparent;
-    top: 16.4%;
-    left: 35.55%;
-    height: 27.5%;
-    width: 27.5%;
+    top: 12.7%;
+    left: 34.1%;
+    height: 30.5%;
+    width: 30.5%;
     z-index: 2;
     overflow: hidden;
     text-align: center;
@@ -131,10 +131,10 @@ img#myImageTag {
     font-size: calc(12px + 50%);
     position: absolute;
     background-color: #fdf3d3;
-    top: 45.2%;
-    left: 31.9%;
-    height: 4.2%;
-    width: 36.3%;
+    top: 44.2%;
+    left: 29.9%;
+    height: 4.6%;
+    width: 40.3%;
     z-index: 2;
     overflow: hidden;
     text-align: center;
@@ -150,11 +150,11 @@ img#myImageTag {
     font-size: 12px;
     font-size: calc(12px + 27%);
     position: absolute;
-    background-color: #ffc1072b;
-    top: 85.3%;
-    left: 12.7%;
-    height: 3.3%;
-    width: 74.7%;
+    background-color: rgb(255 193 7 / 21%);
+    top: 74.4%;
+    left: 13.5%;
+    height: 4.3%;
+    width: 73%;
     z-index: 2;
     text-align: center;
     font-weight: 600;
