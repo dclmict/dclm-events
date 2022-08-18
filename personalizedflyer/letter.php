@@ -96,12 +96,13 @@ if(isset($_POST['getLetter'])){
 		(new TextToImage(__DIR__ . '/img/impact2-letter-dated.jpg'))->addTexts($text, $text2, $text3, $text4)->render(__DIR__ . $filename.'.jpg');
 	}
 	elseif($allowLocation == 1 && getAddr($location)->addr_2 != ''){
+
 		(new TextToImage(__DIR__ . '/img/impact2-letter-extended.jpg'))->addTexts($text, $text2, $text3)->render(__DIR__ . $filename.'.jpg');
 	}
-	elseif($allowLocation == 1){
+	if($allowLocation == 1){
 		(new TextToImage(__DIR__ . '/img/impact2-letter.jpg'))->addTexts($text, $text2)->render(__DIR__ . $filename.'.jpg');
 	}
-	elseif($allowLocation == 0){
+	if($allowLocation == 0){
 		(new TextToImage(__DIR__ . '/img/impact2-letter.jpg'))->addTexts($text)->render(__DIR__ . $filename.'.jpg');
 	}
 
