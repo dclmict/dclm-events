@@ -208,13 +208,13 @@ src="https://www.facebook.com/tr?id=663155374846887&ev=PageView&noscript=1"
         <div class="lgx-inner-countdown">
             <div class="countdown-left-info">
                 <h2 class="title">Global Crusade with Kumuyi (GCK)</h2>
-                <h3 class="subtitle">Triumphant Power</h3>
-                <p class="date">25th - 30th August, 2022.</p>
+                <h3 class="subtitle">God of All Possibilities</h3>
+                <p class="date">22nd - 27th September, 2022.</p>
             </div>
             <div class="countdown-right">
                 <div class="lgx-countdown-area lgx-countdown-simple">
                     <!-- Date Format :"Y/m/d" || For Example: 1017/10/5  -->
-                    <div id="lgx-countdown" data-date="2022/8/25"></div>
+                    <div id="lgx-countdown" data-date="2022/9/22"></div>
                 </div>
             </div>
         </div><!-- //.INNER -->
@@ -222,7 +222,7 @@ src="https://www.facebook.com/tr?id=663155374846887&ev=PageView&noscript=1"
 </section>
 <!--countdown END-->
 
-@include("layouts.form")
+/* @include("layouts.form") */
 
 
 <!--SCHEDULE
