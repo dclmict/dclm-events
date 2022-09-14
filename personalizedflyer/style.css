@@ -110,7 +110,7 @@ div#myImage {
     position: absolute;
     /* background-color: #fff; */
     background-color: transparent;
-    top: 12.7%;
+    top: 14.7%;
     left: 34.1%;
     height: 30.5%;
     width: 30.5%;
@@ -131,10 +131,10 @@ img#myImageTag {
     font-size: calc(12px + 50%);
     position: absolute;
     background-color: #fdf3d3;
-    top: 44.2%;
-    left: 29.9%;
+    top: 46.1%;
+    left: 25.7%;
     height: 4.6%;
-    width: 40.3%;
+    width: 48.7%;
     z-index: 2;
     overflow: hidden;
     text-align: center;
@@ -151,10 +151,10 @@ img#myImageTag {
     font-size: calc(12px + 27%);
     position: absolute;
     background-color: rgb(255 193 7 / 21%);
-    top: 74.4%;
-    left: 13.5%;
+    top: 83.8%;
+    left: 8.4%;
     height: 4.3%;
-    width: 73%;
+    width: 83.5%;
     z-index: 2;
     text-align: center;
     font-weight: 600;
@@ -162,7 +162,7 @@ img#myImageTag {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    border-radius: 5px;
+    border-radius: 0px;
 }
 .myChurch {
     font-size: calc(12px + 27%);
