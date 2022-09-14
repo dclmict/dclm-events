@@ -77,19 +77,19 @@ if(isset($_POST['getLetter'])){
 	}
 
 	$text  = Text::from($name.",")
-		        ->position(118, 259)
-		        ->font(12, __DIR__ . '/fonts/Raleway-SemiBold.ttf')
-		        ->color(73, 73, 73);
+		        ->position(145, 267)
+		        ->font(12, __DIR__ . '/fonts/Raleway-Medium.ttf')
+		        ->color(22, 54, 93);
 
 	$text2  = Text::from(getAddr($location)->addr_1)
-		        ->position(249, 362)
-		        ->font(12, __DIR__ . '/fonts/Raleway-SemiBold.ttf')
-		        ->color(73, 73, 73);
+		        ->position(345, 782)
+		        ->font(12, __DIR__ . '/fonts/Raleway-Medium.ttf')
+		        ->color(22, 54, 93);
 
 	$text3  = Text::from(getAddr($location)->addr_2)
-		        ->position(45, 385)
-		        ->font(12, __DIR__ . '/fonts/Raleway-SemiBold.ttf')
-		        ->color(73, 73, 73);
+		        ->position(99, 803)
+		        ->font(12, __DIR__ . '/fonts/Raleway-Medium.ttf')
+		        ->color(22, 54, 93);
 
 
 	if($allowLocation == 1 && $customDateLocal == 1){
@@ -100,7 +100,7 @@ if(isset($_POST['getLetter'])){
 		(new TextToImage(__DIR__ . '/img/impact2-letter-extended.jpg'))->addTexts($text, $text2, $text3)->render(__DIR__ . $filename.'.jpg');
 	}
 	if($allowLocation == 1){
-		(new TextToImage(__DIR__ . '/img/impact2-letter.jpg'))->addTexts($text, $text2)->render(__DIR__ . $filename.'.jpg');
+		(new TextToImage(__DIR__ . '/img/impact2-letter.jpg'))->addTexts($text, $text2, $text3)->render(__DIR__ . $filename.'.jpg');
 	}
 	if($allowLocation == 0){
 		(new TextToImage(__DIR__ . '/img/impact2-letter.jpg'))->addTexts($text)->render(__DIR__ . $filename.'.jpg');
