@@ -15,11 +15,11 @@ services:
     ports:
       - 1002:80
     networks:
-      - dclm_events
+      - dclm-events-app
     volumes:
       - ./.docker/events.conf:/etc/nginx/sites-available/default.conf
     restart: always
 
 networks:
   dclm_events:
-    name: dclm_events
+    name: dclm-events-app
