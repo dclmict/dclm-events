@@ -1,6 +1,6 @@
 <?php
 
-ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
+// ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
 //ini_set('display_errors', 0); ini_set('display_startup_errors', 0); error_reporting(E_ALL);
 
 // include composer autoload
@@ -102,7 +102,7 @@ if(isset($_POST['getmydp'])){
 	//$cachePath = 'cache/temp/_my-dp.jpg';
 
     // Set Image Size
-    $image->fit(330,330);
+    $image->fit(360,360);
 
     // create empty canvas
     $width = $image->getWidth();
@@ -123,9 +123,9 @@ if(isset($_POST['getmydp'])){
     $userName   = (isset($user)) ? $user : "Wonderful Person";
     //circle($cx, $cy, $r, $color, $filled=false)
     $user = [
-        'text'   => substr($userName, 0, 21),
-        'x'      => 540,
-        'y'      => 522,
+        'text'   => substr($userName, 0, 28),
+        'x'      => 530,
+        'y'      => 590,
         'size'   => 22,
         'angle'  => 0,
         'color'  => (isset($color)) ? $color : "#C32148",
@@ -134,16 +134,16 @@ if(isset($_POST['getmydp'])){
 
     $distName = (isset($dist)) ? $dist : "Deeper Life Bible Chuch - Close to you";
     $dist = [
-        'text'   => "@ ".substr($distName, 0, 61), //substr() use to limit address character lenght
-        'x'      => 540,
-        'y'      => 926,
+        'text'   => "@ ".substr($distName, 0, 68), //substr() use to limit address character lenght
+        'x'      => 520,
+        'y'      => 975,
         'size'   => 18,
         'angle'  => 0,
         'color'  => (isset($color)) ? $color : "#C32148",
         'pos'    => "center",
     ];
 
-    $myDP = Image::make('img/minna.jpg');
+    $myDP = Image::make('img/bori-rivers.jpg');
 
     // $myDP->insert($image, 'top-left', 336, 203);
 
@@ -177,8 +177,7 @@ if(isset($_POST['getmydp'])){
     });
 
 	//Add Image
-	// $myDP->insert($image, 'top-left', 348, 213);
-    $myDP->insert($image, 'top-left', 367, 159);
+    $myDP->insert($image, 'top-left', 360, 184);
 	$quality  = (isset($quality)) ? $quality : 70;
     $myDP->save($cachePath, $quality, 'jpg');
 
@@ -221,16 +220,16 @@ if(isset($_POST['getmydp'])){
   <body class="bodyWrap">
 
     <main class="form-getLetter">
-          <p class="text-end">              
+          <p class="text-end">
               <a href="impact2022.php" class="btn btn-primary btn-sm mr-auto d-none">Make 'IMPACT ACADEMY' DP Here
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="#FFFFFF" d="M13 18v-4h-7v-4h7v-4l6 6-6 6zm-1-16c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12z"/></svg></a>
-            
+
             <a href="letter.php" class="btn btn-success btn-sm mr-auto">
                 Download 'IMPACT ACADEMY' Customized Letter
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="#FFFFFF" d="M13 18v-4h-7v-4h7v-4l6 6-6 6zm-1-16c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12z"/></svg></a>                
-          </p>          
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="#FFFFFF" d="M13 18v-4h-7v-4h7v-4l6 6-6 6zm-1-16c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12z"/></svg></a>
+          </p>
         <div class="baseImg-wrap">
-            <img src="img/minna.jpg" class="w-100">
+            <img src="img/bori-rivers.jpg" class="w-100">
             <div class="myImage rounded-0_" id="myImage">
                 <!-- <img id="myImageTag" src="./img/plus.png" alt="myImageTag" height="105" class="w-100 h-auto"/> -->
                 <img id="myImageTag" src="./img/plus.png" alt="myImageTag" height="105" class="w-auto h-100"/>
@@ -313,7 +312,7 @@ if(isset($_POST['getmydp'])){
           <p>You can do more! <br>To download <strong>"IMPACT ACADEMY"</strong> DP, click the button below</p>
           <p>
               <a href="impact2022.php" class="btn btn-success btn-sm mb-1" target="_blank">Make 'IMPACT ACADEMY' DP</a>
-          </p>          
+          </p>
       </center>
 
 
