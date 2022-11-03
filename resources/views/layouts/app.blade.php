@@ -38,10 +38,10 @@
                                 <a class="nav-link" href="/">Register</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('admin.registration-data') }}">Registeration Data</a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link" href="{{ route('programs.index') }}">Programs</a>
+                            </li>                            
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin.registration-data') }}">Participants</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('continents.index') }}">Continent</a>

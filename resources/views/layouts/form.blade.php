@@ -5,7 +5,7 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="lgx-heading">
-                            <h2 class="heading">REGISTRATION FORM</h2>
+                            <h2 class="heading">Events || Register</h2>
                             <!-- <h3 class="subheading">Welcome to the dedicated to building remarkable Schedule!</h3> -->
                         </div>
                     </div>

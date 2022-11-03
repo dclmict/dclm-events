@@ -4,7 +4,7 @@
             {{-- <img class="img-fluid" width="40"
                 src="/logo.jpg" alt="Logo"
                 srcset=""> --}}
-            <span class="navbrand-header-text">EVENT REGISTRATION FORM</span>
+            <span class="navbrand-header-text">Events </span>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03"
             aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
@@ -14,10 +14,10 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 @auth
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.registration-data') }}">Registeration Data</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="{{ route('programs.index') }}">Programs</a>
+                    </li>                
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.registration-data') }}">Registration</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('continents.index') }}">Continent</a>
