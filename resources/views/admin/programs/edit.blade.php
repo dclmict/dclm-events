@@ -33,14 +33,32 @@
          <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-7 mx-auto">
                 <div class="form-group">
-                    <strong>Program Name:</strong>
-                    <input type="text" name="name" value="{{ $program->name }}" class="form-control" placeholder="Enter Program Name">
+                    <strong>Event Name:</strong>
+                    <input type="text" name="name" value="{{ $program->name }}" class="form-control" placeholder="The Power that Never Fails">
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-7 mx-auto">
+                <div class="form-group">
+                    <strong>Event Type:</strong>
+                    <input type="text" name="category" value="{{ $program->category }}" class="form-control" placeholder="GCK: November Edition">
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-7 mx-auto">
+                <div class="form-group">
+                    <strong>Event Date:</strong>
+                    <input type="text" name="date" value="{{ $program->event_date }}" class="form-control" placeholder="November 17 - 20th, 2022">
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-7 mx-auto">
+                <div class="form-group">
+                    <strong>Event Countdown:</strong>
+                    <input type="text" name="countdown" value="{{ $program->event_countdown }}" class="form-control" placeholder="2022/11/17">
+                </div>
+            </div>                                
+            <div class="col-xs-12 col-sm-12 col-md-7 mx-auto">
             <div class="form-group">
                 <strong>Banner Image: {{ $program->image_location }}</strong>
-                <input type="file" name="image" accept="image/jpeg, image/png, image/jpg, image/gif, image/svg" class="form-control" placeholder="Enter Program Name">
+                <input type="file" name="image" accept="image/jpeg, image/png, image/jpg, image/gif, image/svg" class="form-control" placeholder="Event FLyer 1920px x 1080px">
             </div>
         </div>
             <div class="col-xs-12 my-2 col-sm-12 col-md-7 mx-auto">

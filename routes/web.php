@@ -36,8 +36,8 @@ Route::get('/survey', function (){
 Route::prefix('admin')->middleware("auth")->group(function () {
     Route::resource('/programs', ProgramController::class);
     Route::get('/programs/toggle/{program}', [ProgramController::class, 'toggleProgramStatus'])->name('programs.toggle');
-    Route::get('/registration-data', [IndexController::class, 'registrationData'])->name('admin.registration-data');
-    Route::get('/registration-data/{program}/{slug?}', [IndexController::class, 'programRegistrationData'])->name('programs.registration-data');
+    Route::get('/data', [IndexController::class, 'registrationData'])->name('admin.data');
+    Route::get('/data/{program}/{slug?}', [IndexController::class, 'programRegistrationData'])->name('programs.data');
     Route::get('/countries', [IndexController::class, 'countries'])->name('admin.countries');
     Route::get('/country/{id}/states', [IndexController::class, 'states'])->name('admin.states')->whereNumber('id');
     Route::get('/state/{id}/regions', [IndexController::class, 'regions'])->name('admin.regions')->whereNumber('id');
@@ -45,8 +45,6 @@ Route::prefix('admin')->middleware("auth")->group(function () {
     
     Route::get('/register', [App\Http\Controllers\AuthController::class, 'showRegister'])->name('admin.auth.register');
     Route::post('/register', [App\Http\Controllers\AuthController::class, 'handleRegister'])->name('admin.handleRegister');
-
-
     Route::resource('/countries', CountryController::class);
     Route::resource('/continents', ContinentController::class);
     Route::resource('/states', StateController::class);
@@ -60,13 +58,9 @@ Route::prefix('admin')->middleware("auth")->group(function () {
 // });
 
 Auth::routes([
-
     'register' => false, // Register Routes...
-  
     'reset' => false, // Reset Password Routes...
-  
     'verify' => false, // Email Verification Routes...
-  
   ]);
 
 // Route::get('/admin/login', [App\Http\Controllers\AuthController::class, 'showLogin'])->name('admin.login');

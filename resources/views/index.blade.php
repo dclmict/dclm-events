@@ -8,9 +8,9 @@
     <!-- The above 3 meta tags *must* come first in the head -->
 
     <!-- SITE TITLE -->
-    <title>Events || @if($program) {{ ($program->name) }}@endif</title>
+    <title>DCLM Events || @if($program) {{ ($program->name) }}@endif</title>
     <meta name="description" content="Event Registration for DCLM Programs"/>
-    <meta name="keywords" content="Event,  Conference, Registration, Kumuyi, GCK, Event @if($program)| {{ strtoupper($program->name) }}@endif"/>
+    <meta name="keywords" content="Event,  Conference, Registration, Kumuyi, GCK, Event @if($program)| {{ ($program->name) }}@endif"/>
     <meta name="author" content="dclm.org"/>
 
     <!-- twitter card starts from here, if you don't need remove this section -->
@@ -18,16 +18,16 @@
     <meta name="twitter:site" content="@pastorwf_kumuyi"/>
     <meta name="twitter:creator" content="@pastorwf_kumuyi"/>
     <meta name="twitter:url" content="https://events.dclm.org/"/>
-    <meta name="twitter:title" content="@if($program)| {{ strtoupper($program->name) }}@endif"/>
+    <meta name="twitter:title" content="@if($program)| {{ ($program->name) }}@endif"/>
     <!-- maximum 140 char -->
-    <meta name="twitter:description" content="Registration of participant for @if($program)| {{ strtoupper($program->name) }}@endif"/>
+    <meta name="twitter:description" content="Registration of participant for @if($program)| {{ ($program->name) }}@endif"/>
     <!-- maximum 140 char -->
     <meta name="twitter:image" content="assets/img/twittercardimg/twittercard-280-150.jpg"/>
     <!-- when you post this page url in twitter , this image will be shown -->
     <!-- twitter card ends from here -->
 
     <!-- facebook open graph starts from here, if you don't need then delete open graph related  -->
-    <meta property="og:title" content="@if($program)| {{ strtoupper($program->name) }}@endif"/>
+    <meta property="og:title" content="@if($program)| {{ ($program->name) }}@endif"/>
     <meta property="og:url" content="https://events.dclm.org"/>
     <meta property="og:locale" content="en_US"/>
     <meta property="og:site_name" content="DCLM Events Registration Form"/>
@@ -181,17 +181,18 @@ src="https://www.facebook.com/tr?id=663155374846887&ev=PageView&noscript=1"
     <div class="lgx-countdown">
         <div class="lgx-inner-countdown">
             <div class="countdown-left-info">
-                <h2 class="title">Global Workers Conference
+                <h2 class="title">GCK: November Edition
+                    {{-- @if($program) {{ ($program->category) }}@endif --}}
                     {{-- GCK: November Edition --}}
                     {{-- Global Workers Conference --}}
                 </h2>
-                <h3 class="subtitle">Triumphing Ministry Even In Troublous Times</h3>
-                <p class="date">November 17 - 20th, 2022.</p>
+                <h3 class="subtitle">@if($program) {{ ($program->name) }}@endif</h3>
+                <p class="date">@if($program) {{ ($program->event_date) }}@endif</p>
             </div>
             <div class="countdown-right">
                 <div class="lgx-countdown-area lgx-countdown-simple">
                     <!-- Date Format :"Y/m/d" || For Example: 1017/10/5  -->
-                    <div id="lgx-countdown" data-date="2022/11/17"></div>
+                    <div id="lgx-countdown" data-date="@if($program) {{ ($program->event_countdown) }}@endif"></div>
                 </div>
             </div>
         </div><!-- //.INNER -->
@@ -459,7 +460,7 @@ src="https://www.facebook.com/tr?id=663155374846887&ev=PageView&noscript=1"
 
                     <div class="lgx-footer-bottom">
                         <div class="lgx-copyright">
-                            <p> <span>©</span> 2022 Worldwide Crusade is powered by <a href="#">Deeper Life Bible Church</a> </p>
+                            <p> <span>©</span> 2022 Worldwide Crusade is powered by <a href="#">Deeper Christian Life Ministry</a> </p>
                         </div>
                     </div>
 

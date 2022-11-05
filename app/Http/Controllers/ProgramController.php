@@ -41,14 +41,19 @@ class ProgramController extends Controller
     public function store(Request $request)
     {
         $valData = $request->validate([
-            'name' => 'required|string',
+            'name'      => 'required|string',
+            'category'  => 'required|string',
+            'date'      => 'required|string',
+            'countdown'      => 'required|string',
             // 'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048|dimensions:ratio=820/461'
         ]);
         try {
             //code...
-            
             $program = new Program();
             $program->name = $valData["name"];
+            $program->category = $valData["category"];
+            $program->event_date = $valData["date"];
+            $program->event_countdown = $valData["countdown"];
             $program->slug = Str::slug($valData["name"]);
             if($request->image){
                 $image_name = strtolower(Str::slug($valData["name"]) .'.' .$request->image->extension());
@@ -56,7 +61,6 @@ class ProgramController extends Controller
                 $program->image_location = ($image_name);
             }
             $program->save();
-
 
             return redirect()->route('programs.index')
                             ->with('success', 'Program created successfully.');
@@ -100,6 +104,9 @@ class ProgramController extends Controller
     {
         $valData = $request->validate([
             'name' => 'required|string',
+            'category'  => 'required|string',
+            'date'      => 'required|string',
+            'countdown'      => 'required|string',
             // 'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048|dimensions:ratio=820/461'
         ]);
 
@@ -107,6 +114,9 @@ class ProgramController extends Controller
         $previousFileName = $program->image_location;
 
         $program->name = $valData["name"];
+        $program->category = $valData["category"];
+        $program->event_date = $valData["date"];
+        $program->event_countdown = $valData["countdown"];
         $program->slug = Str::slug($valData["name"]);
         if($request->image){
             Storage::delete('public/' . $previousFileName);

@@ -41,7 +41,7 @@
                                 <a class="nav-link" href="{{ route('programs.index') }}">Programs</a>
                             </li>                            
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('admin.registration-data') }}">Participants</a>
+                                <a class="nav-link" href="{{ route('admin.data') }}">Participants</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('continents.index') }}">Continent</a>
