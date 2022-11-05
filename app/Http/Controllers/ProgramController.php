@@ -127,7 +127,7 @@ class ProgramController extends Controller
         $program->save();
 
         return redirect()->route('programs.index')
-                        ->with('success', 'Program updated successfully');
+                        ->with('success', 'Event updated successfully');
     }
 
     /**
@@ -141,7 +141,7 @@ class ProgramController extends Controller
         $program->delete();
 
         return redirect()->route('programs.index')
-                        ->with('success', 'Program deleted successfully');
+                        ->with('success', 'Event deleted successfully');
     }
 
     public function toggleProgramStatus(Program $program)
@@ -150,7 +150,7 @@ class ProgramController extends Controller
         $program->is_active = !$status;
         $program->save();
         return redirect()->route('programs.index')
-        ->with('success', 'Program Status Changed successfully');
+        ->with('success', 'Event Status Changed successfully');
     }
     
 }
