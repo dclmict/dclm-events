@@ -182,15 +182,13 @@ src="https://www.facebook.com/tr?id=663155374846887&ev=PageView&noscript=1"
         <div class="lgx-inner-countdown">
             <div class="countdown-left-info">
                 <h2 class="title">@if($program) {{ ($program->category) }}@endif
-                    {{-- GCK: November Edition --}}
-                    {{-- Global Workers Conference --}}
                 </h2>
                 <h3 class="subtitle">@if($program) {{ ($program->name) }}@endif</h3>
                 <p class="date">@if($program) {{ ($program->event_date) }}@endif</p>
             </div>
             <div class="countdown-right">
                 <div class="lgx-countdown-area lgx-countdown-simple">
-                    <!-- Date Format :"Y/m/d" || For Example: 1017/10/5  -->
+                    <!-- Date Format :"Y/m/d" || For Example: 2022/10/5  -->
                     <div id="lgx-countdown" data-date="@if($program) {{ ($program->event_countdown) }}@endif"></div>
                 </div>
             </div>
@@ -199,7 +197,7 @@ src="https://www.facebook.com/tr?id=663155374846887&ev=PageView&noscript=1"
 </section>
 <!--countdown END-->
 
-{{-- @include("layouts.form") --}}
+@include("layouts.form")
 
 
 <!--SCHEDULE
@@ -342,134 +340,134 @@ src="https://www.facebook.com/tr?id=663155374846887&ev=PageView&noscript=1"
 <!--SCHEDULE END-->
 
 
-    <!--News-->
-    <section>
-        <div id="lgx-news" class="lgx-news">
-            <div class="lgx-inner">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <div class="lgx-heading">
-                                <h2 class="heading">Remarkable Testimonies</h2>
-                                <!-- <h3 class="subheading">Conferences dedicated to building remarkable events.</h3> -->
-                            </div>
+<!--News-->
+<section>
+    <div id="lgx-news" class="lgx-news">
+        <div class="lgx-inner">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="lgx-heading">
+                            <h2 class="heading">Remarkable Testimonies</h2>
+                            <!-- <h3 class="subheading">Conferences dedicated to building remarkable events.</h3> -->
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-6">
-                            <div class="lgx-single-news">
-                                <figure>
-                                    <a href="#"><img src="assets/img/news/news1.jpg" alt=""></a>
-                                </figure>
-                                <div class="single-news-info">
-                                    <div class="meta-wrapper">
-                                        <span>June 25, 2021</span>
-                                        <span>by <a href="#">Bro David Oladipo</a></span>
-                                    </div>
-                                    <h3 class="title"><a href="#">Prostrate Enlargment Healed</a></h3>
-                                    <!-- <a class="lgx-btn lgx-btn-white lgx-btn-sm" href="testimony1.html"><span>Read More</span></a> -->
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-6">
-                            <div class="lgx-single-news">
-                                <figure>
-                                    <a href="#"><img src="assets/img/news/news3.jpg" alt=""></a>
-                                </figure>
-                                <div class="single-news-info">
-                                    <div class="meta-wrapper">
-                                        <span>June 26, 2021</span>
-                                        <span>by <a href="#">OJOMA SHARON MERCY</a></span>
-
-                                    </div>
-                                    <h3 class="title"><a href="#">HOW GOD SAVED ME FROM THE HANDS OF KIDNAPPERS</a></h3>
-                                    <!-- <a class="lgx-btn lgx-btn-white lgx-btn-sm" href="testimony2.html"><span>Read More</span></a> -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div><!-- //.CONTAINER -->
-            </div><!-- //.INNER -->
-        </div>
-    </section>
-    <!--News END-->
-
-    <!--FOOTER-->
-    <footer>
-        <div id="lgx-footer" class="lgx-footer lgx-footer-black"> <!--lgx-footer-white-->
-            <div class="lgx-inner-footer">
-                <!--<div class="lgx-subscriber-area"> 
-                    <div class="container">
-                        <div class="lgx-subscriber-inner"> 
-                            <h3 class="subscriber-title">Join Newsletter</h3>
-                            <form class="lgx-subscribe-form" >
-                                <div class="form-group form-group-email">
-                                    <input type="email" id="subscribe" placeholder="Enter your email Address  ..." class="form-control lgx-input-form form-control"  />
-                                </div>
-                                <div class="form-group form-group-submit">
-                                    <button type="submit" name="lgx-submit" id="lgx-submit" class="lgx-btn lgx-submit"><span>Subscribe</span></button>
-                                </div>
-                            </form> <-//.SUBSCRIBE-
-                        </div>
-                    </div>
-                </div> -->
-                <div class="container">
-                    <div class="lgx-footer-area lgx-footer-area-center">
-                        <div class="lgx-footer-single">
-                            <h3 class="footer-title">Social Connection</h3>
-                            <p class="text">
-                                You should connect social area <br> for Any update
-                            </p>
-                            <ul class="list-inline lgx-social-footer">
-                                <li><a href="https://www.facebook.com/pastorkumuyiofficial/"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                <li><a href="https://www.twitter.com/pastorkumuyiofficial/"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                                <li><a href="https://www.instagram.com/pastorkumuyiofficial/"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-                                <li><a href="https://www.youtube.com/pastorkumuyiofficial/"><i class="fa fa-youtube" aria-hidden="true"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="lgx-footer-single">
-                            <h3 class="footer-title">Venue Location </h3>
-                            <h4 class="date">
-                                DeeperLife Headquarters
-                            </h4>
-                            <address>
-                                2 – 10 Ayodele Oke-Owo Street, Gbagada, Lagos, Nigeria.
-                            </address>
-                            <a id="myModalLabel2" data-toggle="modal" data-target="#lgx-modal-map" class="map-link" href="#"><i class="fa fa-map-marker" aria-hidden="true"></i> View Map location</a>
-                        </div>
-                        <!-- <div class="lgx-footer-single">
-                            <h2 class="footer-title">Instagram Feed</h2>
-                            <div id="instafeed">
-                            </div>
-                        </div> -->
-                    </div>
-                    <!-- Modal-->
-                    <div id="lgx-modal-map" class="modal fade lgx-modal">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="lgxmapcanvas map-canvas-default" id="map_canvas"> </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> <!-- //.Modal-->
-
-                    <div class="lgx-footer-bottom">
-                        <div class="lgx-copyright">
-                            <p> <span>©</span> 2022 Worldwide Crusade is powered by <a href="#">Deeper Christian Life Ministry</a> </p>
-                        </div>
-                    </div>
-
                 </div>
-                <!-- //.CONTAINER -->
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="lgx-single-news">
+                            <figure>
+                                <a href="#"><img src="assets/img/news/news1.jpg" alt=""></a>
+                            </figure>
+                            <div class="single-news-info">
+                                <div class="meta-wrapper">
+                                    <span>June 25, 2021</span>
+                                    <span>by <a href="#">Bro David Oladipo</a></span>
+                                </div>
+                                <h3 class="title"><a href="#">Prostrate Enlargment Healed</a></h3>
+                                <!-- <a class="lgx-btn lgx-btn-white lgx-btn-sm" href="testimony1.html"><span>Read More</span></a> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="lgx-single-news">
+                            <figure>
+                                <a href="#"><img src="assets/img/news/news3.jpg" alt=""></a>
+                            </figure>
+                            <div class="single-news-info">
+                                <div class="meta-wrapper">
+                                    <span>June 26, 2021</span>
+                                    <span>by <a href="#">OJOMA SHARON MERCY</a></span>
+
+                                </div>
+                                <h3 class="title"><a href="#">HOW GOD SAVED ME FROM THE HANDS OF KIDNAPPERS</a></h3>
+                                <!-- <a class="lgx-btn lgx-btn-white lgx-btn-sm" href="testimony2.html"><span>Read More</span></a> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- //.CONTAINER -->
+        </div><!-- //.INNER -->
+    </div>
+</section>
+<!--News END-->
+
+<!--FOOTER-->
+<footer>
+    <div id="lgx-footer" class="lgx-footer lgx-footer-black"> <!--lgx-footer-white-->
+        <div class="lgx-inner-footer">
+            <!--<div class="lgx-subscriber-area"> 
+                <div class="container">
+                    <div class="lgx-subscriber-inner"> 
+                        <h3 class="subscriber-title">Join Newsletter</h3>
+                        <form class="lgx-subscribe-form" >
+                            <div class="form-group form-group-email">
+                                <input type="email" id="subscribe" placeholder="Enter your email Address  ..." class="form-control lgx-input-form form-control"  />
+                            </div>
+                            <div class="form-group form-group-submit">
+                                <button type="submit" name="lgx-submit" id="lgx-submit" class="lgx-btn lgx-submit"><span>Subscribe</span></button>
+                            </div>
+                        </form> <-//.SUBSCRIBE-
+                    </div>
+                </div>
+            </div> -->
+            <div class="container">
+                <div class="lgx-footer-area lgx-footer-area-center">
+                    <div class="lgx-footer-single">
+                        <h3 class="footer-title">Social Connection</h3>
+                        <p class="text">
+                            You should connect social area <br> for Any update
+                        </p>
+                        <ul class="list-inline lgx-social-footer">
+                            <li><a href="https://www.facebook.com/pastorkumuyiofficial/"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                            <li><a href="https://www.twitter.com/pastorkumuyiofficial/"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                            <li><a href="https://www.instagram.com/pastorkumuyiofficial/"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                            <li><a href="https://www.youtube.com/pastorkumuyiofficial/"><i class="fa fa-youtube" aria-hidden="true"></i></a></li>
+                        </ul>
+                    </div>
+                    <div class="lgx-footer-single">
+                        <h3 class="footer-title">Venue Location </h3>
+                        <h4 class="date">
+                            DeeperLife Headquarters
+                        </h4>
+                        <address>
+                            2 – 10 Ayodele Oke-Owo Street, Gbagada, Lagos, Nigeria.
+                        </address>
+                        <a id="myModalLabel2" data-toggle="modal" data-target="#lgx-modal-map" class="map-link" href="#"><i class="fa fa-map-marker" aria-hidden="true"></i> View Map location</a>
+                    </div>
+                    <!-- <div class="lgx-footer-single">
+                        <h2 class="footer-title">Instagram Feed</h2>
+                        <div id="instafeed">
+                        </div>
+                    </div> -->
+                </div>
+                <!-- Modal-->
+                <div id="lgx-modal-map" class="modal fade lgx-modal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="lgxmapcanvas map-canvas-default" id="map_canvas"> </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- //.Modal-->
+
+                <div class="lgx-footer-bottom">
+                    <div class="lgx-copyright">
+                        <p> <span>©</span> 2022 GCK powered by <a href="#">Deeper Christian Life Ministry</a> </p>
+                    </div>
+                </div>
+
             </div>
-            <!-- //.footer Middle -->
+            <!-- //.CONTAINER -->
         </div>
-    </footer>
-    <!--FOOTER END-->
+        <!-- //.footer Middle -->
+    </div>
+</footer>
+<!--FOOTER END-->
 </div>
 <!--//.LGX SITE CONTAINER-->
 <!-- *** ADD YOUR SITE SCRIPT HERE *** -->
