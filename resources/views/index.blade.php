@@ -181,8 +181,7 @@ src="https://www.facebook.com/tr?id=663155374846887&ev=PageView&noscript=1"
     <div class="lgx-countdown">
         <div class="lgx-inner-countdown">
             <div class="countdown-left-info">
-                <h2 class="title">GCK: November Edition
-                    {{-- @if($program) {{ ($program->category) }}@endif --}}
+                <h2 class="title">@if($program) {{ ($program->category) }}@endif
                     {{-- GCK: November Edition --}}
                     {{-- Global Workers Conference --}}
                 </h2>
