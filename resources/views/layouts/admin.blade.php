@@ -77,7 +77,6 @@
 
             $('#data-table-any').DataTable(anyTableOptionsObj);
             $('#data-table-all').DataTable(tableOptionsObj);
-
             $('#data-table-new').DataTable(tableOptionsObj);
 
             // $('#data-table-non-members').DataTable(tableOptionsObj);

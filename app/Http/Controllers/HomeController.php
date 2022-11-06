@@ -23,7 +23,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return redirect()->route('admin.programs'); #admin.registration-data
+        return redirect()->route('programs.index'); #admin.registration-data
     }
     
 }
