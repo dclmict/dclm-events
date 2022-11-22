@@ -102,7 +102,7 @@ if(isset($_POST['getmydp'])){
 	//$cachePath = 'cache/temp/_my-dp.jpg';
 
     // Set Image Size
-    $image->fit(360,360);
+    $image->fit(300,300);
 
     // create empty canvas
     $width = $image->getWidth();
@@ -124,8 +124,8 @@ if(isset($_POST['getmydp'])){
     //circle($cx, $cy, $r, $color, $filled=false)
     $user = [
         'text'   => substr($userName, 0, 28),
-        'x'      => 530,
-        'y'      => 590,
+        'x'      => 540,
+        'y'      => 528,
         'size'   => 22,
         'angle'  => 0,
         'color'  => (isset($color)) ? $color : "#C32148",
@@ -135,15 +135,15 @@ if(isset($_POST['getmydp'])){
     $distName = (isset($dist)) ? $dist : "Deeper Life Bible Chuch - Close to you";
     $dist = [
         'text'   => "@ ".substr($distName, 0, 68), //substr() use to limit address character lenght
-        'x'      => 520,
-        'y'      => 975,
+        'x'      => 540,
+        'y'      => 958,
         'size'   => 18,
         'angle'  => 0,
         'color'  => (isset($color)) ? $color : "#C32148",
         'pos'    => "center",
     ];
 
-    $myDP = Image::make('img/bori-rivers.jpg');
+    $myDP = Image::make('img/yola.jpg');
 
     // $myDP->insert($image, 'top-left', 336, 203);
 
@@ -177,7 +177,7 @@ if(isset($_POST['getmydp'])){
     });
 
 	//Add Image
-    $myDP->insert($image, 'top-left', 360, 184);
+    $myDP->insert($image, 'top-left', 389, 181);
 	$quality  = (isset($quality)) ? $quality : 70;
     $myDP->save($cachePath, $quality, 'jpg');
 
@@ -224,12 +224,12 @@ if(isset($_POST['getmydp'])){
               <a href="impact2022.php" class="btn btn-primary btn-sm mr-auto d-none">Make 'IMPACT ACADEMY' DP Here
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="#FFFFFF" d="M13 18v-4h-7v-4h7v-4l6 6-6 6zm-1-16c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12z"/></svg></a>
 
-            <a href="letter.php" class="btn btn-success btn-sm mr-auto">
+            <a href="letter.php" class="btn btn-success btn-sm mr-auto d-none">
                 Download 'IMPACT ACADEMY' Customized Letter
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="#FFFFFF" d="M13 18v-4h-7v-4h7v-4l6 6-6 6zm-1-16c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12z"/></svg></a>
           </p>
         <div class="baseImg-wrap">
-            <img src="img/bori-rivers.jpg" class="w-100">
+            <img src="img/yola.jpg" class="w-100">
             <div class="myImage rounded-0_" id="myImage">
                 <!-- <img id="myImageTag" src="./img/plus.png" alt="myImageTag" height="105" class="w-100 h-auto"/> -->
                 <img id="myImageTag" src="./img/plus.png" alt="myImageTag" height="105" class="w-auto h-100"/>
