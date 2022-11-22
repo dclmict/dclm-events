@@ -54,7 +54,7 @@
                             <a class="btn btn-sm mb-1 btn-outline-dark" href="{{ route('home') }}#registration-form">View Form</a>
                         @endif
                         <a class="btn btn-sm mb-1 btn-dark"
-                            href="{{ route('programs.registration-data', $program->id) . '/' . $program->slug }}">Show Registration Data</a>
+                            href="{{ route('programs.data', $program->id) . '/' . $program->slug }}">View Data</a>
 
                         <a class="btn btn-sm mb-1 btn-primary" href="{{ route('programs.edit', $program->id) }}">Edit</a>
                         <a class="btn btn-sm mb-1 btn-outline-danger" href="{{ route('programs.toggle', $program->id) }}">Toggle

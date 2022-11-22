@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Events Engine'),
+    'name' => env('APP_NAME', 'DCLM Events'),
 
     /*
     |--------------------------------------------------------------------------

@@ -18,7 +18,7 @@ class IndexController extends Controller
 
         $countries = Country::get(['id', 'name'])->all();
         // dd($program);
-        return view('index2', compact('program', 'countries'));
+        return view('index', compact('program', 'countries'));
     }
 
     public function registrationData()
