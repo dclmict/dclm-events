@@ -93,16 +93,16 @@ if(isset($_POST['getmydp'])){
     @$color = filter_var($_POST['color'], FILTER_SANITIZE_STRING);
     @$quality = filter_var($_POST['quality'], FILTER_SANITIZE_STRING);
 
-	/*****Doing image stuff******************/
-	$image = $_FILES["file"]["tmp_name"];
-	$image = Image::make($image);
-	$image->orientate();
-	$image->encode('jpg');
+    /*****Doing image stuff******************/
+    $image = $_FILES["file"]["tmp_name"];
+    $image = Image::make($image);
+    $image->orientate();
+    $image->encode('jpg');
     $cachePath = 'cache/temp/'. time().'_my-dp.jpg';
-	//$cachePath = 'cache/temp/_my-dp.jpg';
+    //$cachePath = 'cache/temp/_my-dp.jpg';
 
     // Set Image Size
-    $image->fit(300,300);
+    $image->fit(274,274);
 
     // create empty canvas
     $width = $image->getWidth();
@@ -116,7 +116,7 @@ if(isset($_POST['getmydp'])){
 
     $image->mask($mask, false);
 
-	/***********************/
+    /***********************/
 
     $dpfont  = "fonts/Raleway-ExtraBold.ttf";
     $color      =  (isset($color)) ? $color : "#C32148";
@@ -125,7 +125,7 @@ if(isset($_POST['getmydp'])){
     $user = [
         'text'   => substr($userName, 0, 28),
         'x'      => 540,
-        'y'      => 528,
+        'y'      => 560,
         'size'   => 22,
         'angle'  => 0,
         'color'  => (isset($color)) ? $color : "#C32148",
@@ -136,14 +136,14 @@ if(isset($_POST['getmydp'])){
     $dist = [
         'text'   => "@ ".substr($distName, 0, 68), //substr() use to limit address character lenght
         'x'      => 540,
-        'y'      => 958,
+        'y'      => 950,
         'size'   => 18,
         'angle'  => 0,
         'color'  => (isset($color)) ? $color : "#C32148",
         'pos'    => "center",
     ];
 
-    $myDP = Image::make('img/yola.jpg');
+    $myDP = Image::make('img/ado-ekiti.jpeg');
 
     // $myDP->insert($image, 'top-left', 336, 203);
 
@@ -176,9 +176,9 @@ if(isset($_POST['getmydp'])){
         $font->angle(0);
     });
 
-	//Add Image
-    $myDP->insert($image, 'top-left', 389, 181);
-	$quality  = (isset($quality)) ? $quality : 70;
+    //Add Image
+    $myDP->insert($image, 'top-left', 402, 243);
+    $quality  = (isset($quality)) ? $quality : 70;
     $myDP->save($cachePath, $quality, 'jpg');
 
 
@@ -229,7 +229,7 @@ if(isset($_POST['getmydp'])){
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="#FFFFFF" d="M13 18v-4h-7v-4h7v-4l6 6-6 6zm-1-16c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12z"/></svg></a>
           </p>
         <div class="baseImg-wrap">
-            <img src="img/yola.jpg" class="w-100">
+            <img src="img/ado-ekiti.jpeg" class="w-100">
             <div class="myImage rounded-0_" id="myImage">
                 <!-- <img id="myImageTag" src="./img/plus.png" alt="myImageTag" height="105" class="w-100 h-auto"/> -->
                 <img id="myImageTag" src="./img/plus.png" alt="myImageTag" height="105" class="w-auto h-100"/>
@@ -272,10 +272,10 @@ if(isset($_POST['getmydp'])){
                 <div class="form-floating mb-1">
                   <select class="form-select" id="quality" name="quality">
                         <option value="100">100% [large Image size]</option>
-						<option value="90">90%</option>
-						<option value="80">80%</option>
-						<option value="70" selected>70%</option>
-						<option value="60">60%</option>
+                        <option value="90">90%</option>
+                        <option value="80">80%</option>
+                        <option value="70" selected>70%</option>
+                        <option value="60">60%</option>
                   </select>
                   <label for="quality">Output Size Ratio</label>
                 </div>
