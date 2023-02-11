@@ -23,5 +23,5 @@ services:
 
 networks:
   bams:
-    name: bams-dev
+    name: bams
     external: true
