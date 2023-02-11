@@ -13,3 +13,4 @@
 
 
 cd personalizedflyer && composer install
+cd ..
