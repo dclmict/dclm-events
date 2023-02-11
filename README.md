@@ -8,8 +8,11 @@ App url: [DCLM Events](https://events.dclm.org)
 
 ## How to Run
 ### Monolith architecture
+- make sure you have [docker compose](https://docs.docker.com/compose/install/) installed
 - make sure [PHP 7.4](https://www.php.net/releases/7_4_0.php) is installed on your server
 - make sure you have [composer](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-macos) installed
+- create a directory: `mkdir -p <directory-name>`
+- run `git clone https://github.com/dclmict/dclm-events.git .`
 - enter app directory `cd app`
 - create .env file `cp .env.example .env`
 - add aws credentials to .env file
@@ -22,6 +25,11 @@ App url: [DCLM Events](https://events.dclm.org)
 - run `php artisan optimize:clear`
 
 ### Microservices architecture (Docker)
+- make sure you have [docker compose](https://docs.docker.com/compose/install/) installed
+- make sure [PHP 7.4](https://www.php.net/releases/7_4_0.php) is installed on your server
+- make sure you have [composer](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-macos) installed
+- create a directory: `mkdir -p <directory-name>`
+- run `git clone https://github.com/dclmict/dclm-events.git .`
 - run `make up` (wait for like 2mins for the container to boot and load properly)
 - run `make key`
 - run `make migrate`
