@@ -9,6 +9,7 @@ services:
       # GIT_REPO: ${GIT_REPO}
     ports:
       - 1002:80
+      - 4002:443
     networks:
       - bams
     volumes:

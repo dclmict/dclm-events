@@ -9,11 +9,15 @@ services:
       # GIT_REPO: ${GIT_REPO}
     ports:
       - 1002:80
+      - 4002:443
     networks:
       - bams
     volumes:
-      - ./:/var/www/html
-      - ./.docker/events.conf:/etc/nginx/sites-available/default.conf
+      - .:/var/www/html
+      - ../ops/docker/nginx/events.dev.conf:/etc/nginx/sites-available/default.conf
+      - ../ops/docker/nginx/proxy:/etc/nginx/proxy_params
+      - ../ops/docker/nginx/ssl.conf:/etc/nginx/ssl.conf
+      - ~/dev/keys/mac:/var/keys/mac
     restart: always
 
 networks:

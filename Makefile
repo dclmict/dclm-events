@@ -1,5 +1,3 @@
-shell:
-	docker compose -f ./app/docker-compose.yml --env-file ./app/.env exec -it events-app sh
 up:
 	docker compose -f ./app/docker-compose.yml --env-file ./app/.env up --detach
 build:
@@ -14,6 +12,8 @@ restart:
 	docker compose -f ./app/docker-compose.yml --env-file ./app/.env.dev restart
 destroy:
 	docker compose -f ./app/docker-compose.yml --env-file ./app/.env down --volumes
+shell:
+	docker compose -f ./app/docker-compose.yml --env-file ./app/.env exec -it events-app sh
 key:
  	docker compose -f ./app/docker-compose.yml --env-file ./app/.env exec events-app php artisan key:generate
 storage:
@@ -24,6 +24,8 @@ fresh:
 	docker compose -f ./app/docker-compose.yml --env-file ./app/.env exec events-app php artisan migrate:fresh
 seed:
  	docker compose -f ./app/docker-compose.yml --env-file ./app/.env exec events-app php artisan db:seed
+db:
+	docker compose -f ./app/docker-compose.yml --env-file ./app/.env exec events-app php artisan tinker
 version:
 	docker compose -f ./app/docker-compose.yml --env-file ./app/.env exec events-app php artisan --version
 log:
