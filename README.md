@@ -22,10 +22,12 @@ App url: [DCLM Events](https://events.dclm.org)
 - run `php artisan optimize:clear`
 
 ### Microservices architecture (Docker)
-- run `make dev`
+- run `make up` (wait for like 2mins for the container to boot and load properly)
 - run `make key`
 - run `make migrate`
 - run `make seed`
+- run `make storage`
+- run `make log`
 
 ## Credit
 
