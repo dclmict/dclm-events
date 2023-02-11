@@ -12,6 +12,7 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 *.bck
+docker-compose.yml
 
 # folders
 _
