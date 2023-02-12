@@ -12,5 +12,9 @@
 # Based on https://gist.github.com/2206527
 
 
+# create dhparam for ssl
+openssl dhparam -out /etc/ssl/certs/dhparam.pem 4096
+
+# make personalized dp work
 cd personalizedflyer && composer install
 cd ..
