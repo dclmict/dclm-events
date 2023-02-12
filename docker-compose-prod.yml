@@ -13,15 +13,16 @@ services:
       - 1002:80
       - 4002:443
     networks:
-      - dclm-events
+      - dclm
     volumes:
       - .:/var/www/html
       - ../ops/docker/nginx/events.prod.conf:/etc/nginx/sites-available/default.conf
       - ../ops/docker/nginx/proxy:/etc/nginx/proxy_params
       - ../ops/docker/nginx/ssl.conf:/etc/nginx/ssl.conf
+      - /etc/letsencrypt:/etc/letsencrypt
     restart: always
 
 networks:
-  dclm-events:
-    name: dclm-events
-    #external: true
+  dclm:
+    name: dclm
+    external: true
