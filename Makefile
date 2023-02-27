@@ -1,32 +1,47 @@
 up:
-	docker compose -f ./app/docker-compose.yml --env-file ./app/.env up --detach
+	docker compose -f ./src/docker-compose.yml --env-file ./src/.env up --detach
+
 build:
-	docker compose -f ./app/docker-compose.yml --env-file ./app/.env up --detach --build
+	docker compose -f ./src/docker-compose.yml --env-file ./src/.env up --detach --build
+
 down:
-	docker compose -f ./app/docker-compose.yml --env-file ./app/.env down
+	docker compose -f ./src/docker-compose.yml --env-file ./src/.env down
+
 start:
-	docker compose -f ./app/docker-compose.yml --env-file ./app/.env start
+	docker compose -f ./src/docker-compose.yml --env-file ./src/.env start
+
 stop:
-	docker compose -f ./app/docker-compose.yml --env-file ./app/.env stop
+	docker compose -f ./src/docker-compose.yml --env-file ./src/.env stop
+
 restart:
-	docker compose -f ./app/docker-compose.yml --env-file ./app/.env.dev restart
+	docker compose -f ./src/docker-compose.yml --env-file ./src/.env.dev restart
+
 destroy:
-	docker compose -f ./app/docker-compose.yml --env-file ./app/.env down --volumes
+	docker compose -f ./src/docker-compose.yml --env-file ./src/.env down --volumes
+
 shell:
-	docker compose -f ./app/docker-compose.yml --env-file ./app/.env exec -it events-app sh
+	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec -it events-src sh
+
 key:
-	docker compose -f ./app/docker-compose.yml --env-file ./app/.env exec events-app php artisan key:generate
+	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec events-src php artisan key:generate
+
 storage:
-	docker compose -f ./app/docker-compose.yml --env-file ./app/.env exec events-app php artisan storage:link
+	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec events-src php artisan storage:link
+
 migrate:
-	docker compose -f ./app/docker-compose.yml --env-file ./app/.env exec events-app php artisan migrate
+	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec events-src php artisan migrate
+
 fresh:
-	docker compose -f ./app/docker-compose.yml --env-file ./app/.env exec events-app php artisan migrate:fresh
+	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec events-src php artisan migrate:fresh
+
 seed:
-	docker compose -f ./app/docker-compose.yml --env-file ./app/.env exec events-app php artisan db:seed
+	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec events-src php artisan db:seed
+
 db:
-	docker compose -f ./app/docker-compose.yml --env-file ./app/.env exec events-app php artisan tinker
+	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec events-src php artisan tinker
+
 version:
-	docker compose -f ./app/docker-compose.yml --env-file ./app/.env exec events-app php artisan --version
+	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec events-src php artisan --version
+
 log:
-	docker compose -f ./app/docker-compose.yml --env-file ./app/.env logs -f events-app
+	docker compose -f ./src/docker-compose.yml --env-file ./src/.env logs -f events-src
