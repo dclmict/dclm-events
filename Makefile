@@ -20,28 +20,28 @@ destroy:
 	docker compose -f ./src/docker-compose.yml --env-file ./src/.env down --volumes
 
 shell:
-	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec -it events-src sh
+	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec -it events-app sh
 
 key:
-	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec events-src php artisan key:generate
+	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec events-app php artisan key:generate
 
 storage:
-	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec events-src php artisan storage:link
+	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec events-app php artisan storage:link
 
 migrate:
-	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec events-src php artisan migrate
+	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec events-app php artisan migrate
 
 fresh:
-	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec events-src php artisan migrate:fresh
+	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec events-app php artisan migrate:fresh
 
 seed:
-	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec events-src php artisan db:seed
+	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec events-app php artisan db:seed
 
 db:
-	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec events-src php artisan tinker
+	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec events-app php artisan tinker
 
 version:
-	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec events-src php artisan --version
+	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec events-app php artisan --version
 
 log:
-	docker compose -f ./src/docker-compose.yml --env-file ./src/.env logs -f events-src
+	docker compose -f ./src/docker-compose.yml --env-file ./src/.env logs -f events-app
