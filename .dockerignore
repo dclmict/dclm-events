@@ -1,0 +1,20 @@
+# files
+setup
+README.md
+Makefile
+Dockerfile
+ops/docker/pin
+.git
+*/k8s*
+*/docker-*
+*/.gitignore*
+*/.env*
+*/.idea*
+src/.env
+src/docker-compose.yml
+src/vendor
+src/personalizedflyer/vendor
+src/node_modules
+src/storage/framework/cache/**
+src/storage/framework/sessions/**
+src/storage/framework/views/**

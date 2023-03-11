@@ -3,23 +3,20 @@ services:
 
   events-app:
     container_name: events-app
-    image: richarvey/nginx-php-fpm:1.9.1  # contains php 7.4.10 used for this project
-    #image: opeoniye/nginx-php-fpm:2.1.2
-    environment:
-      RUN_SCRIPTS: ${RUN_SCRIPTS}
-      PUID: ${PUID}
-      PGID: ${PGID}
+    # image: richarvey/nginx-php-fpm:1.9.1  # contains php 7.4.10 used for this project
+    image: opeoniye/dclm-events:latest
+    env_file: .env
     ports:
       - 1002:80
       - 4002:443
     networks:
       - bams
-    volumes:
-      - .:/var/www/html
-      - ../ops/docker/nginx/events.dev.conf:/etc/nginx/sites-available/default.conf
-      - ../ops/docker/nginx/proxy:/etc/nginx/proxy_params
-      - ../ops/docker/nginx/ssl.conf:/etc/nginx/ssl.conf
-      - ~/dev/keys/mac:/var/keys/mac
+    # volumes:
+    #   - .:/var/www/html
+    #   - ../ops/docker/nginx/events.dev.conf:/etc/nginx/sites-available/default.conf
+    #   - ../ops/docker/nginx/proxy:/etc/nginx/proxy_params
+    #   - ../ops/docker/nginx/ssl.conf:/etc/nginx/ssl.conf
+    #   - ~/dev/keys/mac:/var/keys/mac
     restart: always
 
 networks:
