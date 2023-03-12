@@ -17,7 +17,8 @@ RUN chmod -R ug+w /var/www/storage
 # Copy nginx/php/supervisor configs
 COPY ./ops/docker/supervisor.conf /etc/supervisord.conf
 COPY ./ops/docker/php/php.ini /usr/local/etc/php/conf.d/app.ini
-COPY ./ops/docker/ngx/nginx.conf /etc/nginx/sites-enabled/default
+COPY ./ops/docker/ngx/nginx.conf /etc/nginx/nginx.conf
+COPY ./ops/docker/ngx/events.conf /etc/nginx/sites-enabled/default
 COPY ./ops/docker/run.sh /var/www/docker/run.sh
 
 # PHP Error Log Files
