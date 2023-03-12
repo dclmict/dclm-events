@@ -3,12 +3,12 @@ up:
 
 dev:
 	cp ./ops/.env.dev ./src/.env
-	cp ./docker-compose-dev.yml ./src/docker-compose.yml
+	cp ./docker-dev.yml ./src/docker-compose.yml
 	docker compose -f ./src/docker-compose.yml --env-file ./src/.env up -d
 
 prod:
 	cp ./ops/.env.prod ./src/.env
-	cp ./docker-compose-prod.yml ./src/docker-compose.yml
+	cp ./docker-prod.yml ./src/docker-compose.yml
 	docker compose -f ./src/docker-compose.yml --env-file ./src/.env up -d
 
 build:

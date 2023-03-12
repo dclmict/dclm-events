@@ -10,8 +10,6 @@ services:
       - 4002:443
     networks:
       - dclm
-    # volumes:
-    #   - /etc/letsencrypt:/etc/letsencrypt
     restart: always
 
 networks:
