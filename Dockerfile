@@ -31,6 +31,7 @@ RUN composer install --optimize-autoloader --no-dev && \
   cd /var/www/personalizedflyer && \
   composer install --optimize-autoloader --no-dev && \
   cd /var/www && \
+  rm -rf /var/www/html && \
   # give scripts execute permissions
   chmod +x /var/www/docker/run.sh
 
