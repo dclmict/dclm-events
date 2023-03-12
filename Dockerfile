@@ -21,18 +21,17 @@ COPY ./ops/docker/ngx/nginx.conf /etc/nginx/sites-enabled/default
 COPY ./ops/docker/run.sh /var/www/docker/run.sh
 
 # PHP Error Log Files
-RUN mkdir /var/log/php
-RUN touch /var/log/php/errors.log && chmod 777 /var/log/php/errors.log
+RUN mkdir /var/log/php && \
+  touch /var/log/php/errors.log && chmod 777 /var/log/php/errors.log
 
 ## Deployment steps
-# run composer for events app
-RUN composer install --optimize-autoloader --no-dev
-# run composer for personalizedflyer app
-RUN cd personalizedflyer
-RUN composer install --optimize-autoloader --no-dev
-RUN cd ..
-# give scripts execute permissions
-RUN chmod +x /var/www/docker/run.sh
+RUN composer install --optimize-autoloader --no-dev && \
+  # run composer for personalizedflyer app
+  cd /var/www/personalizedflyer && \
+  composer install --optimize-autoloader --no-dev && \
+  cd /var/www && \
+  # give scripts execute permissions
+  chmod +x /var/www/docker/run.sh
 
 EXPOSE 80
 ENTRYPOINT ["/var/www/docker/run.sh"]
