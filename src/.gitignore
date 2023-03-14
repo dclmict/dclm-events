@@ -1,25 +1,22 @@
-# waran waran files
-*.bck
-**/.DS_Store
-**/setup
-**/.setup.txt
+# files
 .env
 .env.dev
 .env.prod
 .env.backup
 .phpunit.result.cache
+*.bck
+**/.DS_Store
 Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
-
 docker-compose.yml
 
 # folders
 .idea
 .vagrant
 .vscode
-vendor
+/vendor
 personalizedflyer/vendor
 personalizedflyer/*.zip
 personalizedflyer/cache/temp/*.jpg

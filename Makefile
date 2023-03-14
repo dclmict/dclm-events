@@ -36,6 +36,9 @@ destroy:
 shell:
 	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec -it events-app sh
 
+composer:
+	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec testimony-app composer install
+
 key:
 	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec events-app php artisan key:generate
 

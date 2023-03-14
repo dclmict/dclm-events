@@ -5,7 +5,6 @@ Makefile
 Dockerfile
 ops/docker/pin
 .git
-*.dockerignore
 */k8s*
 */docker-*
 */.tool-versions
@@ -19,6 +18,8 @@ src/docker-compose.yml
 src/vendor
 src/personalizedflyer/vendor
 src/node_modules
+src/storage/app/public/**
+src/storage/logs/**
 src/storage/framework/cache/**
 src/storage/framework/sessions/**
 src/storage/framework/views/**
