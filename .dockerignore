@@ -5,6 +5,7 @@ README.md
 Makefile
 Dockerfile
 ops/docker/pin
+ops/events_registration.sql
 .git
 */k8s*
 */docker-*

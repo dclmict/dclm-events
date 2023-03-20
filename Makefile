@@ -1,3 +1,21 @@
+build:
+	@if docker images | grep -q opeoniye/dclm-events; then \
+		echo "Removing \033[31mopeoniye/dclm-events\033[0m image"; \
+		echo y | docker image prune --filter="dangling=true"; \
+		docker image rm opeoniye/dclm-events; \
+		echo "Building \033[31mopeoniye/dclm-events\033[0m image"; \
+		docker build -t opeoniye/dclm-events:latest .; \
+		docker images | grep opeoniye/dclm-events; \
+	else \
+		echo "Building \033[31mopeoniye/dclm-events\033[0m image"; \
+		docker build -t opeoniye/dclm-events:latest .; \
+		docker images | grep opeoniye/dclm-events; \
+	fi
+
+push:
+	cat ops/docker/pin | docker login -u opeoniye --password-stdin
+	docker push opeoniye/dclm-events:latest
+
 up:
 	docker compose -f ./src/docker-compose.yml --env-file ./src/.env up --detach
 
@@ -10,13 +28,6 @@ prod:
 	cp ./ops/.env.prod ./src/.env
 	cp ./docker-prod.yml ./src/docker-compose.yml
 	docker compose -f ./src/docker-compose.yml --env-file ./src/.env up -d
-
-build:
-	docker build -t opeoniye/dclm-events:latest . && docker images | grep opeoniye/dclm-events
-
-push:
-	cat ops/docker/pin | docker login -u opeoniye --password-stdin
-	docker push opeoniye/dclm-events:latest
 
 down:
 	docker compose -f ./src/docker-compose.yml --env-file ./src/.env down
@@ -37,7 +48,7 @@ shell:
 	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec -it events-app sh
 
 composer:
-	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec testimony-app composer install
+	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec events-app composer install
 
 key:
 	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec events-app php artisan key:generate

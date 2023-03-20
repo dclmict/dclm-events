@@ -3,6 +3,7 @@ setup
 ops/.env.dev
 ops/.env.prod
 ops/docker/pin
+ops/events_registration.sql
 
 # folders
 _
