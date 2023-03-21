@@ -30,7 +30,8 @@ RUN mkdir /var/log/php && \
   touch /var/log/php/errors.log && chmod 777 /var/log/php/errors.log
 
 ## deployment
-RUN composer install --optimize-autoloader --no-dev && \
+RUN composer update && \
+  composer install --optimize-autoloader --no-dev && \
   # run composer for personalizedflyer app
   cd /var/www/personalizedflyer && \
   composer install --optimize-autoloader --no-dev && \

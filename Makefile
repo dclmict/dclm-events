@@ -27,6 +27,7 @@ dev:
 prod:
 	cp ./ops/.env.prod ./src/.env
 	cp ./docker-prod.yml ./src/docker-compose.yml
+	docker pull opeoniye/dclm-events:latest
 	docker compose -f ./src/docker-compose.yml --env-file ./src/.env up -d
 
 down:
@@ -45,7 +46,7 @@ destroy:
 	docker compose -f ./src/docker-compose.yml --env-file ./src/.env down --volumes
 
 shell:
-	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec -it events-app sh
+	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec -it events-app bash
 
 composer:
 	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec events-app composer install
@@ -68,7 +69,7 @@ seed:
 db:
 	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec events-app php artisan tinker
 
-version:
+info:
 	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec events-app php artisan --version
 
 log:
