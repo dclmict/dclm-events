@@ -1,3 +1,16 @@
+git:
+	@git_status=$(git status --porcelain); \
+	if [[ $git_status =~ \?\? ]]; then \
+		git add .; \
+		echo "\033[31mNew files will be added - Please enter commit message:\033[0m"; \
+		read msg1; \
+		git commit -m "$msg1"; \
+	else \
+		echo "\033[31mNo new files - Please enter commit message:\033[0m"; \
+		read msg2; \
+		git commit -am "$msg2"; \
+	fi
+
 build:
 	@if docker images | grep -q opeoniye/dclm-events; then \
 		echo "Removing \033[31mopeoniye/dclm-events\033[0m image"; \

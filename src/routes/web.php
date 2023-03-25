@@ -3,9 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\ContinentController;
-use App\Http\Controllers\StateController;
-use App\Http\Controllers\RegionController;
-use App\Http\Controllers\GroupController;
+# use App\Http\Controllers\StateController;
+# use App\Http\Controllers\RegionController;
+# use App\Http\Controllers\GroupController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\ProgramController;
 
@@ -47,9 +47,9 @@ Route::prefix('admin')->middleware("auth")->group(function () {
     Route::post('/register', [App\Http\Controllers\AuthController::class, 'handleRegister'])->name('admin.handleRegister');
     Route::resource('/countries', CountryController::class);
     Route::resource('/continents', ContinentController::class);
-    Route::resource('/states', StateController::class);
-    Route::resource('/regions', RegionController::class);
-    Route::resource('/groups', GroupController::class);
+    // Route::resource('/states', StateController::class);
+    // Route::resource('/regions', RegionController::class);
+    // Route::resource('/groups', GroupController::class);
 });
 
 
