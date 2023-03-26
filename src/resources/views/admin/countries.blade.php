@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('admin.layouts.ui')
 @section('body')
     {{-- <h3 class="mt-4">Country Setup</h3> --}}
     <div class="form-group my-2">

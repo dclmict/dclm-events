@@ -21,14 +21,14 @@ use App\Http\Controllers\ProgramController;
 */
 
 Route::get('/', [IndexController::class, 'index'])->name("home");
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('admin.home');
+Route::get('/admin', [App\Http\Controllers\HomeController::class, 'index'])->name('admin');
 Route::get('/ministers', function (){
   return view('ministers');
 });
-
 Route::get('/professionals', function (){
   return view('professionals');
 });
-
 Route::get('/survey', function (){
   return view('survey');
 });
@@ -42,7 +42,6 @@ Route::prefix('admin')->middleware("auth")->group(function () {
     Route::get('/country/{id}/states', [IndexController::class, 'states'])->name('admin.states')->whereNumber('id');
     Route::get('/state/{id}/regions', [IndexController::class, 'regions'])->name('admin.regions')->whereNumber('id');
     Route::get('/region/{id}/groups', [IndexController::class, 'groups'])->name('admin.groups')->whereNumber('id');
-    
     Route::get('/register', [App\Http\Controllers\AuthController::class, 'showRegister'])->name('admin.auth.register');
     Route::post('/register', [App\Http\Controllers\AuthController::class, 'handleRegister'])->name('admin.handleRegister');
     Route::resource('/countries', CountryController::class);
@@ -51,19 +50,3 @@ Route::prefix('admin')->middleware("auth")->group(function () {
     // Route::resource('/regions', RegionController::class);
     // Route::resource('/groups', GroupController::class);
 });
-
-
-// Route::get('/debug', function () {
-//     return dd(Auth::routes());
-// });
-
-Auth::routes([
-    'register' => false, // Register Routes...
-    'reset' => false, // Reset Password Routes...
-    'verify' => false, // Email Verification Routes...
-  ]);
-
-// Route::get('/admin/login', [App\Http\Controllers\AuthController::class, 'showLogin'])->name('admin.login');
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('admin.home');
-Route::get('/admin', [App\Http\Controllers\HomeController::class, 'index'])->name('admin');

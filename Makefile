@@ -1,14 +1,13 @@
 git:
-	@git_status=$(git status --porcelain); \
-	if [[ $git_status =~ \?\? ]]; then \
+	@if [ -z "$(git status --porcelain | grep '^??')" ]; then \
 		git add .; \
 		echo "\033[31mNew files will be added - Please enter commit message:\033[0m"; \
-		read msg1; \
-		git commit -m "$msg1"; \
+		read -r msg1; \
+		git commit -m "$$msg1"; \
 	else \
 		echo "\033[31mNo new files - Please enter commit message:\033[0m"; \
-		read msg2; \
-		git commit -am "$msg2"; \
+		read -r msg2; \
+		git commit -am "$$msg2"; \
 	fi
 
 build:
