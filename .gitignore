@@ -1,25 +1,8 @@
-# waran waran files
-**/.DS_Store
-**/.setup.txt
-.env
-.env.backup
-.phpunit.result.cache
-.production.env
-Homestead.json
-Homestead.yaml
-npm-debug.log
-yarn-error.log
-*.bck
+# files
+setup
+ops/.env.dev
+ops/.env.prod
+ops/docker/pin
 
 # folders
 _
-node_modules
-personalizedflyer/*.zip
-personalizedflyer/cache/temp/*.jpg
-personalizedflyer/cache/letter/*.jpg
-storage/*.key
-public/storage
-vendor
-.idea
-.vagrant
-.vscode

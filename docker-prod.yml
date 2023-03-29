@@ -1,0 +1,18 @@
+# Services
+services:
+
+  events-app:
+    container_name: events-app
+    image: opeoniye/dclm-events:latest
+    env_file: .env
+    ports:
+      - 1002:80
+      - 4002:443
+    networks:
+      - dclm
+    restart: always
+
+networks:
+  dclm:
+    name: dclm
+    external: true

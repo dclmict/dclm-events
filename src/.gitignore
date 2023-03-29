@@ -1,0 +1,26 @@
+# files
+# ref: https://www.golinuxcloud.com/gitignore-examples/
+.env
+.env.dev
+.env.prod
+.env.backup
+.phpunit.result.cache
+*.bck
+**/.DS_Store
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+docker-compose.yml
+
+# folders
+.idea
+.vagrant
+.vscode
+/vendor
+personalizedflyer/vendor
+personalizedflyer/*.zip
+personalizedflyer/cache/temp/*.jpg
+personalizedflyer/cache/letter/*.jpg
+storage/*.key
+public/storage
