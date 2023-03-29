@@ -102,7 +102,7 @@ if(isset($_POST['getmydp'])){
     //$cachePath = 'cache/temp/_my-dp.jpg';
 
     // Set Image Size
-    $image->fit(298,298);
+    $image->fit(299,299);
 
     // create empty canvas
     $width = $image->getWidth();
@@ -124,8 +124,8 @@ if(isset($_POST['getmydp'])){
     //circle($cx, $cy, $r, $color, $filled=false)
     $user = [
         'text'   => substr($userName, 0, 28),
-        'x'      => 520,
-        'y'      => 494,
+        'x'      => 263,
+        'y'      => 717,
         'size'   => 22,
         'angle'  => 0,
         'color'  => (isset($color)) ? $color : "#C32148",
@@ -136,14 +136,14 @@ if(isset($_POST['getmydp'])){
     $dist = [
         'text'   => "@ ".substr($distName, 0, 68), //substr() use to limit address character lenght
         'x'      => 520,
-        'y'      => 915,
+        'y'      => 905,
         'size'   => 20,
         'angle'  => 0,
         'color'  => (isset($color)) ? $color : "#C32148",
         'pos'    => "center",
     ];
 
-    $myDP = Image::make('img/duala-camoroon.jpg');
+    $myDP = Image::make('img/accra-ghana.jpg');
 
     // $myDP->insert($image, 'top-left', 336, 203);
 
@@ -177,7 +177,7 @@ if(isset($_POST['getmydp'])){
     });
 
     //Add Image
-    $myDP->insert($image, 'top-left', 362, 151);
+    $myDP->insert($image, 'top-left', 123, 376);
     $quality  = (isset($quality)) ? $quality : 70;
     $myDP->save($cachePath, $quality, 'jpg');
 
@@ -229,7 +229,7 @@ if(isset($_POST['getmydp'])){
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="#FFFFFF" d="M13 18v-4h-7v-4h7v-4l6 6-6 6zm-1-16c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12z"/></svg></a>
           </p>
         <div class="baseImg-wrap">
-            <img src="img/duala-camoroon.jpg" class="w-100">
+            <img src="img/accra-ghana.jpg" class="w-100">
             <div class="myImage rounded-0_" id="myImage">
                 <!-- <img id="myImageTag" src="./img/plus.png" alt="myImageTag" height="105" class="w-100 h-auto"/> -->
                 <img id="myImageTag" src="./img/plus.png" alt="myImageTag" height="105" class="w-auto h-100"/>
@@ -283,7 +283,7 @@ if(isset($_POST['getmydp'])){
 
         </div>
 
-        <button name="getmydp" class="w-100 btn btn-lg btn-danger mt-3" type="submit">Make My DP</button>
+        <button name="getmydp" class="w-100 btn btn-lg btn-danger mt-3 mk-btn" type="submit">Make My DP</button>
       </form>
     </main>
 

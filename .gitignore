@@ -3,6 +3,18 @@ setup
 ops/.env.dev
 ops/.env.prod
 ops/docker/pin
+.gitignore
 
 # folders
-_
+.idea
+.vagrant
+.vscode
+/vendor
+src/personalizedflyer/vendor
+src/personalizedflyer/*.zip
+src/personalizedflyer/cache/temp/*.jpg
+src/personalizedflyer/cache/letter/*.jpg
+src/public/storage/*
+storage/*.key
+/storage/logs
+
