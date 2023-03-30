@@ -1,4 +1,5 @@
 # files
+.env
 setup
 ops/.env.dev
 ops/.env.prod
@@ -7,3 +8,5 @@ ops/events_registration.sql
 
 # folders
 _
+/bootstrap
+/storage
