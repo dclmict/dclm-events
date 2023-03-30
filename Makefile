@@ -123,5 +123,8 @@ db:
 info:
 	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec events-app php artisan --version
 
+ps:
+	docker compose -f ./src/docker-compose.yml --env-file ./src/.env ps
+
 log:
 	docker compose -f ./src/docker-compose.yml --env-file ./src/.env logs -f events-app
