@@ -110,8 +110,8 @@ div#myImage {
     position: absolute;
     /* background-color: #fff; */
     background-color: transparent;
-    top: 14.9%;
-    left: 35.6%;
+    top: 36.8%;
+    left: 12.1%;
     height: 29%;
     width: 29%;
     z-index: 2;
@@ -131,10 +131,10 @@ img#myImageTag {
     font-size: calc(12px + 50%);
     position: absolute;
     background-color: #fdf3d3;
-    top: 45.8%;
-    left: 28.2%;
+    top: 67.8%;
+    left: 6.2%;
     height: 4.6%;
-    width: 43.7%;
+    width: 40.7%;
     z-index: 2;
     overflow: hidden;
     text-align: center;
@@ -150,11 +150,11 @@ img#myImageTag {
     font-size: 12px;
     font-size: calc(12px + 27%);
     position: absolute;
-    background-color: rgb(255 193 7 / 21%);
-    top: 87.7%;
-    left: 12.7%;
-    height: 4%;
-    width: 74.5%;
+    background-color: #fdf3d3;
+    top: 86%;
+    left: 10.8%;
+    height: 5%;
+    width: 83.1%;
     z-index: 2;
     text-align: center;
     font-weight: 600;
@@ -162,7 +162,7 @@ img#myImageTag {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    border-radius: 5px;
+    border-radius: 11px;
     /* padding-left: 24px; */
 }
 .myChurch {
@@ -195,4 +195,13 @@ img#myImageTag {
     border-color: #002386;
     outline: 0;
     box-shadow: 0 0 0 0.25rem rgb(8 66 152 / 36%);
+}
+
+.mk-btn{
+  background: rgb(40,143,163);
+  border-color: #288FA3;
+  background: linear-gradient(0deg, rgba(40,143,163,1) 0%, rgba(31,148,179,1) 100%);
+}
+.mk-btn:hover{
+  border-color: #288FA3;
 }
