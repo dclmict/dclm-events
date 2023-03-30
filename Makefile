@@ -1,5 +1,5 @@
 repo:
-	echo "\033[31mEnter app code folder name:\033[0m ";
+	@echo "\033[31mEnter app code folder name:\033[0m "; \
 	read -r code; \
 	cd ~/dev/web/dclm/$$code; \
 	git init && git add . && git commit -m "DCLM Events"; \
@@ -12,6 +12,7 @@ git:
 	@if git status --porcelain | grep -q '^??'; then \
 		echo "\033[31mUntracked files found::\033[0m \033[32mPlease enter commit message:\033[0m"; \
 		read -r msg1; \
+		git add -A; \
 		git commit -am "$$msg1"; \
 		read -p "Do you want to push your commit to GitHub? (yes|no): " choice; \
 		case "$$choice" in \
