@@ -1,3 +1,6 @@
+# include .env file
+include ./src/.env
+
 repo:
 	@echo "\033[31mEnter app code folder name:\033[0m "; \
 	read -r code; \
@@ -13,7 +16,7 @@ git:
 		echo "\033[31mUntracked files found::\033[0m \033[32mPlease enter commit message:\033[0m"; \
 		read -r msg1; \
 		git add -A; \
-		git commit -am "$$msg1"; \
+		git commit -m "$$msg1"; \
 		read -p "Do you want to push your commit to GitHub? (yes|no): " choice; \
 		case "$$choice" in \
 			yes|Y|y) \
@@ -51,22 +54,22 @@ git:
 	fi
 
 build:
-	@if docker images | grep -q opeoniye/dclm-events; then \
-		echo "Removing \033[31mopeoniye/dclm-events\033[0m image"; \
+	@if docker images | grep -q opeoniye/dclm-events:$(APP_VER); then \
+		echo "Removing \033[31mopeoniye/dclm-events:$(APP_VER)\033[0m image"; \
 		echo y | docker image prune --filter="dangling=true"; \
-		docker image rm opeoniye/dclm-events; \
-		echo "Building \033[31mopeoniye/dclm-events\033[0m image"; \
-		docker build -t opeoniye/dclm-events:latest .; \
-		docker images | grep opeoniye/dclm-events; \
+		docker image rm opeoniye/dclm-events:$(APP_VER); \
+		echo "Building \033[31mopeoniye/dclm-events:$(APP_VER)\033[0m image"; \
+		docker build -t opeoniye/dclm-events:$(APP_VER) .; \
+		docker images | grep opeoniye/dclm-events:$(APP_VER); \
 	else \
-		echo "Building \033[31mopeoniye/dclm-events\033[0m image"; \
-		docker build -t opeoniye/dclm-events:latest .; \
-		docker images | grep opeoniye/dclm-events; \
+		echo "Building \033[31mopeoniye/dclm-events:$(APP_VER)\033[0m image"; \
+		docker build -t opeoniye/dclm-events:$(APP_VER) .; \
+		docker images | grep opeoniye/dclm-events:$(APP_VER); \
 	fi
 
 push:
 	cat ops/docker/pin | docker login -u opeoniye --password-stdin
-	docker push opeoniye/dclm-events:latest
+	docker push opeoniye/dclm-events:$(APP_VER)
 
 up:
 	docker compose -f ./src/docker-compose.yml --env-file ./src/.env up --detach
@@ -77,10 +80,29 @@ dev:
 	docker compose -f ./src/docker-compose.yml --env-file ./src/.env up -d
 
 prod:
-	cp ./ops/.env.prod ./src/.env
-	cp ./docker-prod.yml ./src/docker-compose.yml
-	docker pull opeoniye/dclm-events:latest
-	docker compose -f ./src/docker-compose.yml --env-file ./src/.env up -d
+	@if ls /var/docker | grep -q dclm-events; then \
+		echo "\033[31mDirectory exists, starting container...\033[0m"; \
+		touch ops/.env.prod; \
+		echo "\033[32mPaste .env content and save with :wq\033[0m"; \
+		vim ops/.env.prod; \
+		cp ./ops/.env.prod ./src/.env; \
+		cp ./docker-prod.yml ./src/docker-compose.yml; \
+		docker pull opeoniye/dclm-events:$(APP_VER); \
+		docker compose -f ./src/docker-compose.yml --env-file ./src/.env up -d; \
+	else \
+		"\033[31mDirectory not found, setting up project...\033[0m"; \
+		mkdir -p /var/docker/dclm-events; \
+		cd /var/docker/dclm-events; \
+		git clone https://github.com/dclmict/dclm-events.git .; \
+		sudo chown -R ubuntu:ubuntu .; \
+		touch ops/.env.prod; \
+		echo "\033[32mPaste .env content and save with :wq\033[0m"; \
+		vim ops/.env.prod; \
+		cp ./ops/.env.prod ./src/.env; \
+		cp ./docker-prod.yml ./src/docker-compose.yml; \
+		docker pull opeoniye/dclm-events:$(APP_VER); \
+		docker compose -f ./src/docker-compose.yml --env-file ./src/.env up -d; \
+	fi
 
 down:
 	docker compose -f ./src/docker-compose.yml --env-file ./src/.env down

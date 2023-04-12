@@ -8,7 +8,7 @@ RUN groupadd -g 1000 www
 RUN useradd -u 1000 -ms /bin/bash -g www www
 
 # copy code
-COPY --chown=www:www-data ./src /var/www
+COPY --chown=www-data:www-data ./src /var/www
 COPY ./ops/docker /var/docker
 
 # set permissions for laravel app
@@ -26,19 +26,20 @@ COPY ./ops/docker/ngx/optimize.conf /etc/nginx/snippets/site_optimization.conf
 COPY ./ops/docker/ngx/log.conf /etc/nginx/snippets/logging.conf
 
 # php log files
-RUN mkdir /var/log/php && \
+RUN mkdir /var/log/php; \
   touch /var/log/php/errors.log && chmod 777 /var/log/php/errors.log
 
 ## deployment
-RUN composer update && \
-  composer install --optimize-autoloader --no-dev && \
+RUN composer update; \
+  composer install --optimize-autoloader --no-dev; \
   # run composer for personalizedflyer app
-  cd /var/www/personalizedflyer && \
-  composer install --optimize-autoloader --no-dev && \
-  cd /var/www && \
-  rm -rf /var/www/html && \
-  # give scripts execute permissions
+  cd /var/www/personalizedflyer; \
+  composer install --optimize-autoloader --no-dev; \
+  cd /var/www; \
+  find . -type d -exec chmod 2775 {} \;; \
+  find . -type f -exec chmod 0664 {} \;; \
+  rm -rf /var/www/html; \
   chmod +x /var/docker/run.sh
 
-EXPOSE 80
+EXPOSE 89
 ENTRYPOINT ["/var/docker/run.sh"]
