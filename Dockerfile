@@ -9,12 +9,12 @@ RUN useradd -u 1000 -ms /bin/bash -g www www
 
 # copy code
 COPY --chown=www-data:www-data ./src /var/www
-COPY ./ops/docker /var/docker
 
 # set permissions for laravel app
 RUN chmod -R ug+w /var/www/storage
 
-# copy configs
+# copy configs/scripts
+COPY ./ops/docker/run.sh /var/docker/run.sh
 COPY ./ops/docker/supervisor.conf /etc/supervisord.conf
 COPY ./ops/docker/php/php.ini /usr/local/etc/php/conf.d/app.ini
 COPY ./ops/docker/ngx/nginx.conf /etc/nginx/nginx.conf
@@ -30,16 +30,7 @@ RUN mkdir /var/log/php; \
   touch /var/log/php/errors.log && chmod 777 /var/log/php/errors.log
 
 ## deployment
-RUN composer update; \
-  composer install --optimize-autoloader --no-dev; \
-  # run composer for personalizedflyer app
-  cd /var/www/personalizedflyer; \
-  composer install --optimize-autoloader --no-dev; \
-  cd /var/www; \
-  find . -type d -exec chmod 2775 {} \;; \
-  find . -type f -exec chmod 0664 {} \;; \
-  rm -rf /var/www/html; \
-  chmod +x /var/docker/run.sh
+RUN chmod +x /var/docker/run.sh
 
 EXPOSE 89
 ENTRYPOINT ["/var/docker/run.sh"]

@@ -54,22 +54,22 @@ git:
 	fi
 
 build:
-	@if docker images | grep -q opeoniye/dclm-events:$(APP_VER); then \
-		echo "Removing \033[31mopeoniye/dclm-events:$(APP_VER)\033[0m image"; \
+	@if docker images | grep -q $(DIN); then \
+		echo "Removing \033[31m$(DIN):$(DIV)\033[0m image"; \
 		echo y | docker image prune --filter="dangling=true"; \
-		docker image rm opeoniye/dclm-events:$(APP_VER); \
-		echo "Building \033[31mopeoniye/dclm-events:$(APP_VER)\033[0m image"; \
-		docker build -t opeoniye/dclm-events:$(APP_VER) .; \
-		docker images | grep opeoniye/dclm-events:$(APP_VER); \
+		docker image rm $(DIN):$(DIV); \
+		echo "Building \033[31m$(DIN):$(DIV)\033[0m image"; \
+		docker build -t $(DIN):$(DIV) .; \
+		docker images | grep $(DIN):$(DIV); \
 	else \
-		echo "Building \033[31mopeoniye/dclm-events:$(APP_VER)\033[0m image"; \
-		docker build -t opeoniye/dclm-events:$(APP_VER) .; \
-		docker images | grep opeoniye/dclm-events:$(APP_VER); \
+		echo "Building \033[31m$(DIN):$(DIV)\033[0m image"; \
+		docker build -t $(DIN):$(DIV) .; \
+		docker images | grep $(DIN):$(DIV); \
 	fi
 
 push:
-	cat ops/docker/pin | docker login -u opeoniye --password-stdin
-	docker push opeoniye/dclm-events:$(APP_VER)
+	@echo $$DLP | docker login -u opeoniye --password-stdin; \
+	docker push $(DIN):$(DIV)
 
 up:
 	docker compose -f ./src/docker-compose.yml --env-file ./src/.env up --detach
@@ -87,7 +87,7 @@ prod:
 		vim ops/.env.prod; \
 		cp ./ops/.env.prod ./src/.env; \
 		cp ./docker-prod.yml ./src/docker-compose.yml; \
-		docker pull opeoniye/dclm-events:$(APP_VER); \
+		docker pull $(DIN):$(DIV); \
 		docker compose -f ./src/docker-compose.yml --env-file ./src/.env up -d; \
 	else \
 		"\033[31mDirectory not found, setting up project...\033[0m"; \
@@ -100,7 +100,7 @@ prod:
 		vim ops/.env.prod; \
 		cp ./ops/.env.prod ./src/.env; \
 		cp ./docker-prod.yml ./src/docker-compose.yml; \
-		docker pull opeoniye/dclm-events:$(APP_VER); \
+		docker pull $(DIN):$(DIV); \
 		docker compose -f ./src/docker-compose.yml --env-file ./src/.env up -d; \
 	fi
 
@@ -120,34 +120,34 @@ destroy:
 	docker compose -f ./src/docker-compose.yml --env-file ./src/.env down --volumes
 
 shell:
-	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec -it events-app bash
+	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec -it $(CN) bash
 
 composer:
-	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec events-app composer install
+	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec $(CN) composer install
 
 key:
-	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec events-app php artisan key:generate
+	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec $(CN) php artisan key:generate
 
 storage:
-	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec events-app php artisan storage:link
+	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec $(CN) php artisan storage:link
 
 migrate:
-	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec events-app php artisan migrate
+	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec $(CN) php artisan migrate
 
 fresh:
-	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec events-app php artisan migrate:fresh
+	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec $(CN) php artisan migrate:fresh
 
 seed:
-	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec events-app php artisan db:seed
+	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec $(CN) php artisan db:seed
 
 db:
-	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec events-app php artisan tinker
+	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec $(CN) php artisan tinker
 
 info:
-	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec events-app php artisan --version
+	docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec $(CN) php artisan --version
 
 ps:
 	docker compose -f ./src/docker-compose.yml --env-file ./src/.env ps
 
 log:
-	docker compose -f ./src/docker-compose.yml --env-file ./src/.env logs -f events-app
+	docker compose -f ./src/docker-compose.yml --env-file ./src/.env logs -f $(CN)

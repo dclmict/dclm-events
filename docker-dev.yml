@@ -1,8 +1,8 @@
 # Services
 services:
   events-app:
-    container_name: events-app
-    image: opeoniye/dclm-events:${APP_VER}
+    container_name: ${CN}
+    image: ${DIN}:${DIV}
     env_file: .env
     ports:
       - 1002:443
