@@ -214,9 +214,14 @@ if(isset($_POST['getmydp'])){
 <link rel="stylesheet" type="text/css" href="style.css">
 
 <style>
+body {
+  display: table;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
 #myImage {
-    width: 200px !important;
-    height: 200px !important;
+    width: 37.2% !important;
+    height: 37.2% !important;
     top: 27% !important;
     left: 31.3% !important;
     border-radius: 0px !important;
@@ -254,6 +259,21 @@ if(isset($_POST['getmydp'])){
     border-radius: 6px;
     line-height: 1.8 !important;    
 }
+
+@media (max-width: 767px){
+    .myName {
+    font-size: 3.1vw;
+    line-height: 1.8;
+    }    
+    .myChurch {
+        font-size: 2.2vw;
+        line-height: 1.6;
+    }
+    body{
+        padding-top: 150px;
+    }
+}
+
 .gck-wrap{
     max-width: 1120px;
 }
@@ -267,13 +287,25 @@ if(isset($_POST['getmydp'])){
 .form-head{
     font-size: 20px;
 }
+
 </style>
 </head>
   <body class="bodyWrap">
 
     <div class="container gck-wrap">
         <div class="row align-items-center gx-4">
-            <div class="col-sm-6">
+            <div class="col-sm-6 order-1 order-sm-2">
+                <div class="baseImg-wrap">
+                    <img src="img/gck-exp.jpg" class="w-100">
+                    <div class="myImage rounded-0_" id="myImage">
+                        <!-- <img id="myImageTag" src="./img/plus.png" alt="myImageTag" height="105" class="w-100 h-auto"/> -->
+                        <img id="myImageTag" src="./img/plus-no.png" alt="myImageTag" height="50" class="w-100 h-100"/>
+                    </div>
+                    <div class="myName"></div>
+                    <div class="myChurch"></div>
+                </div>            
+            </div><!-- //.col-sm-6 -->
+            <div class="col-sm-6 order-2 order-sm-1">
                 <main class="form-getLetter">
                       <p class="text-end">
                           <a href="impact2022.php" class="btn btn-primary btn-sm mr-auto d-none">Make 'IMPACT ACADEMY' DP Here
@@ -334,17 +366,7 @@ if(isset($_POST['getmydp'])){
                   </form>
                 </main>            
             </div><!-- //.col-sm-6 -->
-            <div class="col-sm-6">
-                <div class="baseImg-wrap">
-                    <img src="img/gck-exp.jpg" class="w-100">
-                    <div class="myImage rounded-0_" id="myImage">
-                        <!-- <img id="myImageTag" src="./img/plus.png" alt="myImageTag" height="105" class="w-100 h-auto"/> -->
-                        <img id="myImageTag" src="./img/plus-no.png" alt="myImageTag" height="50" class="w-100 h-100"/>
-                    </div>
-                    <div class="myName"></div>
-                    <div class="myChurch"></div>
-                </div>            
-            </div><!-- //.col-sm-6 -->
+
         </div>
     </div>
     
