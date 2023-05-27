@@ -9,6 +9,8 @@ use App\Http\Controllers\ContinentController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\ProgramController;
 
+use App\Http\Controllers\StaticPages;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -46,7 +48,27 @@ Route::prefix('admin')->middleware("auth")->group(function () {
     Route::post('/register', [App\Http\Controllers\AuthController::class, 'handleRegister'])->name('admin.handleRegister');
     Route::resource('/countries', CountryController::class);
     Route::resource('/continents', ContinentController::class);
-    // Route::resource('/states', StateController::class);
-    // Route::resource('/regions', RegionController::class);
-    // Route::resource('/groups', GroupController::class);
+    Route::resource('/states', StateController::class);
+    Route::resource('/regions', RegionController::class);
+    Route::resource('/groups', GroupController::class);
+});
+
+
+// Route::get('/debug', function () {
+//     return dd(Auth::routes());
+// });
+
+Auth::routes([
+    'register' => false, // Register Routes...
+    'reset' => false, // Reset Password Routes...
+    'verify' => false, // Email Verification Routes...
+  ]);
+
+// Route::get('/admin/login', [App\Http\Controllers\AuthController::class, 'showLogin'])->name('admin.login');
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('admin.home');
+Route::get('/admin', [App\Http\Controllers\HomeController::class, 'index'])->name('admin');
+
+Route::middleware("web")->controller(StaticPages::class)->group(function () {
+  Route::get('/index', 'index')->name('page.index');
 });

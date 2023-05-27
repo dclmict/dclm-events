@@ -1,0 +1,250 @@
+/* => Header Style
+==========================*/
+.navbar-brand .logo{
+	width: 70px;
+}
+.navbar-detached a {
+    color: #163A59;
+}
+
+.navbar-collapse {
+/* 	background: #163A59; */
+	padding: 15px;
+	border-radius: 3px
+}
+.navbar-detached a.nav-link {
+	color: #fff;
+	font-weight: 700;
+	font-size: 16px;
+}
+@media (max-width: 992px){
+    .navbar-detached {
+	    position: absolute;
+	    left: 0;
+	    right:0;
+	    box-shadow: none;
+		background: #163A59;		
+	}
+	.navbar-detached a.nav-link {
+	    color: #fff;
+		font-weight: 600;
+	}
+}
+/* => Banners Style
+==========================*/
+#banner{
+	position: relative;
+	top: 0;
+	background-position: center 15% !important;
+	padding-top: 300px;
+	padding-bottom: 100px;
+	margin-top: -140px
+}
+
+#banner .title_1{
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 800;
+	font-size: 98px;
+	line-height: 90px;	
+	color: #fff;
+}
+#banner .title_2{
+	font-family: 'Roboto';
+	font-weight: 400;
+	font-size: 20px;
+	line-height: 18px;
+	color: #fff;
+}
+
+#banner .date_1{
+	font-family: 'Montserrat';
+	font-weight: 700;
+	font-size: 128px;
+	line-height: 157px;
+	color: #fff;
+	/* identical to box height, or 123% */
+	letter-spacing: 0.1em;
+/*     -webkit-text-stroke-width: 9px;
+    -webkit-text-stroke-color: #fff;
+    -webkit-text-fill-color: rgb(255 255 255 / 0%);	 */
+}
+#banner .date_2{
+	font-family: 'Montserrat';
+	font-weight: 600;
+	font-size: 74px;
+	line-height: 90px;
+	color: #fff;	
+}
+
+#event_countdown h3{
+	font-family: 'Montserrat';
+	font-weight: 800;
+	font-size: 70px;
+	color: #fff;
+	display:inline-block !important;
+	margin: 0 10px;
+	text-align:center
+}
+#event_countdown h3 span{
+	display:block;
+	font-size: 15px;
+	color:#FFC100;
+	letter-spacing: 0.1em;
+	
+}
+@media(max-width: 960px){
+	#banner{
+		background-position: center 1% !important;
+		padding-top: 150px;
+		margin-top: 0px
+	}
+	#banner .title_1{
+		font-size: 62px;
+		line-height: 62px;
+	}
+	#banner .title_2{
+		font-size: 14px;
+		line-height: 18px;
+	}
+
+	#banner .date_1{
+		font-size: 70px;
+		line-height: 70px;	
+	}
+	#banner .date_2{
+		font-size: 40px;
+		line-height: 30px;
+	}
+
+	#event_countdown h3{
+		font-size: 60px;
+		color: #fff;
+		display:inline-block !important;
+		margin: 0 5px;
+		text-align:center
+	}
+	#event_countdown h3 span{
+		display:block;
+		font-size: 12px;
+		color:#FFC100;
+		letter-spacing: 0.1em;
+	}	
+}
+
+@media(max-width: 767px){
+	#banner{
+		background-position: center 10% !important;
+		padding-top: 100px
+	}	
+	.left-side{
+		text-align:center;
+	}
+	#banner .btn{
+		margin:auto;
+		display: block;
+		margin-bottom: 30px;
+	}
+	#event_countdown h3{
+		font-size: 36px;
+		color: #163A59;
+		display:inline-block !important;
+		margin: 0 5px;
+		text-align:center
+	}
+	#event_countdown h3 span{
+		display:block;
+		font-size: 10px;
+		color:#FFC100;
+		letter-spacing: 0.1px;
+	}		
+}
+@media(max-width: 560px){
+	#banner{
+		background-position: center 1% !important;
+		padding-top: 100px
+	}
+	#banner .title_1{
+		font-size: 48px;
+		line-height: 48px;
+		text-align:center
+	}
+}
+
+/*=> testimonies Style
+========================*/
+
+#testimonies .container{
+	max-width: 960px;
+}
+
+#testimonies .carousel-caption {
+    position: relative;
+    right: 0;
+    bottom: 0;
+    left: 1%;
+    padding: 15px;
+    color: #fff;
+    text-align: left;
+    background: #163A59;
+}
+
+
+/*=> Footer Style
+=====================*/
+#footer {
+    background: #060024 url( /assets/img/footer-bg-02.jpg ) no-repeat center center / cover;
+    min-height: 300px;
+	padding-top: 60px;
+	position:relative;
+}
+#footer .sub-footer{
+/*	position:absolute;*/
+	bottom:0; left:0; right:0;
+}
+
+#footer .footer-h1{
+	font-family: 'Roboto';
+	font-weight: 600;
+	font-size: 51px;
+	line-height: 48px;
+	color: #FFFFFF;
+}
+
+#footer .date_1{
+	font-family: 'Montserrat';
+	font-weight: 700;
+	font-size: 88px;
+	line-height: 57px;
+	color: #fff;
+	letter-spacing: 0.1em;
+}
+#footer .date_2{
+	font-family: 'Montserrat';
+	font-weight: 600;
+	font-size: 48px;
+	line-height: 50px;
+	color: #fff;
+	letter-spacing: 0.01em;	
+}
+
+@media(max-width: 960px){
+	#footer .footer-h1{
+		font-size: 41px;
+		line-height: 38px;
+	}	
+}
+
+@media(max-width: 767px){
+	#footer .footer-h1{
+		font-size: 31px;
+		line-height: 38px;
+	}
+	#footer .date_1{
+		font-size: 58px;
+		line-height: 47px;
+	}
+	#footer .date_2{
+		font-size: 32px;
+		line-height: 30px;
+	}	
+}
