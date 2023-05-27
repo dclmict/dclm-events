@@ -9,6 +9,8 @@ use App\Http\Controllers\GroupController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\ProgramController;
 
+use App\Http\Controllers\StaticPages;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -67,3 +69,7 @@ Auth::routes([
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('admin.home');
 Route::get('/admin', [App\Http\Controllers\HomeController::class, 'index'])->name('admin');
+
+Route::middleware("web")->controller(StaticPages::class)->group(function () {
+  Route::get('/index', 'index')->name('page.index');
+});
