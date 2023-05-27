@@ -3,9 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\ContinentController;
-use App\Http\Controllers\StateController;
-use App\Http\Controllers\RegionController;
-use App\Http\Controllers\GroupController;
+# use App\Http\Controllers\StateController;
+# use App\Http\Controllers\RegionController;
+# use App\Http\Controllers\GroupController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\ProgramController;
 
@@ -23,14 +23,14 @@ use App\Http\Controllers\StaticPages;
 */
 
 Route::get('/', [IndexController::class, 'index'])->name("home");
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('admin.home');
+Route::get('/admin', [App\Http\Controllers\HomeController::class, 'index'])->name('admin');
 Route::get('/ministers', function (){
   return view('ministers');
 });
-
 Route::get('/professionals', function (){
   return view('professionals');
 });
-
 Route::get('/survey', function (){
   return view('survey');
 });
@@ -44,7 +44,6 @@ Route::prefix('admin')->middleware("auth")->group(function () {
     Route::get('/country/{id}/states', [IndexController::class, 'states'])->name('admin.states')->whereNumber('id');
     Route::get('/state/{id}/regions', [IndexController::class, 'regions'])->name('admin.regions')->whereNumber('id');
     Route::get('/region/{id}/groups', [IndexController::class, 'groups'])->name('admin.groups')->whereNumber('id');
-    
     Route::get('/register', [App\Http\Controllers\AuthController::class, 'showRegister'])->name('admin.auth.register');
     Route::post('/register', [App\Http\Controllers\AuthController::class, 'handleRegister'])->name('admin.handleRegister');
     Route::resource('/countries', CountryController::class);

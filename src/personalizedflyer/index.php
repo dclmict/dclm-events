@@ -102,7 +102,7 @@ if(isset($_POST['getmydp'])){
     //$cachePath = 'cache/temp/_my-dp.jpg';
 
     // Set Image Size
-    $image->fit(299,299);
+    $image->fit(298,298);
 
     // create empty canvas
     $width = $image->getWidth();

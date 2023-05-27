@@ -1,16 +1,18 @@
 # Services
 services:
-
   events-app:
-    container_name: events-app
-    image: opeoniye/dclm-events:latest
+    container_name: ${CN}
+    image: ${DIN}:${DIV}
     env_file: .env
     ports:
-      - 1002:80
-      - 4002:443
+      - 1002:443
     networks:
       - dclm
+    volumes:
+      - /etc/letsencrypt/live/dclm.org/fullchain.pem:/var/ssl/cert.pem
+      - /etc/letsencrypt/live/dclm.org/privkey.pem:/var/ssl/key.pem
     restart: always
+    working_dir: /var/www
 
 networks:
   dclm:

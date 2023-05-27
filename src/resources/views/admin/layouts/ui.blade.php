@@ -6,12 +6,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
     <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="/css/app.css">
     <script src="https://kit.fontawesome.com/be494ca550.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
     <div id="admin-container">
-        @include('navbar')
+        @include('admin.layouts.navbar')
         <div class="container my-4">
             @yield('content')
         </div>
@@ -48,8 +49,6 @@
         integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
         crossorigin="anonymous"></script>
     <script src="/scripts/auth.js"></script>
-
-
     <script>
         $(document).ready(function() {
             tableOptionsObj = {
@@ -78,13 +77,9 @@
             $('#data-table-any').DataTable(anyTableOptionsObj);
             $('#data-table-all').DataTable(tableOptionsObj);
             $('#data-table-new').DataTable(tableOptionsObj);
-
             // $('#data-table-non-members').DataTable(tableOptionsObj);
-
             // $('#data-table-members').DataTable(tableOptionsObj);
         });
-
     </script>
 </body>
-
 </html>
