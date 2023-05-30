@@ -1,4 +1,4 @@
-FROM opeoniye/php74-base:latest
+FROM opeoniye/php82-base:latest
 
 # set working directory
 WORKDIR /var/www
