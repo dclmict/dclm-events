@@ -71,6 +71,9 @@ push:
 	@echo $$DLP | docker login -u opeoniye --password-stdin; \
 	docker push $(DIN):$(DIV)
 
+pull:
+	docker pull $(DIN):$(DIV)
+
 up:
 	docker compose -f ./src/docker-compose.yml --env-file ./src/.env up --detach
 
