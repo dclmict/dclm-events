@@ -10,3 +10,5 @@ ops/events_registration.sql
 _
 /bootstrap
 /storage
+/src/vendor
+/vendor

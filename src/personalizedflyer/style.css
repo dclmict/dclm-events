@@ -110,10 +110,10 @@ div#myImage {
     position: absolute;
     /* background-color: #fff; */
     background-color: transparent;
-    top: 36.8%;
-    left: 12.1%;
-    height: 29%;
-    width: 29%;
+    top: 18.8%;
+    left: 35.8%;
+    height: 29.4%;
+    width: 29.4%;
     z-index: 2;
     overflow: hidden;
     text-align: center;
@@ -131,15 +131,15 @@ img#myImageTag {
     font-size: calc(12px + 50%);
     position: absolute;
     background-color: #fdf3d3;
-    top: 67.8%;
-    left: 6.2%;
-    height: 4.6%;
-    width: 40.7%;
+    top: 50%;
+    left: 26.8%;
+    height: 5.6%;
+    width: 46.7%;
     z-index: 2;
     overflow: hidden;
     text-align: center;
     font-weight: 600;
-    line-height: 1.6;
+    line-height: 1.9;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -151,22 +151,22 @@ img#myImageTag {
     font-size: calc(12px + 27%);
     position: absolute;
     background-color: #fdf3d3;
-    top: 86%;
-    left: 10.8%;
-    height: 5%;
-    width: 83.1%;
+    top: 89.6%;
+    left: 27.3%;
+    height: 3.6%;
+    width: 60.7%;
     z-index: 2;
     text-align: center;
     font-weight: 600;
-    line-height: 1.8;
+    line-height: 1.9;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    border-radius: 11px;
+    /* border-radius: 11px; */
     /* padding-left: 24px; */
 }
 .myChurch {
-    font-size: calc(12px + 27%);
+    font-size: calc(9px + 27%);
     /* line-height: 36px; */
 }
 @media(max-width: 767px){
@@ -185,7 +185,7 @@ img#myImageTag {
     }
 }
 .form-select, .form-control {
-    border-radius: 1rem 0 !important;
+    border-radius: 0 !important;
     border: 1px solid #000;
 }
 .form-select:focus,
@@ -198,10 +198,10 @@ img#myImageTag {
 }
 
 .mk-btn{
-  background: rgb(40,143,163);
-  border-color: #288FA3;
-  background: linear-gradient(0deg, rgba(40,143,163,1) 0%, rgba(31,148,179,1) 100%);
+  background: #ff8200;
+  border-color: #ff8200;
+  background: linear-gradient(0deg, #ff8200 0%, #ff8200d4 100%);
 }
 .mk-btn:hover{
-  border-color: #288FA3;
+  border-color: #ff8200;
 }
