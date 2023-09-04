@@ -9,6 +9,7 @@ services:
     networks:
       - dclm
     volumes:
+      - .:/var/www
       - /etc/letsencrypt/live/dclm.org/fullchain.pem:/var/ssl/cert.pem
       - /etc/letsencrypt/live/dclm.org/privkey.pem:/var/ssl/key.pem
     restart: always
