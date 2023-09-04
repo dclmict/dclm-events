@@ -1,4 +1,4 @@
-FROM opeoniye/php82-base:latest
+FROM opeoniye/php82:latest
 
 # set working directory
 WORKDIR /var/www
@@ -32,5 +32,5 @@ RUN mkdir /var/log/php; \
 ## deployment
 RUN chmod +x /var/docker/run.sh
 
-EXPOSE 89
+# EXPOSE 89
 ENTRYPOINT ["/var/docker/run.sh"]
