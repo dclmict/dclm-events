@@ -1,7 +1,9 @@
 <?php
 
 ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
-//ini_set('display_errors', 0); ini_set('display_startup_errors', 0); error_reporting(E_ALL);
+// ini_set('display_errors', 0); ini_set('display_startup_errors', 0); error_reporting(E_ALL);
+
+define('PAGE_TITLE', 'Awakening the Sleeping Giant');
 
 // include composer autoload
 require 'vendor/autoload.php';
@@ -40,19 +42,21 @@ if(isset($_GET['purge'])){
     exit;
 }
 
-
 /*Colors
 //http://www.workwithcolor.com/color-chart-full-01.htm
 */
 $colors = [
-    '#E32636' =>   'Alizarin',
-    '#FF8C00' =>   'Dark Orange',
-    '#002E63' =>    'Cool Black',
-    '#FFBF00'  =>   'Amber',
-    '#8DB600'  =>   'Apple Green',
-    '#000000' =>     'Black',
-    '#C32148' =>    'Bright Maroon',
-    '#00009C' =>    'Duke Blue',
+    '#ff8200' => 'Default Color',
+    '#2798D4' => 'Picton Blue',
+    '#71A6D2' => 'Iceberg',
+    '#E32636' => 'Alizarin',
+    '#FF8C00' => 'Dark Orange',
+    '#002E63' => 'Cool Black',
+    '#FFBF00' => 'Amber',
+    '#8DB600' => 'Apple Green',
+    '#000000' => 'Black',
+    '#C32148' => 'Bright Maroon',
+    '#00009C' => 'Duke Blue',
 ];
 
 if(isset($_POST['getmydp'])){
@@ -98,7 +102,7 @@ if(isset($_POST['getmydp'])){
     $cachePath = 'cache/temp/'. time().'_my-impact-dp.jpg';
 	//$cachePath = 'cache/temp/_my-dp.jpg';
 
-    $image->fit(261,261);
+    $image->fit(320,320);
 
     // create empty canvas
     $width = $image->getWidth();
@@ -119,10 +123,10 @@ if(isset($_POST['getmydp'])){
     $userName   = (isset($user)) ? $user : "Wonderful Person";
     //circle($cx, $cy, $r, $color, $filled=false)
     $user = [
-        'text'   => substr($userName, 0, 21),
-        'x'      => 540,
-        'y'      => 410,
-        'size'   => 22,
+        'text'   => substr($userName, 0, 25),
+        'x'      => 525,
+        'y'      => 492,
+        'size'   => 18,
         'angle'  => 0,
         'color'  => (isset($color)) ? $color : "#C32148",
         'pos'    => "center",
@@ -131,16 +135,16 @@ if(isset($_POST['getmydp'])){
     $distName = (isset($dist)) ? $dist : "Deeper Life Bible Chuch - Close to you";
     $dist = [
         // 'text'   => "@ ".substr($distName, 0, 46),
-        'text'   => "@ ".substr($distName, 0, 41),
-        'x'      => 690,
-        'y'      => 940,
+        'text'   => "@ ".substr($distName, 0, 50),
+        'x'      => 525,
+        'y'      => 980,
         'size'   => 14,
         'angle'  => 0,
         'color'  => (isset($color)) ? $color : "#C32148",
         'pos'    => "center",
     ];
 
-    $myDP = Image::make('img/impact2022.jpg');
+    $myDP = Image::make('img/asg-impact.jpg');
 
     // $myDP->insert($image, 'top-left', 336, 203);
 
@@ -156,7 +160,7 @@ if(isset($_POST['getmydp'])){
     //Write Name
     $myDP->text($user['text'], $user['x'], $user['y'], function($font) use($color) {
         $font->file("fonts/KaushanScript-Regular.ttf");
-        $font->size(36);
+        $font->size(32);
         $font->color($color);
         $font->align('center');
         $font->valign('middle');
@@ -175,7 +179,7 @@ if(isset($_POST['getmydp'])){
 
 	//Add Image
 	// $myDP->insert($image, 'top-left', 348, 213);
-    $myDP->insert($image, 'top-left', 411, 111);
+    $myDP->insert($image, 'top-left', 368, 120); // x, y
 	$quality  = (isset($quality)) ? $quality : 70;
     $myDP->save($cachePath, $quality, 'jpg');
 
@@ -191,7 +195,7 @@ if(isset($_POST['getmydp'])){
 <meta name="description" content="Deeper Life Bible Chuch Global Crusade DP Maker">
 <meta name="author" content="DCLM SMAT">
 <meta name="generator" content="DCLM SMAT">
-<title>IMAPCT ACADEMY 2022 DP Maker - DCLM</title>
+<title><?php print PAGE_TITLE; ?> - IMAPCT ACADEMY DP Maker - DCLM</title>
 
 <!-- Bootstrap core CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -211,33 +215,11 @@ if(isset($_POST['getmydp'])){
 <link rel="stylesheet" type="text/css" href="style.css">
 
 <style>
-div#myImage {
-    background-color: transparent;
-    top: 10.3%;
-    left: 38.1%;
-    height: 24.1%;
-    width: 24.1%;
-}    
-.myName {
-    background-color: #fdf3d3;
-    top: 35.5%;
-    left: 33.5%;
-    height: 4.5%;
-    width: 32.9%;
-    z-index: 2;
-}    
-.myChurch {
-    font-size: 12px;
-    font-size: calc(12px + 27%);
-    top: 85.3%;
-    left: 37.6%;
-    height: 3.3%;
-    width: 53.5%;
-}
+
 
 </style>
 </head>
-  <body class="bodyWrap">
+  <body id="impact-page" class="bodyWrap">
 
     <main class="form-getLetter">
 
@@ -245,13 +227,13 @@ div#myImage {
             <a href="index.php" class="btn btn-warning btn-sm mr-auto">
                 Make Global Crusade DP Here
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="#FFFFFF" d="M13 18v-4h-7v-4h7v-4l6 6-6 6zm-1-16c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12z"/></svg></a>
-            <a href="letter.php" class="btn btn-primary btn-sm mr-auto">
+<!--             <a href="letter.php" class="btn btn-primary btn-sm mr-auto">
                 Download Customized Letter
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="#FFFFFF" d="M13 18v-4h-7v-4h7v-4l6 6-6 6zm-1-16c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12z"/></svg></a>                
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="#FFFFFF" d="M13 18v-4h-7v-4h7v-4l6 6-6 6zm-1-16c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12z"/></svg></a>    -->             
 
           </p> 
         <div class="baseImg-wrap">
-            <img src="img/impact2022.jpg" class="w-100">
+            <img src="img/asg-impact.jpg" class="w-100">
             <div class="myImage rounded-0_" id="myImage">
                 <!-- <img id="myImageTag" src="./img/plus.png" alt="myImageTag" height="105" class="w-100 h-auto"/> -->
                 <img id="myImageTag" src="./img/plus.png" alt="myImageTag" height="105" class="w-auto h-100"/>
@@ -307,7 +289,7 @@ div#myImage {
 
         <button name="getmydp" class="w-100 btn btn-lg btn-danger mt-3" type="submit">Make My DP</button>
         <hr>
-            <a href="letter.php" class="btn btn-primary btn-sm m-auto d-block">
+            <a href="letter.php" class="btn btn-primary btn-sm m-auto d-none">
                 Download Customized Letter
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="#FFFFFF" d="M13 18v-4h-7v-4h7v-4l6 6-6 6zm-1-16c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12z"/></svg></a>         
       </form>
