@@ -1,6 +1,11 @@
-<nav class="navbar navbar-example navbar-expand-lg bg-transparent bg-light_ mt-sm-4 fixed-top_ sticky-sm-top_ navbar-detached">
+@php
+    $menu = config('dclm.header_menu');
+    // @dd($menu)
+@endphp
+
+<nav class="navbar navbar-example navbar-expand-lg bg-transparent bg-light_ mt-sm-4_ fixed-top_ sticky-sm-top_ navbar-detached">
   <div class="container">
-    <a class="navbar-brand" href="">
+    <a class="navbar-brand" href="{{route('page.index')}}">
       <img src="dclm-logo.png" class="logo h-100">
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-ex-3">
@@ -11,15 +16,14 @@
 
     <div class="collapse navbar-collapse" id="navbar-ex-3">
       <div class="navbar-nav ms-auto me-5">
-        <a class="nav-item nav-link" href="#">Home</a>
-        <a class="nav-item nav-link" href="#">Personalized Flyer</a>
-        <a class="nav-item nav-link" href="#">Testimonies</a>
-        <a class="nav-item nav-link" href="#">Resources</a>
+        @foreach ($menu as $m)
+            <a class="nav-item nav-link" href="{{ route($m['route']) }}">{{ $m['label'] }}</a>
+        @endforeach
       </div>
 
-      <div class="row_">        
-          <a href="#" class="btn btn-success rounded me-3">Login</a>        
-          <a href="#" class="btn btn-light rounded">Register</a>
+      <div class="row_">
+          <a href="#" class="btn btn-success rounded me-3">Login</a>
+          <a href="{{route('page.register')}}" class="btn btn-light rounded">Register</a>
       </div>
 
     </div>
@@ -45,7 +49,7 @@
 
       <li class="nav-item lh-1 me-3">
         <a href="#">Personalized Flyer</a>
-      </li>      
+      </li>
 
       <li class="nav-item lh-1 me-3">
         <a href="#">Testimonies</a>

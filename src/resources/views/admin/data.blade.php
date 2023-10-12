@@ -1,4 +1,4 @@
-@extends('admin.layouts.ui')
+@extends('layouts.admin')
 @section('content')
     <div class="table-responsive">
         <table id="data-table-all" class="table">
@@ -25,16 +25,16 @@
                 @foreach ($allData as $data)
                 <tr>
                     <th scope="row">{{ $loop->index + 1 }}</th>
-                    <td>{{ $data->program->name }}</td>
-                    <td>{{ $data->fullname }}</td>
-                    <td>{{ $data->email }}</td>
-                    <td>{{ $data->gender }}</td>
-                    <td>{{ $data->phone_number }}</td>
-                    <td>{{ $data->whatsapp_number }}</td>
-                    <td>{{ $data->country->continent->name }}</td>
-                    <td>{{ $data->country->name }}</td>
-                    <td>{{ $data->state}}</td>
-                    <td>{{ $data->lga }}</td>
+                    <td>{!! strip_tags($data->program->name) ?? 'NA' !!}</td>
+                    <td>{{ $data->full_name  ?? 'NA' }}</td>
+                    <td>{{ $data->email  ?? 'NA' }}</td>
+                    <td>{{ $data->gender  ?? 'NA' }}</td>
+                    <td>{{ $data->phone  ?? 'NA' }}</td>
+                    <td>{{ $data->whatsapp  ?? 'NA' }}</td>
+                    <td>{{ $data->country->continent->name  ?? 'NA' }}</td>
+                    <td>{{ $data->country->name  ?? 'NA' }}</td>
+                    <td>{{ $data->state ?? 'NA' }}</td>
+                    <td>{{ $data->lga  ?? 'NA' }}</td>
                 </tr>
                 @endforeach
             </tbody>

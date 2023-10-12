@@ -15,9 +15,18 @@ class CreateProgramsTable extends Migration
     {
         Schema::create('programs', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 100)->unique();
+            $table->string('name', 100);
+            $table->string('slug', 100)->unique();
             $table->boolean('is_active')->default(true);
-            // $table->enum('event_type', ['Global', 'Local']);
+            $table->string('image_location')->nullable();
+            $table->enum('event_type', ['Global', 'Local'])->nullable();
+            $table->string('category')->nullable();
+            $table->string('event_days')->nullable();
+            $table->string('event_month')->nullable();
+            $table->string('event_date')->nullable();
+            $table->string('event_countdown')->nullable();
+            $table->text('schedules')->nullable();
+
             $table->timestamps();
         });
     }

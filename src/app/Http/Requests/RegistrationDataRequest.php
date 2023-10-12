@@ -31,16 +31,19 @@ class RegistrationDataRequest extends FormRequest
     public function rules()
     {
         return [
-            'fullname' => 'required|string',
-            'email' => 'nullable|string|email',
+            'first_name' => 'required',
+            'last_name' => 'required',
             'gender' => 'required|string|in:Male,Female',
-            'phone_number' => 'required|numeric',
-            'whatsapp_number' => 'nullable|numeric',
-            'program_id' => 'required|integer',
-            'country_id' => 'required|integer',
-            'state' => 'nullable|string',
-            
-            // 'address' => 'required|string',
+            'email' => 'required|string|email',
+            // 'email_confirmation' => 'confirmed',
+            'phone' => 'nullable|numeric',
+            'whatsapp' => 'nullable|numeric',
+            'address' => 'required|string',
+            'city' => 'required|string',
+            'state' => 'required|string',
+            'country_id' => 'required|exists:countries,iso2',
+            'program_id' => 'required|'
+
             // 'age' => 'required|string',
             // 'facebook_username' => 'nullable|string',
             // 'location_church' => 'nullable|string',
@@ -50,6 +53,26 @@ class RegistrationDataRequest extends FormRequest
             // 'bus_stop' => 'required|string',
             // 'region_id' => 'nullable|integer',
             // 'group_id' => 'nullable|integer',
+        ];
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'program_id.required'  => 'You are required to select a program',
+            '*.email'  => 'The :attribute required valid email address',
+            '*.required'  => 'The :attribute field is required',
+            '*.numeric'  => 'The :attribute field should be number',
+            '*.string'  => 'The :attribute field required valid input',
+            '*.in'  => 'The :attribute field required valid input',
+            '*.in'  => 'The :attribute field required valid input',
+            '*.exists'  => 'The :attribute field required valid input',
+
         ];
     }
 

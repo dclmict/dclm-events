@@ -15,28 +15,31 @@ class CreateRegistrationDataTable extends Migration
     {
         Schema::create('registration_data', function (Blueprint $table) {
             $table->id();
-            $table->string('fullname', 50);
+            $table->string('first_name', 50);
+            $table->string('last_name', 50);
             $table->string('email', 100)->nullable();
-            $table->string('age', 10);
+            //$table->string('age', 10);
             $table->enum('gender', ['Male', 'Female']);
             $table->string('address', 255);
 
-            $table->string('phone_number', 20)->nullable();
+            $table->string('phone', 20)->nullable();
 
-            $table->string('whatsapp_number', 20)->nullable();
+            $table->string('whatsapp', 20)->nullable();
 
-            $table->string('facebook_username', 50)->nullable();
+            //$table->string('facebook_username', 50)->nullable();
             $table->string('church', 50)->nullable();
-            $table->enum('new_comer', ['Yes', 'No']);
+            //$table->enum('new_comer', ['Yes', 'No']);
 
-            $table->unsignedBigInteger('program_id');
+            $table->unsignedBigInteger('program_id')->nullable();
             $table->foreign('program_id')->references('id')->on('programs');
 
-            $table->unsignedBigInteger('country_id');
-            $table->foreign('country_id')->references('id')->on('countries')->nullable();
+            // $table->unsignedBigInteger('country_id');
+            $table->string('country_id');
+            $table->foreign('country_id')->references('iso2')->on('countries')->nullable();
 
             $table->string('state');
-            $table->string('lga');
+            $table->string('city');
+            // $table->string('lga');
 
             // $table->unsignedBigInteger('state_id');
             // $table->foreign('state_id')->references('id')->on('states')->nullable();
