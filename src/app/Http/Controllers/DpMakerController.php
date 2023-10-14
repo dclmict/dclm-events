@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\DpmakerFormRequest;
+use Illuminate\Support\Facades\Validator;
+
 
 class DpMakerController extends Controller
 {
@@ -25,7 +28,27 @@ class DpMakerController extends Controller
         }
 
         if (request()->isMethod('post')) {
-            dd($request->all());
+            // dd($request->all());
+            $rules = [
+                'fullname' => 'required|string',
+                'district' => 'required|string',
+                'file' => 'required|image|mimes:jpg,jpeg,png,gif,bmp|max:2048',
+            ];
+            $messages = [
+                '*.required'  => 'The :attribute field is required',
+                'file.mimes' => 'Require valid image types are: jpg, jpeg, png, gif, bmp.',
+                'file.max' => 'The image size should not exceed 2MB.',
+            ];
+            // Create a validator instance
+            $validator = Validator::make($request->all(), $rules, $messages);
+            // Perform the validation
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+
+
+
+
         }
     }
 }

@@ -15,7 +15,7 @@ class CountryController extends Controller
      */
     public function index()
     {
-        $countries = Country::latest()->paginate(5);
+        $countries = Country::latest()->paginate(50);
 
         return view('admin.countries.index', compact('countries'))
             ->with('i', (request()->input('page', 1) - 1) * 5);

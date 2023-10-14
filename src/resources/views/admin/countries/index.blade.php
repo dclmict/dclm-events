@@ -46,8 +46,10 @@
                 </tr>
             @endforeach
         </table>
+        <div class="col-lg-7 col-md-7 mx-auto text-center">
+            {!! $countries->links() !!}
+        </div>
     </div>
 
-    {!! $countries->links() !!}
 
 @endsection

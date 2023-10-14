@@ -6,6 +6,7 @@
             <div class="row align-items-center my-2 my-sm-5">
                 <div class="col-md-7">
                     <form action="" method="POST" enctype="multipart/form-data" class="dpmaker-form">
+                        @csrf
                         <h1 class="h1 mt-3 mb-3 fw-bold text-white">PERSONALIZED FLYER</h1>
                         <h3 class="h6 mt-3 mb-5 fw-bold text-sblue">Create Your Personalized DP</h3>
 
@@ -22,8 +23,8 @@
                         </div>
 
                         <div class="custom-file d-block w-100 mb-3">
-                            <input type="file" name="file" class="custom-file-input form-control form-control-2" id="fileDoc"
-                                placeholder="Select a Photo" required>
+                            <input type="file" name="file" class="custom-file-input form-control form-control-2"
+                                id="fileDoc" placeholder="Select a Photo" required>
                             <!--<label class="custom-file-label" for="file" style="justify-content: left;">Choose file</label>-->
                         </div>
 
@@ -54,7 +55,8 @@
 
                         </div>
 
-                        <button name="getmydp" class="w-100 btn btn-lg btn-danger mt-3 mk-btn" type="submit">Make My DP</button>
+                        <button name="getmydp" class="w-100 btn btn-lg btn-danger mt-3 mk-btn" type="submit">Make My
+                            DP</button>
                     </form>
                 </div>
                 <div class="col-md-5">
@@ -78,6 +80,24 @@
         $(document).ready(function() {
             $('nav.navbar').addClass('shadow-none');
             $('.layout-wrapper').addClass('not-home register');
+
+            @if ($errors->any())
+                // @dump(json_encode($errors->all()))
+                let errorArr = `{{ json_encode($errors->all()) }}`;
+                console.table(JSON.parse(errorArr));
+                let errorList = [];
+                // <div class="error">
+                //         @foreach ($errors->all() as $error)
+                //             <li>{{ $error }}</li>
+                //         @endforeach
+                // </div>
+            @endif
+            Swal.fire({
+                icon: 'error',
+                title: `<small>errorArr!</small>`,
+                text: `hello`,
+            })
+
         });
     </script>
 @endsection
