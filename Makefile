@@ -2,16 +2,14 @@
 
 SHELL := /bin/bash
 
-# copy .env file based on environment
-SRC := $(shell os=$$(uname -s); \
-	if [ "$$os" = "Linux" ]; then \
-		cp ./ops/.env.prod ./src/.env; \
-		cp ./docker-prod.yml ./src/docker-compose.yml; \
-	elif [ "$$os" = "Darwin" ]; then \
-		cp ./ops/.env.dev ./src/.env; \
-		cp ./docker-dev.yml ./src/docker-compose.yml; \
+# copy .env file based on env (auto)
+SRC := $(shell os=$$(hostname); \
+	if [ "$$os" = "dclm" ]; then \
+		cp ./ops/dclm-prod.env ./src/.env; \
+	elif [ "$$os" = "dclmict" ]; then \
+		cp ./ops/dclm-dev.env ./src/.env; \
 	else \
-		exit 1; \
+		cp ./ops/bams-dev.env ./src/.env; \
 	fi)
 
 # include .env file
@@ -64,7 +62,7 @@ repo:
 	fi
 
 git:
-	@if git status --porcelain | grep -q '^U'; then \
+	@if git status --porcelain | grep -q "^??"; then \
 		make commit-1; \
 		make git-push; \
 	elif git status --porcelain | grep -qE '[^ADMR]'; then \
@@ -73,7 +71,7 @@ git:
 	elif [ -z "$$(git status --porcelain)" ]; then \
 		make git-push; \
 	else \
-		echo -e "\033[31mUnknown status. Aborting...\033[0m"; \
+		echo -e "\033[31m Unknown status. Aborting...\033[0m\n"; \
 		exit 0; \
 	fi
 
