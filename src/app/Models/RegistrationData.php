@@ -10,14 +10,17 @@ class RegistrationData extends Model
     use HasFactory;
 
     protected $fillable = [
-        'fullname',
+        'user_id',
+        'first_name',
+        'last_name',
         'email',
         'age',
         'gender',
         'address',
+        'city',
         'bus_stop',
-        'phone_number',
-        'whatsapp_number',
+        'phone',
+        'whatsapp',
         'church_member',
         'facebook_username',
         'church',
@@ -30,14 +33,29 @@ class RegistrationData extends Model
         'group_id',
     ];
 
+    protected $appends = [
+        'full_name',
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function program()
     {
         return $this->belongsTo(Program::class);
+        // return $this->belongsTo(Program::class, 'referrer_id', 'id')
+        return $this->belongsTo(Program::class)
+        ->orWhere(function ($query) {
+            $query->where('program_id','LIKE %'. $this->id. '%');
+        });
+        // ->with('user');
     }
 
     public function country()
     {
-        return $this->belongsTo(Country::class);
+        return $this->belongsTo(Country::class, 'country_id','iso2');
     }
 
     public function state()
@@ -55,6 +73,14 @@ class RegistrationData extends Model
         return $this->belongsTo(Group::class);
     }
 
+        /**
+     * Get the user's fullname.
+     * @return string
+     */
+    public function getFullNameAttribute()
+    {
+        return $this->first_name . ' ' .$this->last_name;
+    }
 
 
 

@@ -28,7 +28,7 @@ class IndexController extends Controller
 
         // $newData = RegistrationData::with('program', 'country')->where('new_comer', 'Yes')->get();
 
-        // dd($programs);
+        // dump($allData);
         return view('admin.data', compact('allData'));
     }
 

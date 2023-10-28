@@ -14,7 +14,7 @@ class ContinentController extends Controller
      */
     public function index()
     {
-        $continents = Continent::latest()->paginate(5);
+        $continents = Continent::latest()->paginate(25);
 
         return view('admin.continents.index', compact('continents'))
             ->with('i', (request()->input('page', 1) - 1) * 5);

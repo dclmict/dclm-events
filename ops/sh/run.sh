@@ -23,7 +23,7 @@ find . -type d -exec chmod 2775 {} \;
 find . -type f -exec chmod 0664 {} \;
 rm -rf /var/www/html
 
-# laravel something
+# laravel things
 echo "\033[31mRunning laravel commands\033[0m"
 cd /var/www
 php artisan cache:clear

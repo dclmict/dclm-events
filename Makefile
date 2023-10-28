@@ -12,54 +12,68 @@ SRC := $(shell os=$$(hostname); \
 		cp ./ops/bams-dev.env ./src/.env; \
 	fi)
 
-# include .env file
+# load .env file
 include ./src/.env
+
+# copy .env file based on env (prompt)
+env: 
+	@os=$$(hostname); \
+	if [ "$$os" = "dclm" ]; then \
+		cp ./ops/dclm-prod.env ./src/.env; \
+	elif [ "$$os" = "dclmict" ]; then \
+		cp ./ops/dclm-dev.env ./src/.env; \
+	else \
+		if [[ "$$os" != "dclm" && "$$os" != "dclmict" ]]; then \
+			chmod +x ./ops/sh/env-file.sh; \
+			./ops/sh/env-file.sh; \
+		else \
+			cp ./ops/bams-dev.env ./src/.env; \
+		fi \
+	fi
 
 repo:
 	@if [ -d .git ]; then \
-		echo -e "\033[31mPlease enter github repo name: \033[0m "; \
-		read -r repo; \
-		gh repo create dclmict/$$repo --private --source=. --remote=origin; \
-		read -p "Do you want to push your code to GitHub? (yes|no): " choice; \
-		case "$$choice" in \
-			yes|Y|y) \
-				echo -e "\033[31m Enter commit message\033[0m"; \
-				read -r cm; \
-				git add . && git commit -m "$$cm"; \
-				git push --set-upstream origin main; \
-				;; \
-			no|N|n) \
-				echo -e "\033[32m Nothing to be done. Thank you...:\033[0m"; \
-				exit 0; \
-				;; \
-			*) \
-				echo -e "\033[32m No choice. Exiting script...:\033[0m"; \
-				exit 1; \
-				;; \
-		esac \
+		make repo-name; \
 	else \
-		echo -e "\033[31mPlease enter github repo name: \033[0m "; \
-		git init && git add . && git commit -m "DCLM DAM"; \
-		read -r repo; \
-		gh repo create dclmict/$$repo --private --source=. --remote=origin; \
-		read -p "Do you want to push your code to GitHub? (yes|no): " choice; \
-		case "$$choice" in \
-			yes|Y|y) \
-				echo -e "\033[31m Enter commit message\033[0m"; \
-				read -r cm; \
-				git add . && git commit -m "$$cm"; \
-				git push --set-upstream origin main; \
-				;; \
-			no|N|n) \
-				echo -e "\033[32m Nothing to be done. Thank you...:\033[0m"; \
-				exit 0; \
-				;; \
-			*) \
-				echo -e "\033[32m No choice. Exiting script...:\033[0m"; \
-				exit 1; \
-				;; \
-		esac \
+		make repo-init; \
+		make repo-name; \
 	fi
+
+repo-init:
+	@read -p "Do you want to initialise this folder as a git repo? (yes|no): " choice; \
+	case "$$choice" in \
+		yes|Y|y) \
+			echo -e "\033[31m Please enter initial commit message: \033[0m\n"; \
+			read -r commitMsg; \
+			git init && git add . && git commit -m "$$commitMsg"; \
+			;; \
+		no|N|n) \
+			echo -e "\033[32m Nothing to be done. Thank you...\033[0m\n"; \
+			exit 0; \
+			;; \
+		*) \
+			echo -e "\033[32m No choice. Exiting script...\033[0m\n"; \
+			exit 1; \
+			;; \
+	esac
+
+repo-name:
+	@read -p "Do you want to create a github repo? (yes|no): " choice; \
+	case "$$choice" in \
+		yes|Y|y) \
+			echo -e "\033[31m Please enter github repo name: \033[0m\n"; \
+			read -r repoName; \
+			gh repo create dclmict/$$repoName --public --source=. --remote=origin; \
+			;; \
+		no|N|n) \
+			echo -e "\033[32m Nothing to be done. Thank you...\033[0m\n"; \
+			exit 0; \
+			;; \
+		*) \
+			echo -e "\033[32m No choice. Exiting script...\033[0m\n"; \
+			exit 1; \
+			;; \
+	esac
 
 git:
 	@if git status --porcelain | grep -q "^??"; then \
@@ -86,111 +100,168 @@ commit-2:
 	read -r msg2; \
 	git commit -am "$$msg2"
 
-git-push:
-	@read -p "Do you want to push your commit to GitHub? (yes|no): " choice; \
+gh-sl:
+	@gh secret list
+
+gh-ss: gh-sd
+	@read -p "Do you want to set repo secrets? (yes|no): " choice; \
 	case "$$choice" in \
 		yes|Y|y) \
-			echo -e "\033[32mPushing commit to GitHub...:\033[0m"; \
-			gh secret set -f ops/.env.prod; \
-			git push; \
+			echo -e "\033[32m Setting repo secrets...\033[0m\n"; \
+			chmod +x ./ops/sh/gh-variable-set.sh; \
+			./ops/sh/gh-variable-set.sh; \
+			gh secret set -f $(ENV); \
 			;; \
 		no|N|n) \
-			echo -e "\033[32m Nothing to be done. Thank you...:\033[0m"; \
+			echo -e "\033[32m Nothing to be done. Thank you...\033[0m\n"; \
 			exit 0; \
 			;; \
 		*) \
-			echo -e "\033[32m No choice. Exiting script...:\033[0m"; \
+			echo -e "\033[32m No choice. Exiting script...\033[0m\n"; \
+			exit 1; \
+			;; \
+	esac
+
+gh-sd:
+	@read -p "Do you want to delete repo secret? (yes|no): " choice; \
+	case "$$choice" in \
+		yes|Y|y) \
+			echo -e "\033[32m Deleting repo secrets...\033[0m\n"; \
+			chmod +x ./ops/sh/gh-secret-delete.sh; \
+			./ops/sh/gh-secret-delete.sh $(ENV); \
+			;; \
+		no|N|n) \
+			echo -e "\033[32m Nothing to be done. Thank you...\033[0m\n"; \
+			exit 0; \
+			;; \
+		*) \
+			echo -e "\033[32m No choice. Exiting script...\033[0m\n"; \
+			exit 1; \
+			;; \
+	esac
+
+git-push: env gh-ss
+	@read -p "Do you want to push your commit to GitHub? (yes|no): " choice; \
+	case "$$choice" in \
+		yes|Y|y) \
+			echo -e "\033[32m Pushing commit to GitHub...\033[0m\n"; \
+			git push; \
+			;; \
+		no|N|n) \
+			echo -e "\033[32m Nothing to be done. Thank you...\033[0m\n"; \
+			exit 0; \
+			;; \
+		*) \
+			echo -e "\033[32m No choice. Exiting script...\033[0m\n"; \
 			exit 1; \
 			;; \
 	esac
 
 image:
-	@if docker images | grep -q $(DIN); then \
-		echo "Removing \033[31m$(DIN):$(DIV)\033[0m image"; \
-		echo y | docker image prune --filter="dangling=true"; \
-		docker image rm $(DIN):$(DIV); \
-		echo "Building \033[31m$(DIN):$(DIV)\033[0m image"; \
-		docker build -t $(DIN):$(DIV) .; \
-		docker images | grep $(DIN):$(DIV); \
-	else \
-		echo "Building \033[31m$(DIN):$(DIV)\033[0m image"; \
-		docker build -t $(DIN):$(DIV) .; \
-		docker images | grep $(DIN):$(DIV); \
+	@if [ "$(docker images -qf "dangling=true")" ]; then \
+		echo -e "\033[31mRemoving dangling images...\033[0m"; \
+		docker image prune -f; \
 	fi
+	@if docker image inspect $(DIN):$(DIV) &> /dev/null; then \
+		echo -e "\033[31mDeleting existing image...\033[0m"; \
+		docker rmi $(DIN):$(DIV); \
+	fi
+	@echo -e "\033[32mBuilding $(DIN):$(DIV) image\033[0m"
+	@docker build -t $(DIN):$(DIV) -f $(DOCKERFILE) .
+	@docker images | grep $(DIN)
 
 image-push:
-	@echo $$DLP | docker login -u opeoniye --password-stdin; \
-	docker push $(DIN):$(DIV)
+	@echo ${DLP} | docker login -u opeoniye --password-stdin
+	@docker push $(DIN):$(DIV)
+
+dcgen-dev:
+	@echo "Generating docker-compose.yml..."
+	@echo "services:" > ./src/docker-compose.yml
+	@echo "  $(CN):" >> ./src/docker-compose.yml
+	@echo "    container_name: \$${CN}" >> ./src/docker-compose.yml
+	@echo "    image: \$${DIN}:\$${DIV}" >> ./src/docker-compose.yml
+	@echo "    env_file: .env" >> ./src/docker-compose.yml
+	@echo "    ports:" >> ./src/docker-compose.yml
+	@echo "      - $(COMPOSE_PORT)" >> ./src/docker-compose.yml
+	@echo "    networks:" >> ./src/docker-compose.yml
+	@echo "      - $(COMPOSE_NETWORK)" >> ./src/docker-compose.yml
+	@echo "    volumes:" >> ./src/docker-compose.yml
+	@echo "      - .:/var/www" >> ./src/docker-compose.yml
+	@echo "      - $(CERT):/var/ssl/cert.pem" >> ./src/docker-compose.yml
+	@echo "      - $(CERT_KEY):/var/ssl/key.pem" >> ./src/docker-compose.yml
+	@echo "    restart: always" >> ./src/docker-compose.yml
+	@echo "    working_dir: /var/www" >> ./src/docker-compose.yml
+	@echo "networks:" >> ./src/docker-compose.yml
+	@echo "  $(COMPOSE_NETWORK):" >> ./src/docker-compose.yml
+	@echo "    name: $(COMPOSE_NETWORK)" >> ./src/docker-compose.yml
+	@echo "    external: true" >> ./src/docker-compose.yml
+	@echo "Docker-compose file generated successfully."
+
+dcgen-prod:
+	@echo "Generating docker-compose.yml..."
+	@echo "services:" > ./src/docker-compose.yml
+	@echo "  $(CN):" >> ./src/docker-compose.yml
+	@echo "    container_name: \$${CN}" >> ./src/docker-compose.yml
+	@echo "    image: \$${DIN}:\$${DIV}" >> ./src/docker-compose.yml
+	@echo "    env_file: .env" >> ./src/docker-compose.yml
+	@echo "    ports:" >> ./src/docker-compose.yml
+	@echo "      - $(COMPOSE_PORT)" >> ./src/docker-compose.yml
+	@echo "    networks:" >> ./src/docker-compose.yml
+	@echo "      - $(COMPOSE_NETWORK)" >> ./src/docker-compose.yml
+	@echo "    volumes:" >> ./src/docker-compose.yml
+	@echo "      - $(CERT):/var/ssl/cert.pem" >> ./src/docker-compose.yml
+	@echo "      - $(CERT_KEY):/var/ssl/key.pem" >> ./src/docker-compose.yml
+	@echo "    restart: always" >> ./src/docker-compose.yml
+	@echo "    working_dir: /var/www" >> ./src/docker-compose.yml
+	@echo "networks:" >> ./src/docker-compose.yml
+	@echo "  $(COMPOSE_NETWORK):" >> ./src/docker-compose.yml
+	@echo "    name: $(COMPOSE_NETWORK)" >> ./src/docker-compose.yml
+	@echo "    external: true" >> ./src/docker-compose.yml
+	@echo "Docker-compose file generated successfully."
 
 up:
-	@if [ "$$(uname -s)" = "Linux" ]; then \
-		if [ -f ops/.env.prod ]; then \
-			echo -e "\033[31mStarting container in prod environment...\033[0m"; \
-			cp ./ops/.env.prod ./src/.env; \
-			docker pull $(DIN):$(DIV); \
-			docker compose -f ./src/docker-compose.yml --env-file ./src/.env up -d; \
-		else \
-			echo -e "ops/.env.prod not found."; \
-			exit 1; \
-		fi; \
-	elif [ "$$(uname -s)" = "Darwin" ]; then \
-		echo -e "\033[31mStarting container in dev environment...\033[0m"; \
-		docker compose -f ./src/docker-compose.yml --env-file ./src/.env up -d; \
+	@echo -e "\033[31mStarting container in $(ENV_ENV) environment...\033[0m"
+	@if [ "$(ENV_ENV)" = "bams-dev" ]; then \
+		make dcgen-dev; \
+		docker compose -f $(DCF) --env-file $(ENV) up -d; \
 	else \
-		echo -e "Unsupported operating system."; \
-		exit 1; \
+		make dcgen-prod; \
+		docker pull $(DIN):$(DIV); \
+		docker compose -f $(DCF) --env-file $(ENV) up -d; \
 	fi
 
 down:
-	@docker compose -f ./src/docker-compose.yml --env-file ./src/.env down
+	@docker compose -f $(DCF) --env-file $(ENV) down
 
 start:
-	@docker compose -f ./src/docker-compose.yml --env-file ./src/.env start
-
-stop:
-	@docker compose -f ./src/docker-compose.yml --env-file ./src/.env stop
+	@docker compose -f $(DCF) --env-file $(ENV) start
 
 restart:
-	@docker compose -f ./src/docker-compose.yml --env-file ./src/.env.dev restart
+	@docker compose -f $(DCF) --env-file $(ENV) restart
 
-shell:
-	@docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec -it $(CN) bash
-
-composer:
-	@docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec $(CN) composer install
-
-key:
-	@docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec $(CN) php artisan key:generate
-
-storage:
-	@docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec $(CN) php artisan storage:link
-
-migrate:
-	@docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec $(CN) php artisan migrate
-
-fresh:
-	@docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec $(CN) php artisan migrate:fresh
-
-seed:
-	@docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec $(CN) php artisan db:seed
-
-db:
-	@docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec $(CN) php artisan tinker
-
-info:
-	@docker compose -f ./src/docker-compose.yml --env-file ./src/.env exec $(CN) php artisan --version
-
-ps:
-	@docker compose -f ./src/docker-compose.yml --env-file ./src/.env ps
-
-log:
-	@docker compose -f ./src/docker-compose.yml --env-file ./src/.env logs -f $(CN)
-
-run:
-	@echo -e "\033[31mEnter command to run inside container: \033[0m"; \
-	read -r cmd; \
-	docker compose -f ./src/docker-compose.yml exec $(CN) bash -c "$$cmd"
+stop:
+	@docker compose -f $(DCF) --env-file $(ENV) stop
 
 new:
 	@git restore .
 	@git pull
+
+sh:
+	@docker compose -f $(DCF) --env-file $(ENV) exec -it $(CN) bash
+
+ps:
+	@docker compose -f $(DCF) ps
+
+stats:
+	@docker compose -f $(DCF) top
+
+log:
+	@docker compose -f $(DCF) --env-file $(ENV) logs -f $(CN)
+
+run:
+	@echo -e "\033[31mEnter command to run inside container: \033[0m"; \
+	read -r cmd; \
+	docker compose -f $(DCF) exec $(CN) bash -c "$$cmd"
+
+play:
+	@docker run -it --rm --name bams -v "$$(pwd)":/myapp -w /myapp ubuntu:20.04

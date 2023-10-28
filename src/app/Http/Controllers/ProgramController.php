@@ -112,6 +112,7 @@ class ProgramController extends Controller
 
         
         $previousFileName = $program->image_location;
+
         $program->name = $valData["name"];
         $program->category = $valData["category"];
         $program->event_date = $valData["date"];
@@ -126,7 +127,7 @@ class ProgramController extends Controller
         $program->save();
 
         return redirect()->route('programs.index')
-        ->with('success', 'Event updated successfully');
+                        ->with('success', 'Event updated successfully');
     }
 
     /**
@@ -140,7 +141,7 @@ class ProgramController extends Controller
         $program->delete();
 
         return redirect()->route('programs.index')
-        ->with('success', 'Event deleted successfully');
+                        ->with('success', 'Event deleted successfully');
     }
 
     public function toggleProgramStatus(Program $program)
