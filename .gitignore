@@ -1,12 +1,8 @@
 # files
 .env
-setup
+dclm-events
 ops/bams-dev.env
 ops/dclm-prod.env
 
 # folders
 _
-/bootstrap
-/storage
-/src/vendor
-/vendor
