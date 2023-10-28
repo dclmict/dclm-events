@@ -14,9 +14,12 @@
 echo "\033[31mRunning composer install for events app\033[0m"
 composer update
 composer install --optimize-autoloader --no-dev
-echo "\033[31mNow running composer install for DP maker app\033[0m"
-cd /var/www/personalizedflyer
-composer install --optimize-autoloader --no-dev
+
+# echo "\033[31mNow running composer install for DP maker app\033[0m"
+# cd /var/www/personalizedflyer
+# composer install --optimize-autoloader --no-dev
+
+# set proper permissions
 cd /var/www
 chown -R www-data:www-data .
 find . -type d -exec chmod 2775 {} \;
