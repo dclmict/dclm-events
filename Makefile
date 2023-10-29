@@ -15,6 +15,11 @@ SRC := $(shell os=$$(hostname); \
 # load .env file
 include ./src/.env
 
+# include makefiles
+ifeq ($(APP_STACK),laravel)
+  include laravel.mk
+endif
+
 # copy .env file based on env (prompt)
 env: 
 	@os=$$(hostname); \
@@ -162,24 +167,24 @@ image:
 		echo -e "\033[31mRemoving dangling images...\033[0m"; \
 		docker image prune -f; \
 	fi
-	@if docker image inspect $(DIN):$(DIV) &> /dev/null; then \
+	@if docker image inspect $(DIN) &> /dev/null; then \
 		echo -e "\033[31mDeleting existing image...\033[0m"; \
-		docker rmi $(DIN):$(DIV); \
+		docker rmi $(DIN); \
 	fi
-	@echo -e "\033[32mBuilding $(DIN):$(DIV) image\033[0m"
-	@docker build -t $(DIN):$(DIV) -f $(DOCKERFILE) .
+	@echo -e "\033[32mBuilding $(DIN) image\033[0m"
+	@docker build -t $(DIN) -f $(DOCKERFILE) .
 	@docker images | grep $(DIN)
 
 image-push:
 	@echo ${DLP} | docker login -u opeoniye --password-stdin
-	@docker push $(DIN):$(DIV)
+	@docker push $(DIN)
 
 dcgen-dev:
 	@echo "Generating docker-compose.yml..."
 	@echo "services:" > ./src/docker-compose.yml
 	@echo "  $(CN):" >> ./src/docker-compose.yml
 	@echo "    container_name: \$${CN}" >> ./src/docker-compose.yml
-	@echo "    image: \$${DIN}:\$${DIV}" >> ./src/docker-compose.yml
+	@echo "    image: \$${DIN}" >> ./src/docker-compose.yml
 	@echo "    env_file: .env" >> ./src/docker-compose.yml
 	@echo "    ports:" >> ./src/docker-compose.yml
 	@echo "      - $(COMPOSE_PORT)" >> ./src/docker-compose.yml
@@ -202,7 +207,7 @@ dcgen-prod:
 	@echo "services:" > ./src/docker-compose.yml
 	@echo "  $(CN):" >> ./src/docker-compose.yml
 	@echo "    container_name: \$${CN}" >> ./src/docker-compose.yml
-	@echo "    image: \$${DIN}:\$${DIV}" >> ./src/docker-compose.yml
+	@echo "    image: \$${DIN}" >> ./src/docker-compose.yml
 	@echo "    env_file: .env" >> ./src/docker-compose.yml
 	@echo "    ports:" >> ./src/docker-compose.yml
 	@echo "      - $(COMPOSE_PORT)" >> ./src/docker-compose.yml
@@ -223,31 +228,24 @@ up:
 	@echo -e "\033[31mStarting container in $(ENV_ENV) environment...\033[0m"
 	@if [ "$(ENV_ENV)" = "bams-dev" ]; then \
 		make dcgen-dev; \
-		docker compose -f $(DCF) --env-file $(ENV) up -d; \
+		docker compose -f $(DCF) up -d; \
 	else \
 		make dcgen-prod; \
-		docker pull $(DIN):$(DIV); \
-		docker compose -f $(DCF) --env-file $(ENV) up -d; \
+		docker pull $(DIN); \
+		docker compose -f $(DCF) up -d; \
 	fi
 
 down:
-	@docker compose -f $(DCF) --env-file $(ENV) down
+	@docker compose -f $(DCF) down
 
 start:
-	@docker compose -f $(DCF) --env-file $(ENV) start
+	@docker compose -f $(DCF) start
 
 restart:
-	@docker compose -f $(DCF) --env-file $(ENV) restart
+	@docker compose -f $(DCF) restart
 
 stop:
-	@docker compose -f $(DCF) --env-file $(ENV) stop
-
-new:
-	@git restore .
-	@git pull
-
-sh:
-	@docker compose -f $(DCF) --env-file $(ENV) exec -it $(CN) bash
+	@docker compose -f $(DCF) stop
 
 ps:
 	@docker compose -f $(DCF) ps
@@ -256,7 +254,14 @@ stats:
 	@docker compose -f $(DCF) top
 
 log:
-	@docker compose -f $(DCF) --env-file $(ENV) logs -f $(CN)
+	@docker compose -f $(DCF) logs -f $(CN)
+
+sh:
+	@docker compose -f $(DCF) exec -it $(CN) bash
+
+new:
+	@git restore .
+	@git pull
 
 run:
 	@echo -e "\033[31mEnter command to run inside container: \033[0m"; \
@@ -264,4 +269,4 @@ run:
 	docker compose -f $(DCF) exec $(CN) bash -c "$$cmd"
 
 play:
-	@docker run -it --rm --name bams -v "$$(pwd)":/myapp -w /myapp ubuntu:20.04
+	@docker run -it --rm --name ubuntu -v "$$(pwd)":/myapp -w /myapp ubuntu:bams
