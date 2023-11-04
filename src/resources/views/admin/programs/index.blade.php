@@ -36,7 +36,7 @@
             <tr>
                 <th>No</th>
                 <th>Name</th>
-                <th >Status</th>
+                <th>Status</th>
                 <th width="360px">Action</th>
             </tr>
             @foreach ($programs as $program)

@@ -30,6 +30,11 @@ Route::get('/ministers', function (){
   return view('ministers');
 });
 
+Route::get('/test', function(){
+    dump(storage_path('public/events'));
+    dump(public_path('public'));
+});
+
 Route::get('/professionals', function (){
   return view('professionals');
 });
@@ -80,8 +85,13 @@ Route::middleware("web")->controller(StaticPages::class)->group(function () {
   Route::get('/resources', 'resources')->name('page.resources');
   Route::get('/register', 'register')->name('page.register');
 //   Route::match(['get','post'], '/register', 'register')->name('page.register');
+
+ Route::get('/get-image-file/{dir}/{img}', 'getImageFile')->name('getImageFile');
+
+
 });
 Route::post('/register', [ApiController::class, 'processRegistrationForm'])->name('page.register.post');
 
 
 Route::match(['get','post'],'getmydp', [DpMakerController::class, 'index'])->name('getmydp');
+
