@@ -24,5 +24,6 @@ personalizedflyer/cache/temp/*.jpg
 personalizedflyer/cache/letter/*.jpg
 storage/*.key
 public/storage
+public/cache/
 /public/dp-symlink.php
 /public/createsymlink.php

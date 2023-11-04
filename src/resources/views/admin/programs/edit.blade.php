@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-lg-7 col-md-7 mx-auto margin-tb">
+        <div class="col-12  mx-auto margin-tb">
             <div class="float-start">
                 <h2>Edit Program</h2>
             </div>
@@ -26,6 +26,7 @@
         </div>
     @endif
 
+    @dump($program)
     <form enctype="multipart/form-data" action="{{ route('programs.update',$program->id) }}" method="POST">
         @csrf
         @method('PUT')
@@ -54,7 +55,7 @@
                     <strong>Event Countdown:</strong>
                     <input type="text" name="countdown" value="{{ $program->event_countdown }}" class="form-control" placeholder="2022/11/17">
                 </div>
-            </div>                                
+            </div>
             <div class="col-xs-12 col-sm-12 col-md-7 mx-auto">
             <div class="form-group">
                 <strong>Banner Image: {{ $program->image_location }}</strong>
