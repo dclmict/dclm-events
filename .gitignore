@@ -1,10 +1,8 @@
 # files
 .env
 setup
-ops/.env.dev
-ops/.env.prod
-ops/docker/pin
-ops/events_registration.sql
+ops/bams-dev.env
+ops/dclm-prod.env
 
 # folders
 _
