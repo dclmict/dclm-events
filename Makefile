@@ -12,12 +12,15 @@ SRC := $(shell os=$$(hostname); \
 		cp ./ops/bams-dev.env ./src/.env; \
 	fi)
 
-# load .env file
+# load env file
 include ./src/.env
 
-# include makefiles
-ifeq ($(APP_STACK),laravel)
-  include laravel.mk
+## include makefiles
+# Remove double quotes
+DL_STACK := $(subst ",,${DL_STACK})
+
+ifeq ($(DL_STACK),laravel)
+	include ./ops/sh/laravel.mk
 endif
 
 # copy .env file based on env (prompt)
@@ -29,49 +32,81 @@ env:
 		cp ./ops/dclm-dev.env ./src/.env; \
 	else \
 		if [[ "$$os" != "dclm" && "$$os" != "dclmict" ]]; then \
-			chmod +x ./ops/sh/env-file.sh; \
-			./ops/sh/env-file.sh; \
+			make copy-env; \
 		else \
 			cp ./ops/bams-dev.env ./src/.env; \
 		fi \
 	fi
 
+copy-env:
+	@chmod +x ./ops/sh/copy-env-file.sh
+	@./ops/sh/copy-env-file.sh
+
 repo:
-	@if [ -d .git ]; then \
+	@echo "What do you want to do?:"; \
+	echo "1. Create local git repo"; \
+	echo "2. Create remote repo on GitHub"; \
+	read -p "Enter a number to select your choice: " git_choice; \
+	if [ $$git_choice -eq 1 ]; then \
+		make repo-gitignore; \
+		make repo-init; \
+	elif [ $$git_choice -eq 2 ]; then \
 		make repo-name; \
 	else \
-		make repo-init; \
-		make repo-name; \
+		echo "Invalid choice"; \
+		exit 1; \
 	fi
 
 repo-init:
-	@read -p "Do you want to initialise this folder as a git repo? (yes|no): " choice; \
-	case "$$choice" in \
+	@read -p "Do you want to initialise this folder? (yes|no): " repo_init; \
+	case "$$repo_init" in \
 		yes|Y|y) \
-			echo -e "\033[31m Please enter initial commit message: \033[0m\n"; \
-			read -r commitMsg; \
-			git init && git add . && git commit -m "$$commitMsg"; \
+			if [ -d .git ]; then \
+				echo -e "\033[31mCurrent directory already initialised \033[0m\n"; \
+			else \
+				echo -e "\033[32mPlease enter initial commit message: \033[0m\n"; \
+				read -r commitMsg; \
+				git init && git add . && git commit -m "$$commitMsg"; \
+			fi \
 			;; \
 		no|N|n) \
-			echo -e "\033[32m Nothing to be done. Thank you...\033[0m\n"; \
+			echo -e "\033[32mNothing to be done. Thank you...\033[0m\n"; \
 			exit 0; \
 			;; \
 		*) \
-			echo -e "\033[32m No choice. Exiting script...\033[0m\n"; \
+			echo -e "\033[32mNo choice. Exiting script...\033[0m\n"; \
 			exit 1; \
 			;; \
 	esac
 
 repo-name:
-	@read -p "Do you want to create a github repo? (yes|no): " choice; \
-	case "$$choice" in \
+	@read -p "Do you want to create a github repo? (yes|no): " repo_name; \
+	case "$$repo_name" in \
 		yes|Y|y) \
-			echo -e "\033[31m Please enter github repo name: \033[0m\n"; \
-			read -r repoName; \
-			gh repo create dclmict/$$repoName --public --source=. --remote=origin; \
+			read -p "Enter GitHub user: " ghUser; \
+			read -p "Enter GitHub repo name: " ghName; \
+			chmod +x ./ops/sh/gh-check-repo.sh; \
+			result="$$(./ops/sh/gh-check-repo.sh $$ghUser/$$ghName)"; \
+			if [ $$result -eq 200 ]; then \
+				echo -e "\033[31mGitHub repo exists. I stop here. \033[0m\n"; \
+			else \
+				echo "Which type of repository are you creating?:"; \
+				echo "1. Private repo"; \
+				echo "2. Public repo"; \
+				read -p "Enter a number to select your choice: " repoType; \
+				if [ $$repoType -eq 1 ]; then \
+					REPO=private; \
+				elif [ $$repoType -eq 2 ]; then \
+					REPO=public; \
+				else \
+					echo "Invalid choice"; \
+					exit 1; \
+				fi; \
+				gh repo create $$ghUser/$$ghName --$$REPO --source=. --remote=origin; \
+			fi; \
 			;; \
 		no|N|n) \
-			echo -e "\033[32m Nothing to be done. Thank you...\033[0m\n"; \
+			echo -e "\033[32mOkay. Thank you...\033[0m\n"; \
 			exit 0; \
 			;; \
 		*) \
@@ -80,7 +115,37 @@ repo-name:
 			;; \
 	esac
 
-git:
+repo-scan:
+	@read -p "Do you want to scan this repo? (yes|no): " repo_scan; \
+	case "$$repo_scan" in \
+		yes|Y|y) \
+			echo -e "\033[32mScanning repo for secrets...\033[0m\n"; \
+			ggshield secret scan repo .; \
+			;; \
+		no|N|n) \
+			echo -e "\033[32mOkay. Thank you...\033[0m\n"; \
+			exit 0; \
+			;; \
+		*) \
+			echo -e "\033[32mNo choice. Exiting script...\033[0m\n"; \
+			exit 1; \
+			;; \
+	esac
+
+repo-gitignore:
+	@echo '# files' > .gitignore
+	@echo '.env' >> .gitignore
+	@echo '.cache_ggshield' >> .gitignore
+	@echo 'dclm-events' >> .gitignore
+	@echo 'ops/bams-dev.env' >> .gitignore
+	@echo 'ops/dclm-dev.env' >> .gitignore
+	@echo 'ops/dclm-prod.env' >> .gitignore
+	@echo 'ops/dclm-v1.env' >> .gitignore
+	@echo '' >> .gitignore
+	@echo '# folders' >> .gitignore
+	@echo '_' >> .gitignore
+
+git: gh-envfile-set
 	@if git status --porcelain | grep -q "^??"; then \
 		make commit-1; \
 		make git-push; \
@@ -105,59 +170,112 @@ commit-2:
 	read -r msg2; \
 	git commit -am "$$msg2"
 
-gh-sl:
+gh-secret-list:
 	@gh secret list
 
-gh-ss: gh-sd
+gh-secret-set: gh-secret-rm
 	@read -p "Do you want to set repo secrets? (yes|no): " choice; \
 	case "$$choice" in \
 		yes|Y|y) \
-			echo -e "\033[32m Setting repo secrets...\033[0m\n"; \
-			chmod +x ./ops/sh/gh-variable-set.sh; \
-			./ops/sh/gh-variable-set.sh; \
-			gh secret set -f $(ENV); \
+			echo -e "\033[32mSetting repo secrets...\033[0m\n"; \
+			chmod +x ./ops/sh/gh-secret-set.sh; \
+			./ops/sh/gh-secret-set.sh $(DL_ENV); \
 			;; \
 		no|N|n) \
-			echo -e "\033[32m Nothing to be done. Thank you...\033[0m\n"; \
+			echo -e "\033[32mOkay. Thank you...\033[0m\n"; \
 			exit 0; \
 			;; \
 		*) \
-			echo -e "\033[32m No choice. Exiting script...\033[0m\n"; \
+			echo -e "\033[32mNo choice. Exiting script...\033[0m\n"; \
 			exit 1; \
 			;; \
 	esac
 
-gh-sd:
-	@read -p "Do you want to delete repo secret? (yes|no): " choice; \
+gh-secret-rm:
+	@read -p "Do you want to delete repo secrets? (yes|no): " choice; \
 	case "$$choice" in \
 		yes|Y|y) \
-			echo -e "\033[32m Deleting repo secrets...\033[0m\n"; \
-			chmod +x ./ops/sh/gh-secret-delete.sh; \
-			./ops/sh/gh-secret-delete.sh $(ENV); \
+			echo -e "\033[32mDeleting repo secrets...\033[0m\n"; \
+			chmod +x ./ops/sh/gh-secret-rm.sh; \
+			./ops/sh/gh-secret-rm.sh $(DL_ENV); \
 			;; \
 		no|N|n) \
-			echo -e "\033[32m Nothing to be done. Thank you...\033[0m\n"; \
+			echo -e "\033[32mNothing to be done. Thank you...\033[0m\n"; \
 			exit 0; \
 			;; \
 		*) \
-			echo -e "\033[32m No choice. Exiting script...\033[0m\n"; \
+			echo -e "\033[32mNo choice. Exiting script...\033[0m\n"; \
 			exit 1; \
 			;; \
 	esac
 
-git-push: env gh-ss
+gh-variable-set: gh-variable-rm
+	@read -p "Do you want to set repo variables? (yes|no): " choice; \
+	case "$$choice" in \
+		yes|Y|y) \
+			echo -e "\033[32mSetting repo variables...\033[0m\n"; \
+			chmod +x ./ops/sh/gh-variable-set.sh; \
+			./ops/sh/gh-variable-set.sh; \
+			;; \
+		no|N|n) \
+			echo -e "\033[32mOkay. Thank you...\033[0m\n"; \
+			exit 0; \
+			;; \
+		*) \
+			echo -e "\033[32mNo choice. Exiting script...\033[0m\n"; \
+			exit 1; \
+			;; \
+	esac
+
+gh-variable-rm:
+	@read -p "Do you want to delete repo variables? (yes|no): " choice; \
+	case "$$choice" in \
+		yes|Y|y) \
+			echo -e "\033[32mDeleting repo variables...\033[0m\n"; \
+			chmod +x ./ops/sh/gh-variable-rm.sh; \
+			./ops/sh/gh-variable-rm.sh $(DL_ENV); \
+			;; \
+		no|N|n) \
+			echo -e "\033[32mNothing to be done. Thank you...\033[0m\n"; \
+			exit 0; \
+			;; \
+		*) \
+			echo -e "\033[32mNo choice. Exiting script...\033[0m\n"; \
+			exit 1; \
+			;; \
+	esac
+
+gh-envfile-set:
+	@read -p "Do you want to generate env in workflow? (yes|no): " choice; \
+	case "$$choice" in \
+		yes|Y|y) \
+			echo -e "\033[32mFilling env file in workflow...\033[0m\n"; \
+			chmod +x ./ops/sh/gh-envfile-set.sh; \
+			./ops/sh/gh-envfile-set.sh; \
+			;; \
+		no|N|n) \
+			echo -e "\033[32mOkay. Thank you...\033[0m\n"; \
+			exit 0; \
+			;; \
+		*) \
+			echo -e "\033[32mNo choice. Exiting script...\033[0m\n"; \
+			exit 1; \
+			;; \
+	esac
+
+git-push: env repo-scan gh-secret-set gh-variable-set
 	@read -p "Do you want to push your commit to GitHub? (yes|no): " choice; \
 	case "$$choice" in \
 		yes|Y|y) \
-			echo -e "\033[32m Pushing commit to GitHub...\033[0m\n"; \
+			echo -e "\033[32mPushing commit to GitHub...\033[0m\n"; \
 			git push; \
 			;; \
 		no|N|n) \
-			echo -e "\033[32m Nothing to be done. Thank you...\033[0m\n"; \
+			echo -e "\033[32mNothing to be done. Thank you...\033[0m\n"; \
 			exit 0; \
 			;; \
 		*) \
-			echo -e "\033[32m No choice. Exiting script...\033[0m\n"; \
+			echo -e "\033[32mNo choice. Exiting script...\033[0m\n"; \
 			exit 1; \
 			;; \
 	esac
@@ -167,97 +285,97 @@ image:
 		echo -e "\033[31mRemoving dangling images...\033[0m"; \
 		docker image prune -f; \
 	fi
-	@if docker image inspect $(DIN) &> /dev/null; then \
+	@if docker image inspect $(DL_DIN) &> /dev/null; then \
 		echo -e "\033[31mDeleting existing image...\033[0m"; \
-		docker rmi $(DIN); \
+		docker rmi $(DL_DIN); \
 	fi
-	@echo -e "\033[32mBuilding $(DIN) image\033[0m"
-	@docker build -t $(DIN) -f $(DOCKERFILE) .
-	@docker images | grep $(DIN)
+	@echo -e "\033[32mBuilding $(DL_DIN) image\033[0m"
+	@docker build -t $(DL_DIN) -f $(DL_DFILE) .
+	@docker images | grep $(DL_IU)/$(DL_IN)
 
 image-push:
-	@echo ${DLP} | docker login -u opeoniye --password-stdin
-	@docker push $(DIN)
+	@echo ${DL_DLP} | docker login -u ${DL_DLU} --password-stdin
+	@docker push $(DL_DIN)
 
-dcgen-dev:
+create-compose-dev:
 	@echo "Generating docker-compose.yml..."
 	@echo "services:" > ./src/docker-compose.yml
-	@echo "  $(CN):" >> ./src/docker-compose.yml
-	@echo "    container_name: \$${CN}" >> ./src/docker-compose.yml
-	@echo "    image: \$${DIN}" >> ./src/docker-compose.yml
+	@echo "  $(DL_CN):" >> ./src/docker-compose.yml
+	@echo "    container_name: \$${DL_CN}" >> ./src/docker-compose.yml
+	@echo "    image: \$${DL_DIN}" >> ./src/docker-compose.yml
 	@echo "    env_file: .env" >> ./src/docker-compose.yml
 	@echo "    ports:" >> ./src/docker-compose.yml
-	@echo "      - $(COMPOSE_PORT)" >> ./src/docker-compose.yml
+	@echo "      - $(DL_COMPOSE_PORT)" >> ./src/docker-compose.yml
 	@echo "    networks:" >> ./src/docker-compose.yml
-	@echo "      - $(COMPOSE_NETWORK)" >> ./src/docker-compose.yml
+	@echo "      - $(DL_COMPOSE_NETWORK)" >> ./src/docker-compose.yml
 	@echo "    volumes:" >> ./src/docker-compose.yml
 	@echo "      - .:/var/www" >> ./src/docker-compose.yml
-	@echo "      - $(CERT):/var/ssl/cert.pem" >> ./src/docker-compose.yml
-	@echo "      - $(CERT_KEY):/var/ssl/key.pem" >> ./src/docker-compose.yml
+	@echo "      - $(DL_CERT):/var/ssl/cert.pem" >> ./src/docker-compose.yml
+	@echo "      - $(DL_CERT_KEY):/var/ssl/key.pem" >> ./src/docker-compose.yml
 	@echo "    restart: always" >> ./src/docker-compose.yml
 	@echo "    working_dir: /var/www" >> ./src/docker-compose.yml
 	@echo "networks:" >> ./src/docker-compose.yml
-	@echo "  $(COMPOSE_NETWORK):" >> ./src/docker-compose.yml
-	@echo "    name: $(COMPOSE_NETWORK)" >> ./src/docker-compose.yml
+	@echo "  $(DL_COMPOSE_NETWORK):" >> ./src/docker-compose.yml
+	@echo "    name: $(DL_COMPOSE_NETWORK)" >> ./src/docker-compose.yml
 	@echo "    external: true" >> ./src/docker-compose.yml
 	@echo "Docker-compose file generated successfully."
 
-dcgen-prod:
+create-compose-prod:
 	@echo "Generating docker-compose.yml..."
 	@echo "services:" > ./src/docker-compose.yml
-	@echo "  $(CN):" >> ./src/docker-compose.yml
-	@echo "    container_name: \$${CN}" >> ./src/docker-compose.yml
-	@echo "    image: \$${DIN}" >> ./src/docker-compose.yml
+	@echo "  $(DL_CN):" >> ./src/docker-compose.yml
+	@echo "    container_name: \$${DL_CN}" >> ./src/docker-compose.yml
+	@echo "    image: \$${DL_DIN}" >> ./src/docker-compose.yml
 	@echo "    env_file: .env" >> ./src/docker-compose.yml
 	@echo "    ports:" >> ./src/docker-compose.yml
-	@echo "      - $(COMPOSE_PORT)" >> ./src/docker-compose.yml
+	@echo "      - $(DL_COMPOSE_PORT)" >> ./src/docker-compose.yml
 	@echo "    networks:" >> ./src/docker-compose.yml
-	@echo "      - $(COMPOSE_NETWORK)" >> ./src/docker-compose.yml
+	@echo "      - $(DL_COMPOSE_NETWORK)" >> ./src/docker-compose.yml
 	@echo "    volumes:" >> ./src/docker-compose.yml
-	@echo "      - $(CERT):/var/ssl/cert.pem" >> ./src/docker-compose.yml
-	@echo "      - $(CERT_KEY):/var/ssl/key.pem" >> ./src/docker-compose.yml
+	@echo "      - $(DL_CERT):/var/ssl/cert.pem" >> ./src/docker-compose.yml
+	@echo "      - $(DL_CERT_KEY):/var/ssl/key.pem" >> ./src/docker-compose.yml
 	@echo "    restart: always" >> ./src/docker-compose.yml
 	@echo "    working_dir: /var/www" >> ./src/docker-compose.yml
 	@echo "networks:" >> ./src/docker-compose.yml
-	@echo "  $(COMPOSE_NETWORK):" >> ./src/docker-compose.yml
-	@echo "    name: $(COMPOSE_NETWORK)" >> ./src/docker-compose.yml
+	@echo "  $(DL_COMPOSE_NETWORK):" >> ./src/docker-compose.yml
+	@echo "    name: $(DL_COMPOSE_NETWORK)" >> ./src/docker-compose.yml
 	@echo "    external: true" >> ./src/docker-compose.yml
 	@echo "Docker-compose file generated successfully."
 
 up:
-	@echo -e "\033[31mStarting container in $(ENV_ENV) environment...\033[0m"
-	@if [ "$(ENV_ENV)" = "bams-dev" ]; then \
-		make dcgen-dev; \
-		docker compose -f $(DCF) up -d; \
+	@echo -e "\033[31mStarting container in $(DL_ENV_ENV) environment...\033[0m"
+	@if [ "$(DL_ENV_ENV)" = "bams-dev" ]; then \
+		make create-compose-dev; \
+		docker compose -f $(DL_DCF) up -d; \
 	else \
-		make dcgen-prod; \
-		docker pull $(DIN); \
-		docker compose -f $(DCF) up -d; \
+		make create-compose-prod; \
+		docker pull $(DL_DIN); \
+		docker compose -f $(DL_DCF) up -d; \
 	fi
 
 down:
-	@docker compose -f $(DCF) down
+	@docker compose -f $(DL_DCF) down
 
 start:
-	@docker compose -f $(DCF) start
+	@docker compose -f $(DL_DCF) start
 
 restart:
-	@docker compose -f $(DCF) restart
+	@docker compose -f $(DL_DCF) restart
 
 stop:
-	@docker compose -f $(DCF) stop
+	@docker compose -f $(DL_DCF) stop
 
 ps:
-	@docker compose -f $(DCF) ps
+	@docker compose -f $(DL_DCF) ps
 
 stats:
-	@docker compose -f $(DCF) top
+	@docker compose -f $(DL_DCF) top
 
 log:
-	@docker compose -f $(DCF) logs -f $(CN)
+	@docker compose -f $(DL_DCF) logs -f $(DL_CN)
 
 sh:
-	@docker compose -f $(DCF) exec -it $(CN) bash
+	@docker compose -f $(DL_DCF) exec -it $(DL_CN) bash
 
 new:
 	@git restore .
@@ -266,7 +384,7 @@ new:
 run:
 	@echo -e "\033[31mEnter command to run inside container: \033[0m"; \
 	read -r cmd; \
-	docker compose -f $(DCF) exec $(CN) bash -c "$$cmd"
+	docker compose -f $(DL_DCF) exec $(DL_CN) bash -c "$$cmd"
 
 play:
 	@docker run -it --rm --name ubuntu -v "$$(pwd)":/myapp -w /myapp ubuntu:bams

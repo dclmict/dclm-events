@@ -1,8 +1,10 @@
 # files
-.env
 dclm-events
-ops/bams-dev.env
-ops/dclm-prod.env
+/ops/bams-dev.env
+/ops/dclm-dev.env
+/ops/dclm-prod.env
+/ops/dclm-v1.env
 
 # folders
 _
+

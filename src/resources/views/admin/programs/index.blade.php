@@ -36,13 +36,13 @@
             <tr>
                 <th>No</th>
                 <th>Name</th>
-                <th>Status</th>
-                <th width="280px">Action</th>
+                <th >Status</th>
+                <th width="360px">Action</th>
             </tr>
             @foreach ($programs as $program)
                 <tr>
                     <td>{{ ++$i }}</td>
-                    <td>{{ $program->name }}</td>
+                    <td>{{ strip_tags($program->name) }}</td>
                     @if ($program->is_active)
                         <td class="text-success fw-bold">Open</td>
                     @else
