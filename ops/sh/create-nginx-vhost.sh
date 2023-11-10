@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # enter directory
-cd "$DEST_APP_ENV_DIR"
+cd "$ENV_DEST"
 
 # another way
 ngxx="vhost.conf"
@@ -13,7 +13,7 @@ eval "VHOST=\"$ngx\""
 # eval "VHOST=\"$VHOST_CONFIG\""
 
 # Create a temporary file with the provided configuration
-echo -e "\n\nCreating temporary file..."
+echo -e "\nCreating temporary file..."
 temp_file="$(mktemp)"
 echo "$VHOST" > "$temp_file"
 # echo -e "Content of temporal file:"
@@ -79,6 +79,6 @@ else
 fi
 
 # Remove temporary files
-echo -e "\nRemove temporary files..."
+echo -e "\nRemoving temporary files..."
 rm -f "$temp_file"
 rm -f "$ngxx"

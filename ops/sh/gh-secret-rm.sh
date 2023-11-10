@@ -26,4 +26,6 @@ done < "$env_file"
 # done
 
 # Run the gh secret delete command in parallel
-parallel -j+0 gh secret delete ::: "${ARGS[@]}"
+# parallel -j+0 gh secret delete ::: "${ARGS[@]}"
+# parallel --silent -j20 gh secret delete ::: "${ARGS[@]}"
+parallel --retries 3 --silent -j+0 gh secret delete ::: "${ARGS[@]}"
