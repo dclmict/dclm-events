@@ -36,6 +36,7 @@
             <tr>
                 <th>No</th>
                 <th>Name</th>
+                <th>Date</th>
                 <th>Status</th>
                 <th width="360px">Action</th>
             </tr>
@@ -43,22 +44,26 @@
                 <tr>
                     <td>{{ ++$i }}</td>
                     <td>{{ strip_tags($program->name) }}</td>
-                    @if ($program->is_active)
-                        <td class="text-success fw-bold">Open</td>
-                    @else
-                        <td class="text-danger fw-bold">Closed</td>
-                    @endif
+                    <td>{{ strip_tags($program->event_date) }}</td>
+                    <td>
+                        @if ($program->is_active)
+                            <span class="text-success fw-bold">Open</span>
+                        @else
+                            <span class="text-danger fw-bold">Closed</span>
+                        @endif
+                        @if ($program->is_featured)
+                            <span class="text-primary fw-bold"> | Featured</span>
+                        @endif
+                    </td>
                     <td>
                         {{-- <form action="{{ route('programs.destroy', $program->id) }}" method="POST"> --}}
                         @if ($program->is_active)
                             <a class="btn btn-sm mb-1 btn-outline-dark" href="{{ route('home') }}#registration-form">View Form</a>
                         @endif
-                        <a class="btn btn-sm mb-1 btn-dark"
-                            href="{{ route('programs.data', $program->id) . '/' . $program->slug }}">View Data</a>
-
+                        <a class="btn btn-sm mb-1 btn-dark" href="{{ route('programs.data', $program->id) . '/' . $program->slug }}">View Data</a>
                         <a class="btn btn-sm mb-1 btn-primary" href="{{ route('programs.edit', $program->id) }}">Edit</a>
-                        <a class="btn btn-sm mb-1 btn-outline-danger" href="{{ route('programs.toggle', $program->id) }}">Toggle
-                            Status</a>
+                        <a class="btn btn-sm mb-1 btn-outline-danger" href="{{ route('programs.toggle', $program->id) }}">Toggle Status</a>
+                        <a class="btn btn-sm mb-1 btn-outline-primary" href="{{ route('programs.featured', $program->id) }}">Toggle Featured</a>
                         {{-- </form> --}}
                     </td>
                 </tr>

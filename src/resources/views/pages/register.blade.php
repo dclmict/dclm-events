@@ -22,7 +22,7 @@
                             <div class="col-sm-4 text-center program-select">
                                 <label>
                                     <input type="radio" name="program_id" value="{{$p['id']}}" class="d-none">
-                                    <div class="custom-checkbox"><img src="{{$p['image_location']}}" class="w-100" alt="Checkbox Image"></div>
+                                    <div class="custom-checkbox"><img src="{{ route('getImageFile', ['events', $p['image_location'] ]) }}" class="w-100" alt="Checkbox Image"></div>
                                     <h5 class="text-white bolder mt-1 mb-0">{!! strip_tags($p['name'] )!!}</h5>
                                     <h6 class="small text-sm text-sblue">Days: {!! $p['event_days'] !!}</h6>
                                     <i class="fas fa-check-circle fa-2x text-success_ text-sblue"></i>

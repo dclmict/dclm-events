@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EvsContent;
 use App\Models\Program;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -32,7 +33,9 @@ class ProgramController extends Controller
     public function create()
     {
         $formMode = 'new';
-        return view('admin.programs.create', compact('formMode'));
+        $event_category = EvsContent::where('option_name', 'event_category')->get();
+        $event_type = EvsContent::where('option_name', 'event_type')->get();
+        return view('admin.programs.create', compact('formMode', 'event_category', 'event_type'));
     }
 
     /**
@@ -46,6 +49,7 @@ class ProgramController extends Controller
         $valData = $request->validate([
             'name'      => 'required|string',
             'category'  => 'required|string',
+            'event_type'  => 'required|string',
             'date'      => 'required|string',
             'countdown'      => 'required|string',
             // 'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048|dimensions:ratio=820/461'
@@ -70,6 +74,7 @@ class ProgramController extends Controller
             $program = new Program();
             $program->name = $valData["name"];
             $program->category = $valData["category"];
+            $program->event_type = $valData["event_type"];
             $program->event_date = $valData["date"];
             $program->event_countdown = $valData["countdown"];
             $program->event_days = $valData["event_days"];
@@ -123,7 +128,9 @@ class ProgramController extends Controller
     public function edit(Program $program)
     {
         $formMode = 'edit';
-        return view('admin.programs.edit', compact('program','formMode'));
+        $event_category = EvsContent::where('option_name', 'event_category')->get();
+        $event_type = EvsContent::where('option_name', 'event_type')->get();
+        return view('admin.programs.edit', compact('program','formMode', 'event_category', 'event_type'));
     }
 
     /**
@@ -154,6 +161,7 @@ class ProgramController extends Controller
         $valData = $request->validate([
             'name' => 'required|string',
             'category'  => 'required|string',
+            'event_type'  => 'required|string',
             'date'      => 'required|string',
             'countdown'      => 'required|string',
             // 'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048|dimensions:ratio=820/461'
@@ -166,6 +174,7 @@ class ProgramController extends Controller
 
         $program->name = $valData["name"];
         $program->category = $valData["category"];
+        $program->event_type = $valData["event_type"];
         $program->event_date = $valData["date"];
         $program->event_countdown = $valData["countdown"];
         $program->event_days = $valData["event_days"];
@@ -222,6 +231,15 @@ class ProgramController extends Controller
     {
         $status = $program->is_active;
         $program->is_active = !$status;
+        $program->save();
+        return redirect()->route('programs.index')
+        ->with('success', 'Event Status Changed successfully');
+    }
+
+    public function toggleProgramFeatured(Program $program)
+    {
+        $status = $program->is_featured;
+        $program->is_featured = !$status;
         $program->save();
         return redirect()->route('programs.index')
         ->with('success', 'Event Status Changed successfully');

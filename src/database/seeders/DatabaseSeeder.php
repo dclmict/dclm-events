@@ -41,9 +41,10 @@ class DatabaseSeeder extends Seeder
 
         Program::insert([
             [
-                'name' => 'LOOSE HIM <br>LET HIM GO',
+                'name' => 'Full Redemption Through Christ',
                 'slug' => 'loose-him-let-him-go',
                 'is_active' => true,
+                'is_featured' => true,
                 'image_location' => '/assets/img/event-img/asg.jpg',
                 'event_type' => 'Global',
                 'category' => 'EVENING CRUSADES',
@@ -68,6 +69,7 @@ class DatabaseSeeder extends Seeder
                 'name' => 'MINISTERS CONFERENCE',
                 'slug' => 'ministers-conference',
                 'is_active' => true,
+                'is_featured' => false,
                 'image_location' => '/assets/img/event-img/zambia_banner.jpg',
                 'event_type' => 'Global',
                 'category' => 'MINISTERS CONFERENCE',
@@ -92,6 +94,7 @@ class DatabaseSeeder extends Seeder
                 'name' => 'IMPACT ACADEMY',
                 'slug' => 'impact-academy',
                 'is_active' => true,
+                'is_featured' => false,
                 'image_location' => '/assets/img/event-img/asg.jpg',
                 'event_type' => 'Global',
                 'category' => 'IMPACT ACADEMY',

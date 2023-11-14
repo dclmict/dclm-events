@@ -35,7 +35,6 @@
 @section('footer_script')
 <script id="eventForm">
     $('document').ready(function(){
-        console.log('Form ready');
         // Counter to keep track of the number of field groups added
         let fieldGroupCounter = 1;
         // Function to add a new field group

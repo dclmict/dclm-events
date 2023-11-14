@@ -46,6 +46,7 @@ Route::get('/survey', function (){
 Route::prefix('admin')->middleware("auth")->group(function () {
     Route::resource('/programs', ProgramController::class);
     Route::get('/programs/toggle/{program}', [ProgramController::class, 'toggleProgramStatus'])->name('programs.toggle');
+    Route::get('/programs/featured/{program}', [ProgramController::class, 'toggleProgramFeatured'])->name('programs.featured');
     Route::get('/data', [IndexController::class, 'registrationData'])->name('admin.data');
     Route::get('/data/{program}/{slug?}', [IndexController::class, 'programRegistrationData'])->name('programs.data');
     Route::get('/countries', [IndexController::class, 'countries'])->name('admin.countries');

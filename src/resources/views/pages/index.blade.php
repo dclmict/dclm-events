@@ -121,9 +121,10 @@
                                                             <th>SPEAKERS</th>
                                                         </thead>
                                                         <tbody>
-                                                            @foreach ($s->list as $key => $item)
+                                                            @php($list = json_decode($s->schedules))
+                                                            @foreach ($list as $key => $item)
                                                             <tr>
-                                                                <td class="col-time">{{ $item->time }}</td>
+                                                                <td class="col-time">{{ formatDate($item->time, 'h:i A') }}</td>
                                                                 <td class="col-event">{{ $item->event }}</td>
                                                                 <td class="col-speaker small">{{ $item->speakers ?? '--' }}</td>
                                                             </tr>
@@ -135,7 +136,7 @@
                                         </div>
                                         <div class="col-md-5 ms-auto">
                                             <div class="img-wrap">
-                                                <img src="{{$s->image}}" alt="" class="w-100">
+                                                <img src="{{ route('getImageFile', ['events', $s->image_location]) }} " alt="" class="w-100">
                                             </div>
                                         </div>
                                     </div>

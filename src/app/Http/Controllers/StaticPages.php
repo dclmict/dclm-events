@@ -41,24 +41,24 @@ class StaticPages extends Controller
             'title_2' => 'Join over 3,000,000 Global Audience for a refreshing moment with God.',
             'date_1' => str_replace(" ", "", $date[1]),
             'date_2' => "$date[0] $date[2]",
-            'count_down' => $feature_event->event_countdown.' 16:00:00',
+            'count_down' => "$feature_event->event_countdown",
+            // 'count_down' => "2023/11/23 16:00:00",
             // 'image_path' => $image_path,
             // 'style' => 'background: #060024 url('.  $image_path .') no-repeat center center / cover; min-height:600px',
             'image_path' => 'assets/img/banner-01.jpg',
             'style' => 'background: #060024 url( /assets/img/generic/banner-01.jpg ) no-repeat center center / cover; min-height:600px',
             'route' => 'page.register',
         ];
-
         $res = config('dclm.resources');
-        $sch = config('dclm.schedules');
-        // $sch = json_decode(json_encode( config('dclm.schedules'), JSON_FORCE_OBJECT)) ;
         $testimonies = config('dclm.testimonies');
 
+        $sch = Program::where('is_active', true)->get();
         return view('pages.index', [
             'banner'=> $banner,
             'res'=> $res,
             'testimonies'=> $testimonies,
-            'sch' => json_decode(json_encode($sch, JSON_FORCE_OBJECT)),
+            'sch' => $sch,
+            // 'sch' => json_decode(json_encode($sch, JSON_FORCE_OBJECT)),
         ]);
     }
 
