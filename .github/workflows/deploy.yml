@@ -85,10 +85,12 @@ jobs:
           echo -e "$VHOST_CONFIG" > vhost.conf
           tr -d '\r' < vhost.conf > vhost_fixed.conf
           mv vhost_fixed.conf vhost.conf
-
-      - name: Copy file to SSH server
-        run: |
+          cat vhost.conf
           scp -o "StrictHostKeyChecking=no" -r vhost.conf "$SSH_USERNAME@$SSH_HOST:$ENV_DEST"
+
+      # - name: Copy file to SSH server
+      #   run: |
+      #     scp -o "StrictHostKeyChecking=no" -r vhost.conf "$SSH_USERNAME@$SSH_HOST:$ENV_DEST"
 
       - name: Create Nginx vhost
         env:
