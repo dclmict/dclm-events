@@ -18,15 +18,16 @@ class CreateProgramsTable extends Migration
             $table->string('name', 100);
             $table->string('slug', 100)->unique();
             $table->boolean('is_active')->default(true);
+            $table->boolean('is_featured')->default(false);
             $table->string('image_location')->nullable();
-            $table->enum('event_type', ['Global', 'Local'])->nullable();
+            $table->string('event_type')->nullable();
+            // $table->enum('event_type', ['Global', 'Local'])->nullable();
             $table->string('category')->nullable();
             $table->string('event_days')->nullable();
             $table->string('event_month')->nullable();
             $table->string('event_date')->nullable();
             $table->string('event_countdown')->nullable();
             $table->text('schedules')->nullable();
-
             $table->timestamps();
         });
     }

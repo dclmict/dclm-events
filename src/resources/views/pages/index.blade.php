@@ -2,10 +2,11 @@
 
 @section('content')
     <section id="banner" class="container-fluid fixed-top_" style="{!! $banner->style !!}">
-        <div class="container mt-4 pt-5">
+        <div class="banner-overlay h-100 w-100 position-absolute"></div>
+        <div class="container banner-content mt-4 pt-5">
             <div class="row">
                 <div class="col-md-7 left-side">
-                    <h1 class="title_1 fw-bolder">{!! $banner->title_1 !!}</h1>
+                    <h1 class="title_1 fw-bolder" style="{{$banner->title_1_css}}">{!! $banner->title_1 !!}</h1>
                     <h5 class="title_2">{!! $banner->title_2 !!}</h5>
                     <a class="btn btn-light btn-lg mt-2 text-uppercase text-primary fw-bold"
                         href="{{ route($banner->route) }}">Register <i class="fa fa-caret-right ms-2"></i></a>
@@ -120,9 +121,10 @@
                                                             <th>SPEAKERS</th>
                                                         </thead>
                                                         <tbody>
-                                                            @foreach ($s->list as $key => $item)
+                                                            @php($list = json_decode($s->schedules))
+                                                            @foreach ($list as $key => $item)
                                                             <tr>
-                                                                <td class="col-time">{{ $item->time }}</td>
+                                                                <td class="col-time">{{ formatDate($item->time, 'h:i A') }}</td>
                                                                 <td class="col-event">{{ $item->event }}</td>
                                                                 <td class="col-speaker small">{{ $item->speakers ?? '--' }}</td>
                                                             </tr>
@@ -134,7 +136,7 @@
                                         </div>
                                         <div class="col-md-5 ms-auto">
                                             <div class="img-wrap">
-                                                <img src="{{$s->image}}" alt="" class="w-100">
+                                                <img src="{{ route('getImageFile', ['events', $s->image_location]) }} " alt="" class="w-100">
                                             </div>
                                         </div>
                                     </div>

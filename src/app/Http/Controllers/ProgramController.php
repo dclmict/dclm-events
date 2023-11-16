@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EvsContent;
 use App\Models\Program;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use File;
+use Image;
 
 class ProgramController extends Controller
 {
@@ -29,7 +32,10 @@ class ProgramController extends Controller
      */
     public function create()
     {
-        return view('admin.programs.create');
+        $formMode = 'new';
+        $event_category = EvsContent::where('option_name', 'event_category')->get();
+        $event_type = EvsContent::where('option_name', 'event_type')->get();
+        return view('admin.programs.create', compact('formMode', 'event_category', 'event_type'));
     }
 
     /**
@@ -43,21 +49,52 @@ class ProgramController extends Controller
         $valData = $request->validate([
             'name'      => 'required|string',
             'category'  => 'required|string',
+            'event_type'  => 'required|string',
             'date'      => 'required|string',
             'countdown'      => 'required|string',
             // 'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048|dimensions:ratio=820/461'
+            "event_days" => "required|string",
+            "event_month" => "required|string",
         ]);
+        $data = [];
+        $times = $request->input('time');
+        $events = $request->input('event');
+        $speakers = $request->input('speaker');
+
+        // Combine the data into an array
+        foreach ($times as $key => $time) {
+            $data[] = [
+                'time' => $time,
+                'event' => $events[$key],
+                'speaker' => $speakers[$key],
+            ];
+        }
+        $schedules = json_encode($data);
         try {
-            //code...
             $program = new Program();
             $program->name = $valData["name"];
             $program->category = $valData["category"];
+            $program->event_type = $valData["event_type"];
             $program->event_date = $valData["date"];
             $program->event_countdown = $valData["countdown"];
+            $program->event_days = $valData["event_days"];
+            $program->event_month = $valData["event_month"];
+            $program->schedules = $schedules;
             $program->slug = Str::slug($valData["name"]);
             if($request->image){
-                $image_name = strtolower(Str::slug($valData["name"]) .'.' .$request->image->extension());
-                $request->file('image')->storeAs('public', $image_name);
+                $save_path = storage_path('events/');
+                File::makeDirectory($save_path, $mode = 0755, true, true);
+                // $image_name = strtolower(Str::slug($valData["name"]) .'.' .$request->image->extension());
+                // $request->file('image')->storeAs('public', $image_name);
+                $getImage = $request->file('image');
+                $image_name = strtolower(Str::slug($valData["name"]) .'.jpg');
+                Image::make($getImage)->resize(1080, 1080, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->save($save_path.$image_name);
+                Image::make($getImage)->resize(250, 250, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->save($save_path.'small-'.$image_name, 75);
+
                 $program->image_location = ($image_name);
             }
             $program->save();
@@ -90,7 +127,10 @@ class ProgramController extends Controller
      */
     public function edit(Program $program)
     {
-        return view('admin.programs.edit', compact('program'));
+        $formMode = 'edit';
+        $event_category = EvsContent::where('option_name', 'event_category')->get();
+        $event_type = EvsContent::where('option_name', 'event_type')->get();
+        return view('admin.programs.edit', compact('program','formMode', 'event_category', 'event_type'));
     }
 
     /**
@@ -102,28 +142,71 @@ class ProgramController extends Controller
      */
     public function update(Request $request, Program $program)
     {
+        $data = [];
+        $times = $request->input('time');
+        $events = $request->input('event');
+        $speakers = $request->input('speaker');
+
+        // Combine the data into an array
+        foreach ($times as $key => $time) {
+            $data[] = [
+                'time' => $time,
+                'event' => $events[$key],
+                'speaker' => $speakers[$key],
+            ];
+        }
+        $schedules = json_encode($data);
+
+        // dd($request->all());
         $valData = $request->validate([
             'name' => 'required|string',
             'category'  => 'required|string',
+            'event_type'  => 'required|string',
             'date'      => 'required|string',
             'countdown'      => 'required|string',
             // 'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048|dimensions:ratio=820/461'
+            "event_days" => "required|string",
+            "event_month" => "required|string",
         ]);
 
-        
+
         $previousFileName = $program->image_location;
 
         $program->name = $valData["name"];
         $program->category = $valData["category"];
+        $program->event_type = $valData["event_type"];
         $program->event_date = $valData["date"];
         $program->event_countdown = $valData["countdown"];
+        $program->event_days = $valData["event_days"];
+        $program->event_month = $valData["event_month"];
+        $program->schedules = $schedules;
+
         $program->slug = Str::slug($valData["name"]);
+        // if($request->image){
+        //     Storage::delete('public/' . $previousFileName);
+        //     $image_name = strtolower(Str::slug($valData["name"]) .'.' .$request->image->extension());
+        //     $request->file('image')->storeAs('public', $image_name);
+        //     $program->image_location = ($image_name);
+        // }
         if($request->image){
-            Storage::delete('public/' . $previousFileName);
-            $image_name = strtolower(Str::slug($valData["name"]) .'.' .$request->image->extension());
-            $request->file('image')->storeAs('public', $image_name);
+            Storage::delete(storage_path('events/') . $previousFileName);
+            $save_path = storage_path('events/');
+            File::makeDirectory($save_path, $mode = 0755, true, true);
+            // $image_name = strtolower(Str::slug($valData["name"]) .'.' .$request->image->extension());
+            // $request->file('image')->storeAs('public', $image_name);
+            $getImage = $request->file('image');
+            $image_name = strtolower(Str::slug($valData["name"]) .'.jpg');
+            Image::make($getImage)->resize(1080, 1080, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($save_path.$image_name);
+            Image::make($getImage)->resize(250, 250, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($save_path.'small-'.$image_name, 75);
+
             $program->image_location = ($image_name);
         }
+
+        // dd($program);
         $program->save();
 
         return redirect()->route('programs.index')
@@ -152,5 +235,14 @@ class ProgramController extends Controller
         return redirect()->route('programs.index')
         ->with('success', 'Event Status Changed successfully');
     }
-    
+
+    public function toggleProgramFeatured(Program $program)
+    {
+        $status = $program->is_featured;
+        $program->is_featured = !$status;
+        $program->save();
+        return redirect()->route('programs.index')
+        ->with('success', 'Event Status Changed successfully');
+    }
+
 }
