@@ -3,10 +3,10 @@ name: Deploy App
 on:
   push:
     branches:
-      - dclm-dev
+      - main
   pull_request:
     branches:    
-      - dclm-dev
+      - main
     types:
       - closed
 
