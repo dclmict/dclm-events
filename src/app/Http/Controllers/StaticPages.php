@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Country;
 use App\Models\Program;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class StaticPages extends Controller
 {
@@ -26,16 +27,38 @@ class StaticPages extends Controller
             'style' => 'background: #060024 url( /assets/img/generic/banner-01.jpg ) no-repeat center center / cover; min-height:600px',
             'route' => 'page.register',
         ];
+        $feature_event = Program::latest()->first();
+
+        // Split the string by comma to separate the date part
+        $date = explode(',', $feature_event ->event_date);
+        // dd($date);
+
+        $image_path = route('getImageFile',['events','full-redemption-through-christ.jpg']);
+        $title_len = strlen($feature_event->name).'px';
+        $banner = (object)[
+            'title_1' => $feature_event->name,
+            'title_1_css' => '',//"font-size: calc(90px - $title_len)",
+            'title_2' => 'Join over 3,000,000 Global Audience for a refreshing moment with God.',
+            'date_1' => str_replace(" ", "", $date[1]),
+            'date_2' => "$date[0] $date[2]",
+            'count_down' => "$feature_event->event_countdown",
+            // 'count_down' => "2023/11/23 16:00:00",
+            // 'image_path' => $image_path,
+            // 'style' => 'background: #060024 url('.  $image_path .') no-repeat center center / cover; min-height:600px',
+            'image_path' => 'assets/img/banner-01.jpg',
+            'style' => 'background: #060024 url( /assets/img/generic/banner-01.jpg ) no-repeat center center / cover; min-height:600px',
+            'route' => 'page.register',
+        ];
         $res = config('dclm.resources');
-        $sch = config('dclm.schedules');
-        // $sch = json_decode(json_encode( config('dclm.schedules'), JSON_FORCE_OBJECT)) ;
         $testimonies = config('dclm.testimonies');
 
+        $sch = Program::where('is_active', true)->get();
         return view('pages.index', [
             'banner'=> $banner,
             'res'=> $res,
             'testimonies'=> $testimonies,
-            'sch' => json_decode(json_encode($sch, JSON_FORCE_OBJECT)),
+            'sch' => $sch,
+            // 'sch' => json_decode(json_encode($sch, JSON_FORCE_OBJECT)),
         ]);
     }
 
@@ -53,4 +76,13 @@ class StaticPages extends Controller
         //     ]);
         // }
     }
+
+    public function getImageFile($dir, $img)  {
+        $path = storage_path($dir) .'/'. $img;
+        if (file_exists($path)) {
+            return response()->file($path);
+        }
+        abort(404);
+    }
+
 }

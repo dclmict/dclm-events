@@ -30,6 +30,11 @@ Route::get('/ministers', function (){
   return view('ministers');
 });
 
+Route::get('/test', function(){
+    dump(storage_path('public/events'));
+    dump(public_path('public'));
+});
+
 Route::get('/professionals', function (){
   return view('professionals');
 });
@@ -41,6 +46,7 @@ Route::get('/survey', function (){
 Route::prefix('admin')->middleware("auth")->group(function () {
     Route::resource('/programs', ProgramController::class);
     Route::get('/programs/toggle/{program}', [ProgramController::class, 'toggleProgramStatus'])->name('programs.toggle');
+    Route::get('/programs/featured/{program}', [ProgramController::class, 'toggleProgramFeatured'])->name('programs.featured');
     Route::get('/data', [IndexController::class, 'registrationData'])->name('admin.data');
     Route::get('/data/{program}/{slug?}', [IndexController::class, 'programRegistrationData'])->name('programs.data');
     Route::get('/countries', [IndexController::class, 'countries'])->name('admin.countries');
@@ -80,8 +86,13 @@ Route::middleware("web")->controller(StaticPages::class)->group(function () {
   Route::get('/resources', 'resources')->name('page.resources');
   Route::get('/register', 'register')->name('page.register');
 //   Route::match(['get','post'], '/register', 'register')->name('page.register');
+
+ Route::get('/get-image-file/{dir}/{img}', 'getImageFile')->name('getImageFile');
+
+
 });
 Route::post('/register', [ApiController::class, 'processRegistrationForm'])->name('page.register.post');
 
 
 Route::match(['get','post'],'getmydp', [DpMakerController::class, 'index'])->name('getmydp');
+

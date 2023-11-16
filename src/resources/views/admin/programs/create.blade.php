@@ -28,42 +28,33 @@
 
 <form enctype="multipart/form-data" action="{{ route('programs.store') }}" method="POST">
     @csrf
-
-     <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-7 mx-auto">
-            <div class="form-group">
-                <strong>Event Name:</strong>
-                <input type="text" name="name" class="form-control" placeholder="The Power that Never Fails">
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-7 mx-auto">
-            <div class="form-group">
-                <strong>Event Type:</strong>
-                <input type="text" name="category" class="form-control" placeholder="GCK: November Edition">
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-7 mx-auto">
-            <div class="form-group">
-                <strong>Event Date:</strong>
-                <input type="text" name="date" class="form-control" placeholder="November 17 - 20th, 2022">
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-7 mx-auto">
-            <div class="form-group">
-                <strong>Event Countdown:</strong>
-                <input type="text" name="countdown" class="form-control" placeholder="2022/11/17">
-            </div>
-        </div>  
-        <div class="col-xs-12 col-sm-12 col-md-7 mx-auto">
-            <div class="form-group">
-                <strong>Banner Image:</strong>
-                <input type="file" name="image" name="id" accept="image/jpeg, image/png, image/jpg, image/gif, image/svg" class="form-control" placeholder="Event FLyer 1920px x 1080px">
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-7 mx-auto my-2">
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-    </div>
-
+    @include('admin.programs.form-fields')
 </form>
+@endsection
+
+@section('footer_script')
+<script id="eventForm">
+    $('document').ready(function(){
+        // Counter to keep track of the number of field groups added
+        let fieldGroupCounter = 1;
+        // Function to add a new field group
+        function addNewFieldGroup() {
+            fieldGroupCounter++;
+            const newRow = $('<tr></tr>');
+            newRow.append($('<td><input type="time" class="form-control form-control-sm" name="time[]" placeholder="Time" required></td>'));
+            newRow.append($('<td><input type="text" class="form-control form-control-sm" name="event[]" placeholder="Event" required></td>'));
+            newRow.append($('<td><input type="text" class="form-control form-control-sm" name="speaker[]" placeholder="Speaker"></td>'));
+            newRow.append($('<td><button type="button" class="btn btn-danger btn-sm remove">Remove</button></td>'));
+            $('#fieldTable').append(newRow);
+        }
+        // Event listener for the "Add Field Group" button
+        $('#addField').click(addNewFieldGroup);
+        // Event listener for removing a field group
+        $('#fieldTable').on('click', '.remove', function() {
+            $(this).closest('tr').remove();
+        });
+    //  edn of ready()
+    });
+
+</script>
 @endsection
