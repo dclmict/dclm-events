@@ -66,7 +66,7 @@ jobs:
           ./create-dns-record.sh
         working-directory: ${{ env.WORK_DIR }}
 
-  create-nginx-vhost:
+  create-app-dir:
     runs-on: ubuntu-latest
     needs: create-dns-record
     steps:
@@ -78,7 +78,53 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.DL_SSH_KEY }}
 
-      - name: Export vhost into file
+      - name: Create app directory
+        env:
+          IN: ${{ secrets.DL_IN }}
+        run: |
+          # Create app directory
+          ssh -T -o "StrictHostKeyChecking=no" "$SSH_USERNAME@$SSH_HOST" \
+          "IN=$IN" \
+          'bash -s' < ./create-app-dir.sh
+        working-directory: ${{ env.WORK_DIR }}
+
+  clone-app-repo:
+    runs-on: ubuntu-latest
+    needs: create-app-dir
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+    
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.DL_SSH_KEY }}
+
+      - name: Clone app
+        env:
+          REPO: ${{ secrets.DL_REPO }}
+          GIT_BRANCH: ${{ secrets.DL_GIT_BRANCH }}
+        run: |
+          ssh -T -o "StrictHostKeyChecking=no" "$SSH_USERNAME@$SSH_HOST" \
+          "APP_DIR=$APP_DIR" \
+          "REPO=$REPO" \
+          "GIT_BRANCH=$GIT_BRANCH" \
+          'bash -s' < ./clone-app-repo.sh
+        working-directory: ${{ env.WORK_DIR }}
+
+  create-nginx-vhost:
+    runs-on: ubuntu-latest
+    needs: clone-app-repo
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.DL_SSH_KEY }}
+
+      - name: Create & copy vhost config file
         env:
           VHOST_CONFIG: ${{ vars.NGX }}
         run: |
@@ -87,10 +133,6 @@ jobs:
           mv vhost_fixed.conf vhost.conf
           cat vhost.conf && ls -la
           scp -o "StrictHostKeyChecking=no" -r vhost.conf "$SSH_USERNAME@$SSH_HOST:$ENV_DEST"
-
-      # - name: Copy file to SSH server
-      #   run: |
-      #     scp -o "StrictHostKeyChecking=no" -r vhost.conf "$SSH_USERNAME@$SSH_HOST:$ENV_DEST"
 
       - name: Create Nginx vhost
         env:
@@ -111,33 +153,9 @@ jobs:
           'bash -s' < ./create-nginx-vhost.sh
         working-directory: ${{ env.WORK_DIR }}
 
-  clone-app:
-    runs-on: ubuntu-latest
-    needs: create-nginx-vhost
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-    
-      - name: Setup SSH
-        uses: webfactory/ssh-agent@v0.8.0
-        with:
-          ssh-private-key: ${{ secrets.DL_SSH_KEY }}
-
-      - name: Clone app
-        env:
-          REPO: ${{ secrets.DL_REPO }}
-          GIT_BRANCH: ${{ secrets.DL_GIT_BRANCH }}
-        run: |
-          ssh -T -o "StrictHostKeyChecking=no" "$SSH_USERNAME@$SSH_HOST" \
-          "APP_DIR=$APP_DIR" \
-          "REPO=$REPO" \
-          "GIT_BRANCH=$GIT_BRANCH" \
-          'bash -s' < ./clone-app.sh
-        working-directory: ${{ env.WORK_DIR }}
-
   deploy-app:
     runs-on: ubuntu-latest
-    needs: clone-app
+    needs: create-nginx-vhost
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
