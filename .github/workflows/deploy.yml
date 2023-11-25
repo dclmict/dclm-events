@@ -1,4 +1,4 @@
-name: Deploy App
+name: Build & Deploy App
 
 on:
   push:
@@ -81,6 +81,7 @@ jobs:
       - name: Create app directory
         env:
           IN: ${{ secrets.DL_IN }}
+          CODE_HIVE: ${{ secrets.DL_CODE_HIVE }}
         run: |
           # Create app directory
           ssh -T -o "StrictHostKeyChecking=no" "$SSH_USERNAME@$SSH_HOST" \

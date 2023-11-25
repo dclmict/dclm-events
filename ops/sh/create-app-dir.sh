@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Set the target directory 
-docker_dir="/var/docker/dev"
+docker_dir="$CODE_HIVE"
 app_dir="$IN"
 
 # Navigate into the docker directory
