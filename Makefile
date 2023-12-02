@@ -46,12 +46,15 @@ repo:
 	@echo "What do you want to do?:"; \
 	echo "1. Create local git repo"; \
 	echo "2. Create remote repo on GitHub"; \
+	echo "3. Rename remote repo on GitHub"; \
 	read -p "Enter a number to select your choice: " git_choice; \
 	if [ $$git_choice -eq 1 ]; then \
 		make repo-gitignore; \
 		make repo-init; \
 	elif [ $$git_choice -eq 2 ]; then \
 		make repo-name; \
+	elif [ $$git_choice -eq 3 ]; then \
+		make repo-rename; \
 	else \
 		echo "Invalid choice"; \
 		exit 1; \
@@ -85,8 +88,8 @@ repo-name:
 		yes|Y|y) \
 			read -p "Enter GitHub user: " ghUser; \
 			read -p "Enter GitHub repo name: " ghName; \
-			chmod +x ./ops/sh/gh-check-repo.sh; \
-			result="$$(./ops/sh/gh-check-repo.sh $$ghUser/$$ghName)"; \
+			chmod +x ./ops/sh/gh-repo-check.sh; \
+			result="$$(./ops/sh/gh-repo-check.sh $$ghUser/$$ghName)"; \
 			if [ $$result -eq 200 ]; then \
 				echo -e "\033[31mGitHub repo exists. I stop here. \033[0m\n"; \
 			else \
@@ -111,6 +114,24 @@ repo-name:
 			;; \
 		*) \
 			echo -e "\033[32m No choice. Exiting script...\033[0m\n"; \
+			exit 1; \
+			;; \
+	esac
+
+repo-rename:
+	@read -p "Do you want to rename this repo? (yes|no): " repo_scan; \
+	case "$$repo_scan" in \
+		yes|Y|y) \
+			echo -e "\033[32mRenaming repo ...\033[0m\n"; \
+			chmod +x ./ops/sh/gh-repo-rename.sh; \
+			./ops/sh/gh-repo-rename.sh; \
+			;; \
+		no|N|n) \
+			echo -e "\033[32mOkay. Thank you...\033[0m\n"; \
+			exit 0; \
+			;; \
+		*) \
+			echo -e "\033[32mNo choice. Exiting script...\033[0m\n"; \
 			exit 1; \
 			;; \
 	esac
@@ -145,7 +166,7 @@ repo-gitignore:
 	@echo '# folders' >> .gitignore
 	@echo '_' >> .gitignore
 
-git: gh-envfile-set
+git: gh-envfile-set gh-secret-set gh-variable-set
 	@if git status --porcelain | grep -q "^??"; then \
 		make commit-1; \
 		make git-push; \
@@ -245,7 +266,7 @@ gh-variable-rm:
 			;; \
 	esac
 
-gh-envfile-set:
+gh-envfile-set: env
 	@read -p "Do you want to generate env in workflow? (yes|no): " choice; \
 	case "$$choice" in \
 		yes|Y|y) \
@@ -263,7 +284,7 @@ gh-envfile-set:
 			;; \
 	esac
 
-git-push: env repo-scan gh-secret-set gh-variable-set
+git-push: repo-scan
 	@read -p "Do you want to push your commit to GitHub? (yes|no): " choice; \
 	case "$$choice" in \
 		yes|Y|y) \

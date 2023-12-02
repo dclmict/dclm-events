@@ -3,10 +3,6 @@ FROM opeoniye/php82:latest
 # set working directory
 WORKDIR /var/www
 
-# add user for laravel application
-# RUN groupadd -g 1000 www
-# RUN useradd -u 1000 -ms /bin/bash -g www www
-
 # copy code
 COPY --chown=www-data:www-data ./src /var/www
 
@@ -25,12 +21,17 @@ COPY ./ops/nginx/exploit.conf /etc/nginx/snippets/exploit_protection.conf
 COPY ./ops/nginx/optimize.conf /etc/nginx/snippets/site_optimization.conf
 COPY ./ops/nginx/log.conf /etc/nginx/snippets/logging.conf
 
-# php log files
-# RUN mkdir /var/log/php; \
-#   touch /var/log/php/errors.log && chmod 777 /var/log/php/errors.log
-
 ## deployment
+RUN composer update
+RUN composer install --optimize-autoloader --no-dev
 RUN chmod +x /var/docker/run.sh
+
+# set proper permissions
+RUN cd /var/www && \
+chown -R www-data:www-data . && \
+find . -type d -exec chmod 2775 {} \; && \
+find . -type f -exec chmod 0664 {} \; && \
+rm -rf /var/www/html
 
 # EXPOSE 89
 ENTRYPOINT ["/var/docker/run.sh"]

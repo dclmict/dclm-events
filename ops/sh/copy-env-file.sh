@@ -9,23 +9,23 @@ do
   case $opt in
     "dclm-dev")
       cp $src_dir/dclm-dev.env $dest_dir/.env
-      echo "Copied dclm-dev.env to $dest_dir/.env"
+      echo -e "Copied dclm-dev.env to $dest_dir/.env\n"
       break
       ;;
     "dclm-prod")
       cp $src_dir/dclm-prod.env $dest_dir/.env
-      echo "Copied dclm-prod.env to $dest_dir/.env"
+      echo -e "Copied dclm-prod.env to $dest_dir/.env\n"
       break
       ;;
     "Custom env")
       read -p "Enter custom env file name: " envfile
       cp $src_dir/$envfile $dest_dir/.env
-      echo "Copied $envfile to $dest_dir/.env"
+      echo -e "Copied $envfile to $dest_dir/.env\n"
       break
       ;;
     *)
       cp $src_dir/bams-dev.env $dest_dir/.env
-      echo "Copied bams-dev.env to $dest_dir/.env"
+      echo -e "Copied bams-dev.env to $dest_dir/.env\n"
       break
       ;;
   esac

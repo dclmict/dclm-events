@@ -20,8 +20,8 @@ gh secret set -f "$envfile"
 
 # Check return code and output result
 if [ $? -eq 0 ]; then
-  echo "Secrets set successfully from '$envfile'"
+  echo -e "Secrets set successfully from '$envfile'\n"
 else
-  echo "Error setting secrets from '$envfile'"
+  echo -e "Error setting secrets from '$envfile'\n"
   exit 1
 fi
