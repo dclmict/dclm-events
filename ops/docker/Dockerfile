@@ -3,10 +3,6 @@ FROM opeoniye/php82:latest
 # set working directory
 WORKDIR /var/www
 
-# add user for laravel application
-# RUN groupadd -g 1000 www
-# RUN useradd -u 1000 -ms /bin/bash -g www www
-
 # copy code
 COPY --chown=www-data:www-data ./src /var/www
 
@@ -24,7 +20,6 @@ COPY ./ops/nginx/proxy /etc/nginx/proxy_params
 COPY ./ops/nginx/exploit.conf /etc/nginx/snippets/exploit_protection.conf
 COPY ./ops/nginx/optimize.conf /etc/nginx/snippets/site_optimization.conf
 COPY ./ops/nginx/log.conf /etc/nginx/snippets/logging.conf
-
 
 ## deployment
 RUN composer update
