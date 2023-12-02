@@ -22,7 +22,7 @@
       </div>
 
       <div class="row_">
-          <a href="#" class="btn btn-success rounded me-3">Login</a>
+          <a href="{{route('login')}}" class="btn btn-success rounded me-3">Login</a>
           <a href="{{route('page.register')}}" class="btn btn-light rounded">Register</a>
       </div>
 

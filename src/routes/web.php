@@ -10,7 +10,6 @@ use App\Http\Controllers\IndexController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\ApiController;
 
-
 use App\Http\Controllers\StaticPages;
 use App\Http\Controllers\DpMakerController;
 
@@ -53,7 +52,6 @@ Route::prefix('admin')->middleware("auth")->group(function () {
     Route::get('/country/{id}/states', [IndexController::class, 'states'])->name('admin.states')->whereNumber('id');
     Route::get('/state/{id}/regions', [IndexController::class, 'regions'])->name('admin.regions')->whereNumber('id');
     Route::get('/region/{id}/groups', [IndexController::class, 'groups'])->name('admin.groups')->whereNumber('id');
-
     Route::get('/register', [App\Http\Controllers\AuthController::class, 'showRegister'])->name('admin.auth.register');
     Route::post('/register', [App\Http\Controllers\AuthController::class, 'handleRegister'])->name('admin.handleRegister');
     Route::resource('/countries', CountryController::class);
@@ -62,7 +60,6 @@ Route::prefix('admin')->middleware("auth")->group(function () {
     Route::resource('/regions', RegionController::class);
     Route::resource('/groups', GroupController::class);
 });
-
 
 // Route::get('/debug', function () {
 //     return dd(Auth::routes());
@@ -85,14 +82,9 @@ Route::middleware("web")->controller(StaticPages::class)->group(function () {
   Route::get('/testimonies', 'testimonies')->name('page.testimonies');
   Route::get('/resources', 'resources')->name('page.resources');
   Route::get('/register', 'register')->name('page.register');
-//   Route::match(['get','post'], '/register', 'register')->name('page.register');
-
- Route::get('/get-image-file/{dir}/{img}', 'getImageFile')->name('getImageFile');
-
-
+  //Route::match(['get','post'], '/register', 'register')->name('page.register');
+  Route::get('/get-image-file/{dir}/{img}', 'getImageFile')->name('getImageFile');
 });
+
 Route::post('/register', [ApiController::class, 'processRegistrationForm'])->name('page.register.post');
-
-
 Route::match(['get','post'],'getmydp', [DpMakerController::class, 'index'])->name('getmydp');
-

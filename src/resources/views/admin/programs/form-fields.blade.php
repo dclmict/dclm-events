@@ -42,8 +42,8 @@
         </div>
 
         <div class="form-group mb-2">
-            <label class="fw-bold">Event Date: <em>(format: JAN, 17th - 20th, 2022)</em></label>
-            <input type="text" name="date" value="{{ $formMode == 'edit' ? $program->event_date : old('event_date') ?? '' }}" class="form-control" placeholder="JAN, 17 - 20th, 2022">
+            <label class="fw-bold">Event Date: <em>(format: December, 21 - 26, 2023)</em></label>
+            <input type="text" name="date" value="{{ $formMode == 'edit' ? $program->event_date : old('event_date') ?? '' }}" class="form-control" placeholder="format: December, 21 - 26, 2023">
         </div>
 
         @php($selectMonth = ($formMode == 'edit') ? $program->event_month : old('event_month')  )
@@ -67,7 +67,7 @@
 
         <div class="form-group mb-2">
             <label class="fw-bold">Event Countdown:</label>
-            <input type="text" name="countdown" value="{{ $formMode == 'edit' ? $program->event_countdown : old('event_countdown') }}" class="form-control" placeholder="2022/11/17">
+            <input type="text" name="countdown" value="{{ $formMode == 'edit' ? $program->event_countdown : old('event_countdown') }}" class="form-control" placeholder="format: 2023/11/23 15:00:00">
         </div>
 
         <div class="form-group mb-2">

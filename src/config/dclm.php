@@ -8,7 +8,7 @@ return [
     |--------------------------------------------------------------------------*/
 
     'header_menu' => [
-    	['label'=>'Home',   'route'=>'page.index'],
+    	['label'=>'Home',   'route'=>'home'],
     	['label'=>'Personalized Flyer',   'route'=>'getmydp'],
     	['label'=>'Testimonies',  'route'=>'home'],
     	['label'=>'Resources',   'route'=>'home'],
