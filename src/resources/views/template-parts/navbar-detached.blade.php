@@ -5,7 +5,7 @@
 
 <nav class="navbar navbar-example navbar-expand-lg bg-transparent bg-light_ mt-sm-4_ fixed-top_ sticky-sm-top_ navbar-detached">
   <div class="container">
-    <a class="navbar-brand" href="{{route('page.index')}}">
+    <a class="navbar-brand" href="{{route('home')}}">
       <img src="dclm-logo.png" class="logo h-100">
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-ex-3">
