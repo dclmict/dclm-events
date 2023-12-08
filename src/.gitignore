@@ -1,5 +1,6 @@
 # files
 # ref: https://www.golinuxcloud.com/gitignore-examples/
+!.htaccess
 .env
 .env.dev
 .env.prod
