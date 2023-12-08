@@ -1,32 +1,49 @@
 #!/bin/bash
 
+# Define the source and destination directories
 src_dir="./ops"
 dest_dir="./src"
-PS3='Select environment file to copy or leave blank to copy default: '
-options=("dclm-dev" "dclm-prod" "Custom env")
-select opt in "${options[@]}"
-do
-  case $opt in
-    "dclm-dev")
-      cp $src_dir/dclm-dev.env $dest_dir/.env
-      echo -e "Copied dclm-dev.env to $dest_dir/.env\n"
-      break
-      ;;
-    "dclm-prod")
-      cp $src_dir/dclm-prod.env $dest_dir/.env
-      echo -e "Copied dclm-prod.env to $dest_dir/.env\n"
-      break
-      ;;
-    "Custom env")
-      read -p "Enter custom env file name: " envfile
-      cp $src_dir/$envfile $dest_dir/.env
-      echo -e "Copied $envfile to $dest_dir/.env\n"
-      break
-      ;;
-    *)
-      cp $src_dir/bams-dev.env $dest_dir/.env
-      echo -e "Copied bams-dev.env to $dest_dir/.env\n"
-      break
-      ;;
-  esac
-done
+
+# Define environment file
+dest_env=".env"
+default_env_file="bams-dev.env"
+
+
+# Display the options
+echo "Please select an environment:"
+echo "1) dclm-dev"
+echo "2) dclm-prod"
+echo "3) Custom env"
+
+# Read the user's selection
+read -p "Select an option or press enter to copy default: " selection
+
+# Handle the user's selection
+case $selection in
+  1)
+    env_file="dclm-dev.env"
+    ;;
+  2)
+    env_file="dclm-prod.env"
+    ;;
+  3)
+    read -p "Enter the name of the custom environment file: " env_file
+    ;;
+  "")
+    env_file=$default_env_file
+    ;;
+  *)
+    echo -e "Invalid option. Please select 1, 2, or 3\n"
+    ;;
+esac
+
+# Copy the environment file
+cp "${src_dir}/${env_file}" "${dest_dir}/${dest_env}"
+
+# Check if the copy was successful
+if [ $? -eq 0 ]; then
+  echo -e "Environment file copied successfully.\n"
+else
+  echo -e "Failed to copy environment file. Exiting.\n"
+  exit 1
+fi
