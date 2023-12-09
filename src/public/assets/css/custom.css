@@ -140,7 +140,7 @@ input:-internal-autofill-selected {
     font-family: 'Montserrat';
     font-weight: 700;
     font-size: 128px;
-    line-height: 157px;
+    line-height: 90px;
     color: #fff;
     /* identical to box height, or 123% */
     letter-spacing: 0.1em;

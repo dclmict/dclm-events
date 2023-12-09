@@ -3,9 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\ContinentController;
-use App\Http\Controllers\StateController;
-use App\Http\Controllers\RegionController;
-use App\Http\Controllers\GroupController;
+// use App\Http\Controllers\StateController;
+// use App\Http\Controllers\RegionController;
+// use App\Http\Controllers\GroupController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\ApiController;
@@ -25,23 +25,6 @@ use App\Http\Controllers\DpMakerController;
 */
 
 Route::get('/', [IndexController::class, 'index'])->name("home");
-Route::get('/ministers', function (){
-  return view('ministers');
-});
-
-Route::get('/test', function(){
-    dump(storage_path('public/events'));
-    dump(public_path('public'));
-});
-
-Route::get('/professionals', function (){
-  return view('professionals');
-});
-
-Route::get('/survey', function (){
-  return view('survey');
-});
-
 Route::prefix('admin')->middleware("auth")->group(function () {
     Route::resource('/programs', ProgramController::class);
     Route::get('/programs/toggle/{program}', [ProgramController::class, 'toggleProgramStatus'])->name('programs.toggle');
@@ -56,22 +39,16 @@ Route::prefix('admin')->middleware("auth")->group(function () {
     Route::post('/register', [App\Http\Controllers\AuthController::class, 'handleRegister'])->name('admin.handleRegister');
     Route::resource('/countries', CountryController::class);
     Route::resource('/continents', ContinentController::class);
-    Route::resource('/states', StateController::class);
-    Route::resource('/regions', RegionController::class);
-    Route::resource('/groups', GroupController::class);
+    // Route::resource('/states', StateController::class);
+    // Route::resource('/regions', RegionController::class);
+    // Route::resource('/groups', GroupController::class);
 });
-
-// Route::get('/debug', function () {
-//     return dd(Auth::routes());
-// });
 
 Auth::routes([
     'register' => false, // Register Routes...
     'reset' => false, // Reset Password Routes...
     'verify' => false, // Email Verification Routes...
   ]);
-
-// Route::get('/admin/login', [App\Http\Controllers\AuthController::class, 'showLogin'])->name('admin.login');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('admin.home');
 Route::get('/admin', [App\Http\Controllers\HomeController::class, 'index'])->name('admin');

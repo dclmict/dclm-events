@@ -19,7 +19,7 @@
 
             <div class="row mt-5 pt-5">
                 <div class="col-sm-6">
-                    <img src="assets/img/icons/social.png" class="w-100 mb-3 mt-3">
+                    <!--<img src="assets/img/icons/social.png" class="w-100 mb-3 mt-3">-->
                 </div>
                 <div class="col-sm-6 text-end">
                     <div id="event_countdown" class="text-white fw-bolder"></div>
@@ -96,7 +96,7 @@
                             @php($count = 0)
                             @foreach ($sch as $key => $s)
                             <li class="nav-item" role="presentation">
-                                <button type="button" class="nav-link @if($count == 0) active @endif" role="tab" data-bs-toggle="tab" data-bs-target="#navs-{{$key}}" aria-controls="navs-{{$key}}" @if($count == 0) aria-selected="true" @else aria-selected="false" tabindex="-1" @endif>{{$s->name}}</button>
+                                <button type="button" class="nav-link @if($count == 0) active @endif" role="tab" data-bs-toggle="tab" data-bs-target="#navs-{{$key}}" aria-controls="navs-{{$key}}" @if($count == 0) aria-selected="true" @else aria-selected="false" tabindex="-1" @endif>{{$s->category}}</button>
                             </li>
                             @php($count++)
                             @endforeach
@@ -136,6 +136,7 @@
                                         </div>
                                         <div class="col-md-5 ms-auto">
                                             <div class="img-wrap">
+                                                {{--<img src="{{ route('getImageFile', ['events', $s->image_location]) }} " alt="" class="w-100"> --}}
                                                 <img src="{{ route('getImageFile', ['events', $s->image_location]) }} " alt="" class="w-100">
                                             </div>
                                         </div>
@@ -156,9 +157,8 @@
                 <div class="col-md-6 font-roboto">
                     <div class="mb-5">
                         <h2 class="fw-bold text-uppercase text-white mb-3">Resources</h2>
-                        <h3 class="text-uppercase mb-4 text-sblue font-montserrat">Glorious Visitation from Christ</h3>
-                        <p class="h5 text-white mb-2">Download event resources and materials for Glorious Visitation from
-                            Christ here.</p>
+                        <h3 class="text-uppercase mb-4 text-sblue font-montserrat">Emmanuel</h3>
+                        <p class="h5 text-white mb-2">Download event resources and materials for Emmanuel here.</p>
                         <p class="h5 text-white mb-2">Crusade, Ministers conference and Impact Academy</p>
                     </div>
                 </div>
@@ -169,7 +169,7 @@
                                 <a href="{{ $r['route'] }}" class="d-block rounded border border-white py-5">
                                     <i class="fas fa-3x {{ $r['icon'] }} text-blue-gradient mb-2"></i>
                                     <p class="text-white mb-0">{{ $r['title_1'] }} <span
-                                            class="fw-bold d-block">{{ $r['title_2'] }}</span></p>
+                                        class="fw-bold d-block">{{ $r['title_2'] }}</span></p>
                                 </a>
                             </div>{{-- //col-6 --}}
                         @endforeach

@@ -30,3 +30,4 @@ public/cache/
 storage/
 /public/dp-symlink.php
 /public/createsymlink.php
+/cache/temp/

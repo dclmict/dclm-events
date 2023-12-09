@@ -19,11 +19,16 @@
         @foreach ($menu as $m)
             <a class="nav-item nav-link" href="{{ route($m['route']) }}">{{ $m['label'] }}</a>
         @endforeach
+
+        <a class="nav-item nav-link" href="{{ route('home') }}#testimonies">Testimonies</a>
+        <a class="nav-item nav-link" href="{{ route('home') }}#schedule">Schedule</a>
+        <a class="nav-item nav-link" href="{{ route('home') }}#resources">Resources</a>
       </div>
 
       <div class="row_">
-          <a href="{{route('login')}}" class="btn btn-success rounded me-3">Login</a>
-          <a href="{{route('page.register')}}" class="btn btn-light rounded">Register</a>
+        <a href="{{route('page.register')}}" class="btn btn-success rounded me-3" >Register</a>
+          <a href="{{route('login')}}" class="btn btn-light rounded">Login</a>
+
       </div>
 
     </div>
