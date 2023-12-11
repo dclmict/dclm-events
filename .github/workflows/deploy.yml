@@ -20,7 +20,7 @@ env:
 
 jobs:
   build-image:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     environment: prod
     steps:
       - name: Checkout repository
@@ -44,7 +44,7 @@ jobs:
           docker push $DIN
   
   create-dns-record:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     environment: prod
     steps:
       - name: Checkout repository
@@ -70,7 +70,7 @@ jobs:
         working-directory: ${{ env.WORK_DIR }}
   
   create-app-dir:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     environment: prod
     needs: create-dns-record
     steps:
@@ -92,7 +92,7 @@ jobs:
         working-directory: ${{ env.WORK_DIR }}
   
   clone-app-repo:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     environment: prod
     needs: create-app-dir
     steps:
@@ -115,7 +115,7 @@ jobs:
         working-directory: ${{ env.WORK_DIR }}
   
   create-nginx-vhost:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     environment: prod
     needs: clone-app-repo
     steps:
@@ -154,7 +154,7 @@ jobs:
         working-directory: ${{ env.WORK_DIR }}
   
   deploy-app:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     environment: prod
     needs: create-nginx-vhost
     steps:
