@@ -8,7 +8,6 @@ dest_dir="./src"
 dest_env=".env"
 default_env_file="bams-dev.env"
 
-
 # Display the options
 echo "Please select an environment:"
 echo "1) dclm-dev"
