@@ -51,7 +51,7 @@ gh_secret_public() {
   while IFS='=' read -r key value
   do
     # Skip lines starting with '#' (comments)
-    if [ -n "$key" ] && if [[ $key != \#* ]]; then
+    if [ -n "$key" ] && [[ $key != \#* ]]; then
       # Trim leading/trailing whitespaces
       key=$(echo "$key" | xargs)
       value=$(echo "$value" | xargs)
@@ -85,7 +85,7 @@ gh_secret_public_rm() {
   while IFS= read -r line; do
 
     # Skip lines starting with '#' (comments)
-    if [ -n "$line" ] && if [[ $line != \#* ]]; then
+    if [ -n "$line" ] && [[ $line != \#* ]]; then
       # Trim leading/trailing whitespaces
       line=$(echo "$line" | xargs)
       gh secret delete "$line" --repo $DL_REPO --env"$env"

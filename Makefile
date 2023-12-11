@@ -120,7 +120,7 @@ repo-rename: env
 			;; \
 	esac
 
-repo-scan: env
+repo-scan:
 	@read -p "Do you want to scan this repo? (yes|no): " repo_scan; \
 	case "$$repo_scan" in \
 		yes|Y|y) \
