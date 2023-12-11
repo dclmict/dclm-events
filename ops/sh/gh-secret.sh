@@ -48,18 +48,19 @@ gh_secret_public() {
   fi
 
   # Read the .env file and set the secrets
-  while IFS='=' read -r key value
-  do
-    # Skip lines starting with '#' (comments)
-    if [ -n "$key" ] && [[ $key != \#* ]]; then
-      # Trim leading/trailing whitespaces
-      key=$(echo "$key" | xargs)
-      value=$(echo "$value" | xargs)
+  # while IFS='=' read -r key value
+  # do
+  #   # Skip lines starting with '#' (comments)
+  #   if [ -n "$key" ] && [[ $key != \#* ]]; then
+  #     # Trim leading/trailing whitespaces
+  #     key=$(echo "$key" | xargs)
+  #     value=$(echo "$value" | xargs)
 
-      # Set the secret
-      gh secret set "$key" -b"$value" -e"$env"
-    fi
-  done < $envfile
+  #     # Set the secret
+  #     gh secret set "$key" -b"$value" -e"$env"
+  #   fi
+  # done < $envfile
+  gh secret set -f "$envfile" -e"$env"
 
   # Check return code and output result
   if [ $? -eq 0 ]; then
