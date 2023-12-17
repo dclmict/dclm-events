@@ -1,7 +1,7 @@
 # Start app engine
 run-app:
 	@\
-	echo -e "Starting container in \033[32m$$(hostname)\033[0m environment..."
+	echo -e "Starting container in \033[32m$$(hostname)\033[0m environment..."; \
   os=$$(hostname); \
   if [ "$$os" = "dclm" ]; then \
     make -s compose-dclm-prod; \
@@ -56,8 +56,8 @@ compose-bams-dev:
 	@echo "    working_dir: /var/www" >> ./src/docker-compose.yml
 	@echo "    restart: unless-stopped" >> ./src/docker-compose.yml
 	@echo "    labels:" >> ./src/docker-compose.yml
-	@echo "      logging: promtail" >> ./src/docker-compose.yml
-	@echo "      logging_jobname: containerlogs" >> ./src/docker-compose.yml
+	@echo "      logging: '"promtail"'" >> ./src/docker-compose.yml
+	@echo "      logging_jobname: '"containerlogs"'" >> ./src/docker-compose.yml
 	@echo "    volumes:" >> ./src/docker-compose.yml
 	@echo "      - .:/var/www" >> ./src/docker-compose.yml
 	@echo "      - $(DL_CERT):/var/ssl/cert.pem" >> ./src/docker-compose.yml
