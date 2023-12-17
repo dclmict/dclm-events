@@ -130,7 +130,7 @@ git_commit() {
         echo -e "\033[31mUntracked files found::\033[0m \033[32mPlease enter commit message:\033[0m"
         read -r msg1
         git add -A
-        git commit -m "$$msg1"
+        git commit -m "$msg1"
         ;;
       no|N|n)
         echo -e "\033[32mNothing to be done. Thank you...\033[0m"
@@ -148,7 +148,7 @@ git_commit() {
       yes|Y|y)
         echo -e "\033[31mModified files found...\033[0m \033[32mPlease enter commit message:\033[0m"
         read -r msg2
-        git commit -am "$$msg2"
+        git commit -am "$msg2"
         ;;
       no|N|n)
         echo -e "\033[32mNothing to be done. Thank you...\033[0m"
