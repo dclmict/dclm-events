@@ -3,47 +3,30 @@
 # add envfile to shell
 source ./src/.env
 
-# function to add envfile supplied from cmd argument
-env() {
-  # Check if env file argument was supplied
-  if [ $# -ne 2 ]; then
-    read -p $'\nEnvfile not found... Enter path to env file: ' env
-    envfile="$env"
-  else
-    # assign variable to argument
-    envfile="$2"
-  fi
-  # Validate that the env file exists
-  if [ ! -f "$envfile" ]; then
-    echo "Error: Envfile '$envfile' not found"
-    exit 1
-  fi
-}
-
 # function to check which git branch
 git_branch() {
   # Get the current Git branch
   branch=$(git rev-parse --abbrev-ref HEAD)
 
-  # Check if branch is main or dclm-dev
-  if [[ $branch != "main" ]] && [[ $branch != "dclm-dev" ]]; then
+  # Check if branch is dclm-dev or dclm-prod
+  if [[ $branch != "dclm-dev" ]] && [[ $branch != "dclm-prod" ]]; then
 
     # Prompt the user to select a branch  
     echo "Current branch is $branch"
     echo "Please select branch:"
-    echo "1) main" 
-    echo "2) dclm-dev"
+    echo "1) dclm-dev" 
+    echo "2) dclm-prod"
     read -p "Enter choice: " choice
 
     # Switch based on choice
     case $choice in
       1) 
         echo "Switching to main branch"
-        git switch main
+        git switch dclm-dev
         ;;
       2)
         echo "Switching to dclm-dev branch" 
-        git switch dclm-dev
+        git switch dclm-prod
         ;;
       *)
         echo "Invalid choice" >&2
