@@ -1,10 +1,9 @@
 <p align="center"><a href="https://dclm.org" target="_blank"><img src="https://dclmcloud.s3.amazonaws.com/img/logo.png" width="206.5" height="190"></a></p>
 
 ## DCLM Events
-This is an events management app that 
+This is an app built to manage church events, access schedules, personalized publicity, and inspiring testimonies. Dive into transformative moments on our event website. 🌟 #DLBCEvents #GlobalFaithCommunity
 
 App url: [DCLM Events](https://events.dclm.org)
-
 
 ## How to Run
 ### Docker
@@ -20,7 +19,6 @@ App url: [DCLM Events](https://events.dclm.org)
 - run `make seed`
 - run `make storage`
 - run `make log`
-
 
 ## Credit
 App built and released by [DCLM Tech Community (DTC)](https://developers.dclm.org).
