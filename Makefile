@@ -17,7 +17,7 @@ SRC := $(shell \
 			cp ./ops/bams-dev.env ./src/.env; \
 		elif [[ $$branch == "dclm-dev" ]]; then \
 			cp ./ops/dclm-dev.env ./src/.env; \
-		elif [[ $$branch == "main" ]]; then \
+		elif [[ $$branch == "dclm-prod" ]]; then \
 			cp ./ops/dclm-prod.env ./src/.env; \
 		else \
 			cp ./ops/bams-dev.env ./src/.env; \
