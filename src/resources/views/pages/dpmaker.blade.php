@@ -90,17 +90,14 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="dp-wrap rounded border border-white border-2 rounded-2 mb-3 mb-sm-0">
-                                    <img src="{{ asset('/cache/temp/' . Session::get('myDPfile')) }}" alt=""
-                                        class="w-100">
-                                    {{-- <img src="{{asset( '/cache/temp/1699022372_my-dp.jpg' )}}" alt="" class="w-100"> --}}
+                                    <img src="{{ asset('/cache/temp/' . Session::get('myDPfile')) }}" alt=""class="w-100">
                                 </div>
                             </div>
                             <div class="col-sm-5 col-dm-3 ">
                                 <div class="d-flex align-items-center h-100">
                                     {{-- <div class="btn-wrap d-grid gap-2_ me-auto"> --}}
                                     <div class="btn-wrap ">
-                                        <a href="{{ asset('/cache/temp/1699022372_my-dp.jpg') }}" target="_blank"
-                                            class="btn btn-success btn-lg w-100 mb-3">Download DP</a>
+                                        <a href="{{ asset('/cache/temp/' . Session::get('myDPfile')) }}" target="_blank" download class="btn btn-success btn-lg w-100 mb-3">Download DP</a>
                                         <a href="#" class="btn btn-secondary btn-lg w-100 mb-3">Share</a>
                                         <a href="#" class="btn btn-danger btn-lg w-100 mb-3"
                                             data-bs-dismiss="modal">Close</a>

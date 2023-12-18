@@ -1,4 +1,4 @@
-@extends('layouts\admin')
+@extends('admin.layouts.admin')
 @section('body')
 <table id="dataTableExample1" class="table table-bordered table-striped table-hover">
     <thead>

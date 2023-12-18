@@ -15,12 +15,12 @@
   <div class="sub-footer bg-dark mt-5">
     <div class="container d-flex flex-md-row flex-column justify-content-between align-items-md-center gap-1 container-p-x py-3">
       <div>
-        <a href="#!" class="footer-text fw-bolder">DCLM.ORG</a>©
+        <a href="#!" class="footer-text fw-bolder">© DCLM.ORG</a>
       </div>
       <div>
-        <a href="#!" class="footer-link me-4">Terms of use</a>
-        <a href="#!" class="footer-link me-4">Privacy policy </a>
-        <a href="#!" class="footer-link me-4">Contact us</a>
+        <a href="https://dclm.org/terms-conditions/" class="footer-link me-4">Terms of use</a>
+        <a href="https://dclm.org/privacy/" class="footer-link me-4">Privacy policy </a>
+        <a href="https://dclm.org/contact/" class="footer-link me-4">Contact us</a>
       </div>
     </div>
 

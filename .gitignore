@@ -1,4 +1,5 @@
 # files
+.cache_ggshield
 dclm-events
 /ops/bams-dev.env
 /ops/dclm-dev.env

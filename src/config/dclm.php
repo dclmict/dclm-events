@@ -8,10 +8,11 @@ return [
     |--------------------------------------------------------------------------*/
 
     'header_menu' => [
-    	['label'=>'Home',   'route'=>'page.index'],
-    	['label'=>'Personalized Flyer',   'route'=>'getmydp'],
-    	['label'=>'Testimonies',  'route'=>'home'],
-    	['label'=>'Resources',   'route'=>'home'],
+    	['label'=>'Home',   'route'=>'home'],
+    	['label'=>'My DP',   'route'=>'getmydp'],
+    	# ['label'=>'Testimonies',  'route'=>'home'],
+        # ['label'=>'Schedule',  'route'=>'home'],
+    	# ['label'=>'Resources',   'route'=>'home'],
     ],
 
     /*
@@ -21,7 +22,7 @@ return [
 
     'resources' => [
     	['title_1'=>'Download events', 'title_2'=>'RESOURCES', 'icon'=>'fa-file-pdf', 'route'=>'home'],
-    	['title_1'=>'Create Personalized', 'title_2'=>'FLYERS', 'icon'=>'fa-file-image', 'route'=>'home'],
+    	['title_1'=>'Create DP', 'title_2'=>'FLYERS', 'icon'=>'fa-file-image', 'route'=>'home'],
     	['title_1'=>'Share Your', 'title_2'=>'TESTIMONIES', 'icon'=>'fa-microphone', 'route'=>'home'],
     	['title_1'=>'Download events', 'title_2'=>'RESOURCES', 'icon'=>'fa-file-pdf', 'route'=>'home'],
     ],
@@ -39,7 +40,7 @@ return [
     		'text'=>'On the 1st of April, she experienced a sharp pain after trying to put a baby down. She got home and felt the pain again. Someone researched online and told her that this kind of pain is associated with kidney disease. She ignored it and believed in God for her healing. During the Easter Retreat, after the message on Jesus, Our Passover, The man of God prayed specifically for people experiencing internal problems. She received her healing and was made whole. The pain has not returned since then. Praise the Lord!'
     	],
     	[
-    		'name'=>'Esther Yohana', 'location'=>'Lagos, Nigeria', 'image'=>'news2.jpg',
+    		'name'=>'Esther Yohana', 'location'=>'Lagos, Nigeria', 'image'=>'news3.jpg',
     		'title'=>'Sharp Pain Healed',
     		'text'=>'The man of God prayed specifically for people experiencing internal problems. She received her healing and was made whole. The pain has not returned since then .On the 1st of April, she experienced a sharp pain after trying to put a baby down. She got home and felt the pain again. Someone researched online and told her that this kind of pain is associated with kidney disease. She ignored it and believed in God for her healing. During the Easter Retreat, after the message on Jesus, Our Passover. Praise the Lord!'
     	],

@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Session\TokenMismatchException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -37,5 +38,22 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    public function render($request, Throwable $e)
+    {
+        // if ($e instanceof TokenMismatchException) {
+        //     return redirect()->route('home');
+        // }
+
+        if($e instanceof TokenMismatchException){
+
+            return response()
+                ->view('errors::419', [], 200)
+                ->header('Refresh', '5;url='.route('home'));
+        
+        }
+
+        return parent::render($request, $e);
     }
 }

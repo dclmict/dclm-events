@@ -2,16 +2,18 @@
 <html>
 
 <head>
-    <title>DCLM Events || Admin</title>
+    <title>Admin || DCLM Events </title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
     <link rel="stylesheet" href="/styles/style.css">
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/assets/img/favicon/dclm.png" />
     <script src="https://kit.fontawesome.com/be494ca550.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
     <div id="admin-container">
-        @include('navbar')
+        @include('admin.layouts.navbar')
         <div class="container my-4">
             @yield('content')
         </div>

@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('admin.layouts.admin')
 @section('content')
     <div class="table-responsive">
         <table id="data-table-all" class="table">

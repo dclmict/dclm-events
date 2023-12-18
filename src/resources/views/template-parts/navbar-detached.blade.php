@@ -5,7 +5,7 @@
 
 <nav class="navbar navbar-example navbar-expand-lg bg-transparent bg-light_ mt-sm-4_ fixed-top_ sticky-sm-top_ navbar-detached">
   <div class="container">
-    <a class="navbar-brand" href="{{route('page.index')}}">
+    <a class="navbar-brand" href="{{route('home')}}">
       <img src="dclm-logo.png" class="logo h-100">
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-ex-3">
@@ -19,11 +19,16 @@
         @foreach ($menu as $m)
             <a class="nav-item nav-link" href="{{ route($m['route']) }}">{{ $m['label'] }}</a>
         @endforeach
+
+        <a class="nav-item nav-link" href="{{ route('home') }}#testimonies">Testimonies</a>
+        <a class="nav-item nav-link" href="{{ route('home') }}#schedule">Schedule</a>
+        <a class="nav-item nav-link" href="{{ route('home') }}#resources">Resources</a>
       </div>
 
       <div class="row_">
-          <a href="#" class="btn btn-success rounded me-3">Login</a>
-          <a href="{{route('page.register')}}" class="btn btn-light rounded">Register</a>
+        <a href="{{route('page.register')}}" class="btn btn-success rounded me-3" >Register</a>
+          <a href="{{route('login')}}" class="btn btn-light rounded">Login</a>
+
       </div>
 
     </div>

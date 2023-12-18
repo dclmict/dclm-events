@@ -1,4 +1,4 @@
-name: Build & Deploy App
+name: Deploy App
 
 on:
   push:
@@ -21,10 +21,10 @@ env:
 jobs:
   build-image:
     runs-on: ubuntu-latest
+    environment: dev
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
       - name: Build and push Docker image
         env:
           IU: ${{ secrets.DL_IU }}
@@ -38,20 +38,19 @@ jobs:
           docker build -t $DIN -f $DOCKERFILE .
           echo $DLP | docker login -u $DLU --password-stdin
           docker push $DIN
-
+  
   create-dns-record:
     runs-on: ubuntu-latest
+    environment: dev
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
       - name: Set up AWS CLI
         uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-access-key-id: ${{ secrets.DL_AWS_KEY }}
           aws-secret-access-key: ${{ secrets.DL_AWS_SECRET }}
           aws-region: us-east-1
-
       - name: Create Route 53 DNS Record
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.DL_AWS_KEY }}
@@ -62,22 +61,21 @@ jobs:
           URL2: ${{ secrets.DL_URL2 }}
           URL3: ${{ secrets.DL_URL3 }}
         run: |
-          chmod +x create-dns-record.sh
-          ./create-dns-record.sh
+          chmod +x app.sh
+          ./app.sh 7
         working-directory: ${{ env.WORK_DIR }}
-
+  
   create-app-dir:
     runs-on: ubuntu-latest
+    environment: dev
     needs: create-dns-record
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.8.0
         with:
           ssh-private-key: ${{ secrets.DL_SSH_KEY }}
-
       - name: Create app directory
         env:
           IN: ${{ secrets.DL_IN }}
@@ -86,45 +84,43 @@ jobs:
           # Create app directory
           ssh -T -o "StrictHostKeyChecking=no" "$SSH_USERNAME@$SSH_HOST" \
           "IN=$IN" \
-          'bash -s' < ./create-app-dir.sh
+          'bash -s' < ./app.sh 8
         working-directory: ${{ env.WORK_DIR }}
-
+  
   clone-app-repo:
     runs-on: ubuntu-latest
+    environment: dev
     needs: create-app-dir
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-    
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.8.0
         with:
           ssh-private-key: ${{ secrets.DL_SSH_KEY }}
-
       - name: Clone app
         env:
-          REPO: ${{ secrets.DL_REPO }}
+          REPO: ${{ secrets.DL_GH_REPO_URL }}
           GIT_BRANCH: ${{ secrets.DL_GIT_BRANCH }}
         run: |
           ssh -T -o "StrictHostKeyChecking=no" "$SSH_USERNAME@$SSH_HOST" \
           "APP_DIR=$APP_DIR" \
           "REPO=$REPO" \
           "GIT_BRANCH=$GIT_BRANCH" \
-          'bash -s' < ./clone-app-repo.sh
+          'bash -s' < ./app.sh 9
         working-directory: ${{ env.WORK_DIR }}
-
+  
   create-nginx-vhost:
     runs-on: ubuntu-latest
+    environment: dev
     needs: clone-app-repo
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.8.0
         with:
           ssh-private-key: ${{ secrets.DL_SSH_KEY }}
-
       - name: Create & copy vhost config file
         env:
           VHOST_CONFIG: ${{ vars.NGX }}
@@ -134,7 +130,6 @@ jobs:
           mv vhost_fixed.conf vhost.conf
           cat vhost.conf && ls -la
           scp -o "StrictHostKeyChecking=no" -r vhost.conf "$SSH_USERNAME@$SSH_HOST:$ENV_DEST"
-
       - name: Create Nginx vhost
         env:
           APP_PROXY_URL: ${{ secrets.DL_APP_PROXY_URL }}
@@ -151,16 +146,16 @@ jobs:
           "CERT=$CERT" \
           "CERT_KEY=$CERT_KEY" \
           "ENV_DEST=$ENV_DEST" \
-          'bash -s' < ./create-nginx-vhost.sh
+          'bash -s' < ./app.sh 10
         working-directory: ${{ env.WORK_DIR }}
-
+  
   deploy-app:
     runs-on: ubuntu-latest
+    environment: dev
     needs: create-nginx-vhost
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
       - name: Generate envfile
         env:
           ENV_FILE: ${{ secrets.DL_ENV_FILE }}
@@ -186,6 +181,9 @@ jobs:
           envkey_DL_ENV: ${{ secrets.DL_ENV }}
           envkey_DL_ENV_ENV: ${{ secrets.DL_ENV_ENV }}
           envkey_DL_REPO: ${{ secrets.DL_REPO }}
+          envkey_DL_GH_TOKEN: ${{ secrets.DL_GH_TOKEN }}
+          envkey_DL_GH_REPO_URL: ${{ secrets.DL_GH_REPO_URL }}
+          envkey_DL_EXCLUDE: ${{ secrets.DL_EXCLUDE }}
           envkey_APP_NAME: ${{ secrets.APP_NAME }}
           envkey_APP_ENV: ${{ secrets.APP_ENV }}
           envkey_APP_KEY: ${{ secrets.APP_KEY }}
@@ -231,12 +229,10 @@ jobs:
           file_name: ${{ env.ENV_FILE }}
           fail_on_empty: false
           sort_keys: false
-
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.8.0
         with:
           ssh-private-key: ${{ secrets.DL_SSH_KEY }}
-
       - name: Copy envfile
         env:
           ENV_FILE: ${{ secrets.DL_ENV_FILE }}
@@ -244,11 +240,10 @@ jobs:
         run: |
           # Copy .env file into deploy server
           scp -o "StrictHostKeyChecking=no" -r "$ENV_SRC/$ENV_FILE" "$SSH_USERNAME@$SSH_HOST:$ENV_DEST"
-
-      - name: Deploy app   
+      - name: Deploy app
         run: |
           # Deploy the app
           ssh -T -o "StrictHostKeyChecking=no" "$SSH_USERNAME@$SSH_HOST" \
           "APP_DIR=$APP_DIR" \
-          'bash -s' < ./deploy-app.sh
+          'bash -s' < ./app.sh 11
         working-directory: ${{ env.WORK_DIR }}
