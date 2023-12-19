@@ -40,7 +40,7 @@ git_branch() {
 # function to check if there are uncommitted changes in repo
 commit_status() {
   # Check if the current directory is a Git repository
-  if [ -d .git ]; then
+  if [ -d .git ] || git rev-parse --git-dir > /dev/null 2>&1; then
     :
   else
     echo "This is not a Git repository."
@@ -611,7 +611,6 @@ gh_secret_set() {
   }
 
   check="$(gh_repo_view)"
-  echo $check
   if [ "$check" == "private" ]; then
     gh_secret_private_rm argv $DL_ENV
     gh_secret_private argv $DL_ENV
@@ -623,7 +622,7 @@ gh_secret_set() {
     gh_variable_public_rm
     gh_variable_public
   else
-    echo "Could not set secrets. Something is wrong!" >&2
+    echo "Could not set secrets. Something is wrong!"
     exit 1
   fi
 }
@@ -1028,11 +1027,13 @@ gh_repo_check() {
 
 # function to check if GitHub repo is private/public
 gh_repo_view() {
+  code1=private
+  code2=public
   view=$(gh repo view $DL_REPO --json isPrivate -q .isPrivate 2>/dev/null)
 	if [ "$view" = "true" ]; then
-		repo_view=private
+		echo $code1
 	else
-		repo_view=public
+		echo $code2
 	fi
 }
 
