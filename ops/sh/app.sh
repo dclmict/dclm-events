@@ -10,7 +10,6 @@ git_branch() {
 
   # Check if branch is dclm-dev or dclm-prod
   if [[ $branch != "dclm-dev" ]] && [[ $branch != "dclm-prod" ]]; then
-
     # Prompt the user to select a branch  
     echo "Current branch is $branch"
     echo "Please select branch:"
@@ -33,9 +32,27 @@ git_branch() {
         exit 1
         ;;
     esac
-
   else 
     echo -e "Git Repo: You're on \033[32m$branch\033[0m branch"
+  fi
+}
+
+# function to check if there are uncommitted changes in repo
+commit_status() {
+  # Check if the current directory is a Git repository
+  if [ -d .git ]; then
+    :
+  else
+    echo "This is not a Git repository."
+    exit 1
+  fi
+
+  # Check if the working tree is clean
+  if [ -z "$(git status --porcelain)" ]; then
+    echo -e "Git Commit: \033[32mWorking tree is clean.\033[0m"
+  else
+    echo -e "\n\033[31mThere are uncommitted files.\033[0m Type \033[32my|Y|yes\033[0m to fix."
+    ./ops/sh/app.sh 3
   fi
 }
 
@@ -107,10 +124,12 @@ gh_repo_create() {
 git_commit() {
   # function to commit repo with untracked files
   git_commit_new() {
-    read -p $'\nDo you want to commit repo? (yes|no): ' git_commit
+    read -p $'\nDo you want to commit repo files? (yes|no): ' git_commit
     case "$git_commit" in
       yes|Y|y)
-        echo -e "\033[31mUntracked files found::\033[0m \033[32mPlease enter commit message:\033[0m"
+        echo -e "\n\033[31mUntracked files found and listed below: \033[0m"
+        git status -s
+        echo -e "\n\033[32mPlease enter commit message:\033[0m"
         read -r msg1
         git add -A
         git commit -m "$msg1"
@@ -126,10 +145,12 @@ git_commit() {
 
   # function to commit repo with modified files
   git_commit_old() {
-    read -p $'\nDo you want to commit repo? (yes|no): ' git_commit
+    read -p $'\nDo you want to commit repo files? (yes|no): ' git_commit
     case "$git_commit" in
       yes|Y|y)
-        echo -e "\033[31mModified files found...\033[0m \033[32mPlease enter commit message:\033[0m"
+        echo -e "\n\033[31mModified files found and listed below: \033[0m"
+        git status -s
+        echo -e "\n\033[32mPlease enter commit message:\033[0m"
         read -r msg2
         git commit -am "$msg2"
         ;;
@@ -221,8 +242,9 @@ docker_build() {
 #---------------------------------------#
 git_push() {
   git_branch
+  commit_status
   ga_workflow_env argv $DL_ENV
-  gh_secret_set argv $DL_ENV
+  gh_secret_set
   git_repo_push
 }
 
@@ -289,7 +311,7 @@ ga_workflow_env() {
       echo -e "Actions worklow updated successfully!\n"
       ;;
     no|N|n)
-      echo -e "\033[32mNothing to be done. Thank you...\033[0m"
+      echo -e "\033[32mNothing to be done. Thank you...\033[0m\n"
       ;;
     *)
       echo -e "\033[32mNo choice. Exiting script...\033[0m"
@@ -311,10 +333,8 @@ gh_secret_set() {
         else
           envfile="$2"
         fi
-
         # Run gh secret set, reading from the env file 
         gh secret set -f "$envfile"
-
         # Check return code and output result
         if [ $? -eq 0 ]; then
           echo -e "Secrets set successfully\n"
@@ -346,7 +366,6 @@ gh_secret_set() {
         else
           envfile="$2"
         fi
-
         # Initialize the ARGS array
         ARGS=()
 
@@ -391,7 +410,6 @@ gh_secret_set() {
         else
           envfile="$2"
         fi
-
         # Check the DL_ENV_ENV variable
         if [ "$DL_ENV_ENV" = "dclm-prod" ]; then
           env="prod"
@@ -401,10 +419,8 @@ gh_secret_set() {
           echo "DL_ENV_ENV value not what is expected!"
           exit 0
         fi
-
         # Read the .env file and set the secrets
         gh secret set -f "$envfile" -e"$env"
-
         # Check return code and output result
         if [ $? -eq 0 ]; then
           echo -e "Secrets set successfully\n"
@@ -436,7 +452,6 @@ gh_secret_set() {
         else
           envfile="$2"
         fi
-
         # Check the DL_ENV_ENV variable
         if [ "$DL_ENV_ENV" = "dclm-prod" ]; then
           env="prod"
@@ -446,10 +461,8 @@ gh_secret_set() {
           echo "Aha! No need then..."
           exit 0
         fi
-
         # Read the envfile line by line and delete the secrets
         while IFS= read -r line; do
-
           # Skip lines starting with '#' (comments)
           if [ -n "$line" ] && [[ $line != \#* ]]; then
             # Trim leading/trailing whitespaces
@@ -457,7 +470,6 @@ gh_secret_set() {
             gh secret delete "$line" --repo $DL_REPO --env"$env"
           fi
         done < "$envfile"
-
         # Check return code and output result
         if [ $? -eq 0 ]; then
           echo -e "Secrets deleted successfully\n"
@@ -484,8 +496,6 @@ gh_secret_set() {
         echo -e "\033[32mSetting variables...\033[0m\n"
         vhost=${DL_VHOST_CONFIG}
         gh variable set NGX < "$vhost"
-        rm -f "$file"
-
         # Check return code and output result
         if [ $? -eq 0 ]; then
           echo -e "Variables set successfully\n"
@@ -512,8 +522,6 @@ gh_secret_set() {
         echo -e "\033[32mDeleting variables...\033[0m\n"
         vhost=${DL_VHOST_CONFIG}
         gh variable delete NGX < "$vhost"
-        rm -f "$file"
-
         # Check return code and output result
         if [ $? -eq 0 ]; then
           echo -e "Variables deleted successfully\n"
@@ -547,11 +555,8 @@ gh_secret_set() {
           echo "Haa! No need then..."
           exit 0
         fi
-
         vhost=${DL_VHOST_CONFIG}
         gh variable set NGX < "$vhost" -e"$env"
-        rm -f "$file"
-
         # Check return code and output result
         if [ $? -eq 0 ]; then
           echo -e "Variables set successfully\n"
@@ -585,11 +590,8 @@ gh_secret_set() {
           echo "Haa! No need then..."
           exit 0
         fi
-
         vhost=${DL_VHOST_CONFIG}
         gh variable delete NGX < "$vhost" -e"$env"
-        rm -f "$file"
-
         # Check return code and output result
         if [ $? -eq 0 ]; then
           echo -e "Variables deleted successfully\n"
@@ -609,16 +611,17 @@ gh_secret_set() {
   }
 
   check="$(gh_repo_view)"
+  echo $check
   if [ "$check" == "private" ]; then
-    gh_secret_private
-    gh_variable_private
-    gh_secret_private_rm
+    gh_secret_private_rm argv $DL_ENV
+    gh_secret_private argv $DL_ENV
     gh_variable_private_rm
+    gh_variable_private
   elif [ "$check" == "public" ]; then
-    gh_secret_public
-    gh_variable_public
-    gh_secret_public_rm
+    gh_secret_public_rm argv $DL_ENV
+    gh_secret_public argv $DL_ENV
     gh_variable_public_rm
+    gh_variable_public
   else
     echo "Could not set secrets. Something is wrong!" >&2
     exit 1
