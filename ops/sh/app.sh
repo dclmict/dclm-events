@@ -89,7 +89,7 @@ gh_repo_create() {
 			read -p "Enter GitHub username: " ghUser
 			read -p "Enter GitHub repo name: " ghName
       gh="$ghUser/$ghName"
-			result="$(gh_repo_check arg1 $gh)"
+			result="$(gh_repo_check $gh)"
 			if [ $result -eq 200 ]; then
 				echo -e "\033[31mGitHub repo exists. I stop here. \033[0m\n"
 			else
@@ -243,7 +243,7 @@ docker_build() {
 git_push() {
   git_branch
   commit_status
-  ga_workflow_env argv $DL_ENV
+  ga_workflow_env $DL_ENV
   gh_secret_set
   git_repo_push
 }
@@ -253,11 +253,11 @@ ga_workflow_env() {
   case "$ga_workflow" in
     yes|Y|y)
       # check if argument is provided
-      if [ $# -ne 2 ]; then
+      if [ $# -ne 1 ]; then
         read -p $'\nEnvfile not found... Enter path to env file: ' env
         envfile="$env"
       else
-        envfile="$2"
+        envfile="$1"
       fi
 
       vfile="./ops/vars.txt"
@@ -325,16 +325,39 @@ gh_secret_set() {
     read -p "Do you want to set secrets on private repo? (yes|no): " git_push
     case "$git_push" in
       yes|Y|y)
-        echo -e "\033[32mSetting secrets...\033[0m\n"
         # check if argument is provided
-        if [ $# -ne 2 ]; then
+        if [ $# -ne 1 ]; then
           read -p $'\nEnvfile not found... Enter path to env file: ' env
           envfile="$env"
         else
-          envfile="$2"
+          envfile="$1"
         fi
-        # Run gh secret set, reading from the env file 
-        gh secret set -f "$envfile"
+
+        # Set number of retries and delay between retries  
+        MAX_RETRIES=3
+        RETRY_DELAY=5
+        # Helper function to retry command on failure
+        retry() {
+          local retries=$1
+          shift
+          local count=0
+          until "$@"; do
+            exit=$?
+            count=$(($count + 1))
+            if [ $count -lt $retries ]; then
+              echo "Command failed! Retrying in $RETRY_DELAY seconds..."
+              sleep $RETRY_DELAY 
+            else
+              echo "Failed after $count retries."
+              return $exit
+            fi
+          done 
+          return 0
+        }
+
+        echo -e "\033[32mSetting secrets...\033[0m\n"
+        # Read the .env file and set the secrets
+        retry $MAX_RETRIES gh secret set -f "$envfile"
         # Check return code and output result
         if [ $? -eq 0 ]; then
           echo -e "Secrets set successfully\n"
@@ -360,11 +383,11 @@ gh_secret_set() {
       yes|Y|y)
         echo -e "\033[32mDeleting secrets...\033[0m\n"
         # check if argument is provided
-        if [ $# -ne 2 ]; then
+        if [ $# -ne 1 ]; then
           read -p $'\nEnvfile not found... Enter path to env file: ' env
           envfile="$env"
         else
-          envfile="$2"
+          envfile="$1"
         fi
         # Initialize the ARGS array
         ARGS=()
@@ -402,14 +425,37 @@ gh_secret_set() {
     read -p "Do you want to set secrets on public repo? (yes|no): " git_push
     case "$git_push" in
       yes|Y|y)
-        echo -e "\033[32mSetting secrets...\033[0m\n"
         # check if argument is provided
-        if [ $# -ne 2 ]; then
+        if [ $# -ne 1 ]; then
           read -p $'\nEnvfile not found... Enter path to env file: ' env
           envfile="$env"
         else
-          envfile="$2"
+          envfile="$1"
         fi
+
+        # Set number of retries and delay between retries  
+        MAX_RETRIES=3
+        RETRY_DELAY=5
+        # Helper function to retry command on failure
+        retry() {
+          local retries=$1
+          shift
+          local count=0
+          until "$@"; do
+            exit=$?
+            count=$(($count + 1))
+            if [ $count -lt $retries ]; then
+              echo "Command failed! Retrying in $RETRY_DELAY seconds..."
+              sleep $RETRY_DELAY 
+            else
+              echo "Failed after $count retries."
+              return $exit
+            fi
+          done 
+          return 0
+        }
+
+        echo -e "\033[32mSetting secrets...\033[0m\n"
         # Check the DL_ENV_ENV variable
         if [ "$DL_ENV_ENV" = "dclm-prod" ]; then
           env="prod"
@@ -420,7 +466,7 @@ gh_secret_set() {
           exit 0
         fi
         # Read the .env file and set the secrets
-        gh secret set -f "$envfile" -e"$env"
+        retry $MAX_RETRIES gh secret set -f "$envfile" -e"$env"
         # Check return code and output result
         if [ $? -eq 0 ]; then
           echo -e "Secrets set successfully\n"
@@ -446,11 +492,11 @@ gh_secret_set() {
       yes|Y|y)
         echo -e "\033[32mDeleting secrets...\033[0m\n"
         # check if argument is provided
-        if [ $# -ne 2 ]; then
+        if [ $# -ne 1 ]; then
           read -p $'\nEnvfile not found... Enter path to env file: ' env
           envfile="$env"
         else
-          envfile="$2"
+          envfile="$1"
         fi
         # Check the DL_ENV_ENV variable
         if [ "$DL_ENV_ENV" = "dclm-prod" ]; then
@@ -617,8 +663,8 @@ gh_secret_set() {
     gh_variable_private_rm
     gh_variable_private
   elif [ "$check" == "public" ]; then
-    gh_secret_public_rm argv $DL_ENV
-    gh_secret_public argv $DL_ENV
+    gh_secret_public_rm $DL_ENV
+    gh_secret_public $DL_ENV
     gh_variable_public_rm
     gh_variable_public
   else
@@ -1002,12 +1048,12 @@ gh_repo_rename() {
 # function to check if GitHub repo exists
 gh_repo_check() {
   # check if argument is provided
-  if [ $# -ne 2 ]; then
+  if [ $# -ne 1 ]; then
     read -p "Enter GitHub username: " ghUser
 		read -p "Enter GitHub repo name: " ghName
     repo="${ghUser}/${ghName}"
   else
-    repo=$2
+    repo=$1
   fi
 
   status_code=$(curl -s -o /dev/null -w "%{http_code}" -H "Authorization: token ${DL_GH_TOKEN}" "https://api.github.com/repos/$repo")
