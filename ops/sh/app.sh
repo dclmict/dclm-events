@@ -524,7 +524,7 @@ gh_secret_set() {
           if [ -n "$line" ] && [[ $line != \#* ]]; then
             # Trim leading/trailing whitespaces
             line=$(echo "$line" | xargs)
-            gh secret delete "$line" --repo $GH_APP_REPO -e "$env"
+            gh secret delete "$line" --repo $GH_REPO -e "$env"
           fi
         done < "$envfile"
         # Check return code and output result
@@ -1077,7 +1077,7 @@ gh_repo_check() {
 gh_repo_view() {
   code1=private
   code2=public
-  view=$(gh repo view $GH_APP_REPO --json isPrivate -q .isPrivate 2>/dev/null)
+  view=$(gh repo view $GH_REPO --json isPrivate -q .isPrivate 2>/dev/null)
 	if [ "$view" = "true" ]; then
 		echo $code1
 	else
