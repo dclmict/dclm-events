@@ -159,32 +159,42 @@ jobs:
         id: envfile
         uses: SpicyPizza/create-envfile@v2.0
         with:
-          envkey_COMPOSE_PROJECT_NAME: ${{ secrets.COMPOSE_PROJECT_NAME }}
           envkey_DL_STACK: ${{ secrets.DL_STACK }}
-          envkey_COMPOSE_NETWORK: ${{ secrets.COMPOSE_NETWORK }}
-          envkey_DL_COMPOSE_PORT: ${{ secrets.DL_COMPOSE_PORT }}
+          envkey_DL_APP1: ${{ secrets.DL_APP1 }}
+          envkey_DL_APP2: ${{ secrets.DL_APP2 }}
+          envkey_ORG_ID: ${{ secrets.ORG_ID }}
+          envkey_TLD: ${{ secrets.TLD }}
+          envkey_HOST_ENV: ${{ secrets.HOST_ENV }}
+          envkey_HOST_NAME: ${{ secrets.HOST_NAME }}
+          envkey_HOST_LOCAL: ${{ secrets.HOST_LOCAL }}
+          envkey_HOST_SSH_DIR: ${{ secrets.HOST_SSH_DIR }}
+          envkey_ENV_FILE: ${{ secrets.ENV_FILE }}
+          envkey_OPS_DIR: ${{ secrets.OPS_DIR }}
+          envkey_OPS_SH_DIR: ${{ secrets.OPS_SH_DIR }}
+          envkey_OPS_NGX_DIR: ${{ secrets.OPS_NGX_DIR }}
+          envkey_HOST_PORT1: ${{ secrets.HOST_PORT1 }}
+          envkey_DK_PORT1: ${{ secrets.DK_PORT1 }}
+          envkey_DK_HUB: ${{ secrets.DK_HUB }}
+          envkey_DK_FILE: ${{ secrets.DK_FILE }}
+          envkey_COMPOSE_FILE: ${{ secrets.COMPOSE_FILE }}
+          envkey_GH_SSH: ${{ secrets.GH_SSH }}
+          envkey_GH_APP_REPO: ${{ secrets.GH_APP_REPO }}
           envkey_NGX_CERT: ${{ secrets.NGX_CERT }}
           envkey_NGX_CERT_KEY: ${{ secrets.NGX_CERT_KEY }}
-          envkey_DL_CN: ${{ secrets.DL_CN }}
-          envkey_DL_IU: ${{ secrets.DL_IU }}
-          envkey_DL_IN: ${{ secrets.DL_IN }}
-          envkey_DL_IV: ${{ secrets.DL_IV }}
-          envkey_DL_DIN: ${{ secrets.DL_DIN }}
-          envkey_DK_HUB: ${{ secrets.DK_HUB }}
-          envkey_DK_TOKEN: ${{ secrets.DK_TOKEN }}
-          envkey_DL_DCF: ${{ secrets.DL_DCF }}
-          envkey_DK_FILE: ${{ secrets.DK_FILE }}
-          envkey_DL_ENV: ${{ secrets.DL_ENV }}
-          envkey_GA_ENV_FILE: ${{ secrets.GA_ENV_FILE }}
-          envkey_DL_REPO: ${{ secrets.DL_REPO }}
-          envkey_GH_TOKEN: ${{ secrets.GH_TOKEN }}
-          envkey_DL_GH_REPO: ${{ secrets.GH_REPO }}
+          envkey_APP_ID: ${{ secrets.APP_ID }}
+          envkey_COMPOSE_NETWORK: ${{ secrets.COMPOSE_NETWORK }}
+          envkey_COMPOSE_PROJECT_NAME: ${{ secrets.COMPOSE_PROJECT_NAME }}
+          envkey_COMPOSE_PORT: ${{ secrets.COMPOSE_PORT }}
+          envkey_DK_IMAGE: ${{ secrets.DK_IMAGE }}
+          envkey_DK_REPO: ${{ secrets.DK_REPO }}
+          envkey_GH_REPO: ${{ secrets.GH_REPO }}
+          envkey_GA_APP_DIR: ${{ secrets.GA_APP_DIR }}
           envkey_GA_ENV_EXCLUDE: ${{ secrets.GA_ENV_EXCLUDE }}
           envkey_APP_NAME: ${{ secrets.APP_NAME }}
           envkey_APP_ENV: ${{ secrets.APP_ENV }}
           envkey_APP_KEY: ${{ secrets.APP_KEY }}
           envkey_APP_DEBUG: ${{ secrets.APP_DEBUG }}
-          envkey_APP_URL: ${{ secrets.GA_APP_URL }}
+          envkey_APP_URL: ${{ secrets.APP_URL }}
           envkey_LOG_CHANNEL: ${{ secrets.LOG_CHANNEL }}
           envkey_LOG_LEVEL: ${{ secrets.LOG_LEVEL }}
           envkey_DB_CONNECTION: ${{ secrets.DB_CONNECTION }}

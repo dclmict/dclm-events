@@ -253,8 +253,8 @@ docker_build() {
 #---------------------------------------#
 git_push() {
   git_branch
-  commit_status
   ga_workflow_env $ENV_FILE
+  commit_status
   gh_secret_set
   git_repo_push
 }
@@ -467,13 +467,13 @@ gh_secret_set() {
         }
 
         echo -e "${GREEN}Setting secrets...${RESET}\n"
-        # Check the GA_ENV_FILE variable
-        if [ "$GA_ENV_FILE" = "release/prod" ]; then
+        # Check the GH_BRANCH variable
+        if [ "$GH_BRANCH" = "release/prod" ]; then
           env="prod"
-        elif [ "$GA_ENV_FILE" = "release/dev" ]; then
+        elif [ "$GH_BRANCH" = "release/dev" ]; then
           env="dev"
         else
-          echo "GA_ENV_FILE value not what is expected!"
+          echo "GH_BRANCH value not what is expected!"
           exit 0
         fi
         # Read the .env file and set the secrets
@@ -509,10 +509,10 @@ gh_secret_set() {
         else
           envfile="$1"
         fi
-        # Check the GA_ENV_FILE variable
-        if [ "$GA_ENV_FILE" = "release/prod" ]; then
+        # Check the GH_BRANCH variable
+        if [ "$GH_BRANCH" = "release/prod" ]; then
           env="prod"
-        elif [ "$GA_ENV_FILE" = "release/dev" ]; then
+        elif [ "$GH_BRANCH" = "release/dev" ]; then
           env="dev"
         else
           echo "Aha! No need then..."
@@ -603,10 +603,10 @@ gh_secret_set() {
     case "$git_push" in
       yes|Y|y)
         echo -e "${GREEN}Setting variables...${RESET}\n"
-        # Check the GA_ENV_FILE variable
-        if [ "$GA_ENV_FILE" = "release/prod" ]; then
+        # Check the GH_BRANCH variable
+        if [ "$GH_BRANCH" = "release/prod" ]; then
           env="prod"
-        elif [ "$GA_ENV_FILE" = "release/dev" ]; then
+        elif [ "$GH_BRANCH" = "release/dev" ]; then
           env="dev"
         else
           echo "Haa! No need then..."
@@ -638,10 +638,10 @@ gh_secret_set() {
     case "$git_push" in
       yes|Y|y)
         echo -e "${GREEN}Deleting variables...${RESET}\n"
-        # Check the GA_ENV_FILE variable
-        if [ "$GA_ENV_FILE" = "release/prod" ]; then
+        # Check the GH_BRANCH variable
+        if [ "$GH_BRANCH" = "release/prod" ]; then
           env="prod"
-        elif [ "$GA_ENV_FILE" = "release/dev" ]; then
+        elif [ "$GH_BRANCH" = "release/dev" ]; then
           env="dev"
         else
           echo "Haa! No need then..."
