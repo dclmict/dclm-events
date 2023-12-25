@@ -223,8 +223,6 @@ jobs:
           envkey_MIX_PUSHER_APP_CLUSTER: ${{ secrets.MIX_PUSHER_APP_CLUSTER }}
           directory: $GA_ENV_SRC
           file_name: $GA_ENV_FILE
-          # directory: ${{ env.GA_ENV_SRC }}
-          # file_name: ${{ env.GA_ENV_FILE }}
           fail_on_empty: false
           sort_keys: false
       - name: Setup SSH
