@@ -524,7 +524,7 @@ gh_secret_set() {
           if [ -n "$line" ] && [[ $line != \#* ]]; then
             # Trim leading/trailing whitespaces
             line=$(echo "$line" | xargs)
-            gh secret delete "$line" --repo $GH_APP_REPO --env"$env"
+            gh secret delete "$line" --repo $GH_APP_REPO -e "$env"
           fi
         done < "$envfile"
         # Check return code and output result
