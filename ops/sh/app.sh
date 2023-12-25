@@ -533,8 +533,8 @@ gh_secret_set() {
             ARGS+=("$var_name")
           fi
         done < "$envfile"
-        parallel --retries 3 --silent -j+0 gh secret delete ::: "${ARGS[@]}"
-        
+        parallel --retries 3 --silent -j+0 gh secret delete ::: "${ARGS[@]}" --repo $GH_REPO -e "$env"
+
         # Check return code and output result
         if [ $? -eq 0 ]; then
           echo -e "Secrets deleted successfully\n"
