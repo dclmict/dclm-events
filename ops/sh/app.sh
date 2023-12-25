@@ -392,7 +392,7 @@ gh_secret_set() {
     read -p "Do you want to delete secrets on private repo? (yes|no): " git_push
     case "$git_push" in
       yes|Y|y)
-        echo -e "${GREEN}Deleting secrets...${RESET}\n"
+        echo -e "${GREEN}Deleting private repo secrets...${RESET}\n"
         # check if argument is provided
         if [ $# -ne 1 ]; then
           read -p $'\nEnvfile not found... Enter path to env file: ' env
@@ -501,7 +501,7 @@ gh_secret_set() {
     read -p "Do you want to delete secrets on public repo? (yes|no): " git_push
     case "$git_push" in
       yes|Y|y)
-        echo -e "${GREEN}Deleting secrets...${RESET}\n"
+        echo -e "${GREEN}Deleting public repo secrets...${RESET}\n"
         # check if argument is provided
         if [ $# -ne 1 ]; then
           read -p $'\nEnvfile not found... Enter path to env file: ' env
@@ -524,7 +524,7 @@ gh_secret_set() {
           if [ -n "$line" ] && [[ $line != \#* ]]; then
             # Trim leading/trailing whitespaces
             line=$(echo "$line" | xargs)
-            gh secret delete "$line" --repo $DL_REPO --env"$env"
+            gh secret delete "$line" --repo $GH_APP_REPO --env"$env"
           fi
         done < "$envfile"
         # Check return code and output result
@@ -1077,7 +1077,7 @@ gh_repo_check() {
 gh_repo_view() {
   code1=private
   code2=public
-  view=$(gh repo view $DL_REPO --json isPrivate -q .isPrivate 2>/dev/null)
+  view=$(gh repo view $GH_APP_REPO --json isPrivate -q .isPrivate 2>/dev/null)
 	if [ "$view" = "true" ]; then
 		echo $code1
 	else
