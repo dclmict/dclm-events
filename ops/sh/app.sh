@@ -528,12 +528,16 @@ gh_secret_set() {
           if [ -n "$line" ] && [[ ! "$line" =~ ^\# ]]; then
             # Trim leading/trailing whitespaces
             # line=$(echo "$line" | xargs)
-            # gh secret delete "$line" --repo $GH_REPO -e "$env"
+            # gh secret delete "$line" --repo $GH_OWNER_REPO -e "$env"
             var_name=$(echo "$line" | cut -d'=' -f1)
             ARGS+=("$var_name")
           fi
         done < "$envfile"
-        parallel --retries 3 --silent -j+0 gh secret delete ::: "${ARGS[@]}" --repo $GH_REPO -e "$env"
+
+        # parallel --retries 3 --silent -j+4 gh secret delete ::: "${ARGS[@]}" --repo $GH_OWNER_REPO -e "$env"
+
+        parallel --retries 3 --silent -j+4 \
+          gh secret delete --repo "${GH_OWNER_REPO}" --env "${env}" ::: "${SECRETS[@]}"
 
         # Check return code and output result
         if [ $? -eq 0 ]; then
@@ -990,19 +994,19 @@ git_repo_rename() {
 
 # function to rename GitHub repo
 gh_repo_rename() {
-  read -p "Enter GitHub username: " GH_USER
+  read -p "Enter GitHub username: " gh_user
 
   repo_name() {
-    read -p "Enter current repository name: " GH_REPO
-    read -p "Enter new repository name: " NEW_NAME
+    read -p "Enter current repository name: " gh_repo
+    read -p "Enter new repository name: " new_name
     # API to rename repo
-    API_ENDPOINT="https://api.github.com/repos/${GH_USER}/${GH_REPO}"
+    API_ENDPOINT="https://api.github.com/repos/${gh_user}/${gh_repo}"
 
     # Make API call to rename repo
     curl \
       -X PATCH \
       -H "Authorization: token ${GH_TOKEN}" \
-      -d '{"name":"'"${NEW_NAME}"'"}' \
+      -d '{"name":"'"${new_name}"'"}' \
       ${API_ENDPOINT}
 
     if [ $? -eq 0 ]; then
@@ -1085,7 +1089,7 @@ gh_repo_check() {
 gh_repo_view() {
   code1=private
   code2=public
-  view=$(gh repo view $GH_REPO --json isPrivate -q .isPrivate 2>/dev/null)
+  view=$(gh repo view $GH_OWNER_REPO --json isPrivate -q .isPrivate 2>/dev/null)
 	if [ "$view" = "true" ]; then
 		echo $code1
 	else

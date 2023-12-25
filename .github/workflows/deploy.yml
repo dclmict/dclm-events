@@ -179,6 +179,7 @@ jobs:
           envkey_COMPOSE_FILE: ${{ secrets.COMPOSE_FILE }}
           envkey_GH_SSH: ${{ secrets.GH_SSH }}
           envkey_GH_APP_REPO: ${{ secrets.GH_APP_REPO }}
+          envkey_GH_OWNER_REPO: ${{ secrets.GH_OWNER_REPO }}
           envkey_NGX_CERT: ${{ secrets.NGX_CERT }}
           envkey_NGX_CERT_KEY: ${{ secrets.NGX_CERT_KEY }}
           envkey_APP_ID: ${{ secrets.APP_ID }}
