@@ -3,6 +3,11 @@
 # add envfile to shell
 source ./src/.env
 
+RED='\033[31m'
+GREEN='\033[32m'
+YELLOW='\033[1;33m'
+RESET='\033[0m'
+
 nginx_config() {
   export APP_ID NGX_DOCROOT NGX_SERVER_NAME NGX_INDEX
   # Generate config 
@@ -17,10 +22,10 @@ git_branch() {
   # Check if branch is release/dev or release/prod
   if [[ $branch != "release/dev" ]] && [[ $branch != "release/prod" ]]; then
     # Prompt the user to select a branch  
-    echo "Current branch is $branch"
-    echo "Please select branch:"
-    echo "1) release/dev" 
-    echo "2) release/prod"
+    echo -e "Current branch is ${RED}$branch.${RESET} You can only deploy on ${GREEN}release/dev${RESET} or ${GREEN}release/prod${RESET}"
+    echo -e "Please select branch:"
+    echo -e "1) ${YELLOW}release/dev${RESET}" 
+    echo -e "2) ${YELLOW}release/prod${RESET}"
     read -p "Enter choice: " choice
 
     # Switch based on choice
@@ -39,7 +44,7 @@ git_branch() {
         ;;
     esac
   else 
-    echo -e "Git Repo: You're on \033[32m$branch\033[0m branch"
+    echo -e "Git Repo: You're on ${GREEN}$branch${RESET} branch"
   fi
 }
 
@@ -55,9 +60,9 @@ commit_status() {
 
   # Check if the working tree is clean
   if [ -z "$(git status --porcelain)" ]; then
-    echo -e "Git Commit: \033[32mWorking tree is clean.\033[0m"
+    echo -e "Git Commit: ${GREEN}Working tree is clean.${RESET}"
   else
-    echo -e "\n\033[31mThere are uncommitted files.\033[0m Type \033[32my|Y|yes\033[0m to fix."
+    echo -e "\n${RED}There are uncommitted files.${RESET} Type ${GREEN}y|Y|yes${RESET} to fix."
     ./ops/sh/app.sh 3
   fi
 }
@@ -71,18 +76,18 @@ git_repo_create() {
 	case "$repo_init" in
 		yes|Y|y)
 			if [ -d .git ]; then
-				echo -e "\033[31mCurrent directory already initialised \033[0m\n"
+				echo -e "${RED}Current directory already initialised ${RESET}\n"
 			else
-				echo -e "\033[32mPlease enter initial commit message: \033[0m\n"
+				echo -e "${GREEN}Please enter initial commit message: ${RESET}\n"
 				read -r commitMsg
 				git init && git add . && git commit -m "$commitMsg"
 			fi
 			;;
 		no|N|n)
-			echo -e "\033[32mNothing to be done. Thank you...\033[0m"
+			echo -e "${GREEN}Nothing to be done. Thank you...${RESET}"
 			;;
 		*) \
-			echo -e "\033[32mNo choice. Exiting script...\033[0m"
+			echo -e "${GREEN}No choice. Exiting script...${RESET}"
 			;;
 	esac
 }
@@ -97,7 +102,7 @@ gh_repo_create() {
       gh="$ghUser/$ghName"
 			result="$(gh_repo_check $gh)"
 			if [ $result -eq 200 ]; then
-				echo -e "\033[31mGitHub repo exists. I stop here. \033[0m\n"
+				echo -e "${RED}GitHub repo exists. I stop here. ${RESET}\n"
 			else
 				echo -e "\nWhich type of repository are you creating?:"
 				echo "1. Private repo"
@@ -115,10 +120,10 @@ gh_repo_create() {
 			fi
 			;;
 		no|N|n)
-			echo -e "\033[32mOkay, thank you...\033[0m"
+			echo -e "${GREEN}Okay, thank you...${RESET}"
 			;;
 		*)
-			echo -e "\033[32m No choice. Exiting script...\033[0m"
+			echo -e "${GREEN} No choice. Exiting script...${RESET}"
 			;;
 	esac
 }
@@ -133,18 +138,18 @@ git_commit() {
     read -p $'\nDo you want to commit repo files? (yes|no): ' git_commit
     case "$git_commit" in
       yes|Y|y)
-        echo -e "\n\033[31mUntracked files found and listed below: \033[0m"
+        echo -e "\n${RED}Untracked files found and listed below: ${RESET}"
         git status -s
-        echo -e "\n\033[32mPlease enter commit message:\033[0m"
+        echo -e "\n${GREEN}Please enter commit message:${RESET}"
         read -r msg1
         git add -A
         git commit -m "$msg1"
         ;;
       no|N|n)
-        echo -e "\033[32mNothing to be done. Thank you...\033[0m"
+        echo -e "${GREEN}Nothing to be done. Thank you...${RESET}"
         ;;
       *)
-        echo -e "\033[32mNo choice. Exiting script...\033[0m"
+        echo -e "${GREEN}No choice. Exiting script...${RESET}"
         ;;
     esac
   }
@@ -154,17 +159,17 @@ git_commit() {
     read -p $'\nDo you want to commit repo files? (yes|no): ' git_commit
     case "$git_commit" in
       yes|Y|y)
-        echo -e "\n\033[31mModified files found and listed below: \033[0m"
+        echo -e "\n${RED}Modified files found and listed below: ${RESET}"
         git status -s
-        echo -e "\n\033[32mPlease enter commit message:\033[0m"
+        echo -e "\n${GREEN}Please enter commit message:${RESET}"
         read -r msg2
         git commit -am "$msg2"
         ;;
       no|N|n)
-        echo -e "\033[32mNothing to be done. Thank you...\033[0m"
+        echo -e "${GREEN}Nothing to be done. Thank you...${RESET}"
         ;;
       *)
-        echo -e "\033[32mNo choice. Exiting script...\033[0m"
+        echo -e "${GREEN}No choice. Exiting script...${RESET}"
         ;;
     esac
   }
@@ -174,9 +179,9 @@ git_commit() {
   elif git status --porcelain | grep -qE '[^ADMR]'; then
     git_commit_old
   elif [ -z "$(git status --porcelain)" ]; then
-    echo -e "\033[31m Nothing to commit, thanks...\033[0m\n"
+    echo -e "${RED} Nothing to commit, thanks...${RESET}\n"
   else
-    echo -e "\033[31m Unknown status. Aborting...\033[0m\n"
+    echo -e "${RED} Unknown status. Aborting...${RESET}\n"
     exit 1
   fi
 }
@@ -188,15 +193,15 @@ docker_build() {
     case "$dkr_purge" in
       yes|Y|y)
         if [ "$(docker images -qf "dangling=true")" ]; then
-          echo -e "\033[31mRemoving dangling images...\033[0m"
+          echo -e "${RED}Removing dangling images...${RESET}"
           docker image prune -f
         fi
         ;;
       no|N|n)
-        echo -e "\033[32mNothing to be done. Thank you...\033[0m"
+        echo -e "${GREEN}Nothing to be done. Thank you...${RESET}"
         ;;
       *)
-        echo -e "\033[32mNo choice. Exiting script...\033[0m"
+        echo -e "${GREEN}No choice. Exiting script...${RESET}"
         ;;
     esac
   }
@@ -207,15 +212,15 @@ docker_build() {
     case "$dkr_rmi" in
       yes|Y|y)
         if docker image inspect $DK_IMAGE &> /dev/null; then \
-          echo -e "\033[31mDeleting existing image...\033[0m"; \
+          echo -e "${RED}Deleting existing image...${RESET}"; \
           docker rmi $DK_IMAGE; \
         fi
         ;;
       no|N|n)
-        echo -e "\033[32mNothing to be done. Thank you...\033[0m"
+        echo -e "${GREEN}Nothing to be done. Thank you...${RESET}"
         ;;
       *)
-        echo -e "\033[32mNo choice. Exiting script...\033[0m"
+        echo -e "${GREEN}No choice. Exiting script...${RESET}"
         ;;
     esac
   }
@@ -225,15 +230,15 @@ docker_build() {
     read -p $'\nDo you want to build image? (yes|no): ' dkr_build
     case "$dkr_build" in
       yes|Y|y)
-        echo -e "\033[32mBuilding $DK_IMAGE image\033[0m"
+        echo -e "${GREEN}Building $DK_IMAGE image${RESET}"
         docker build -t $DK_IMAGE -f $DL_DFILE .
         docker images | grep $DL_IU/$DL_IN
         ;;
       no|N|n)
-        echo -e "\033[32mNothing to be done. Thank you...\033[0m"
+        echo -e "${GREEN}Nothing to be done. Thank you...${RESET}"
         ;;
       *)
-        echo -e "\033[32mNo choice. Exiting script...\033[0m"
+        echo -e "${GREEN}No choice. Exiting script...${RESET}"
         ;;
     esac
   }
@@ -317,10 +322,10 @@ ga_workflow_env() {
       echo -e "Actions worklow updated successfully!\n"
       ;;
     no|N|n)
-      echo -e "\033[32mNothing to be done. Thank you...\033[0m\n"
+      echo -e "${GREEN}Nothing to be done. Thank you...${RESET}\n"
       ;;
     *)
-      echo -e "\033[32mNo choice. Exiting script...\033[0m"
+      echo -e "${GREEN}No choice. Exiting script...${RESET}"
       ;;
   esac
 }
@@ -361,7 +366,7 @@ gh_secret_set() {
           return 0
         }
 
-        echo -e "\033[32mSetting secrets...\033[0m\n"
+        echo -e "${GREEN}Setting secrets...${RESET}\n"
         # Read the .env file and set the secrets
         retry $MAX_RETRIES gh secret set -f "$envfile"
         # Check return code and output result
@@ -373,10 +378,10 @@ gh_secret_set() {
         fi
         ;;
       no|N|n)
-        echo -e "\033[32mNothing to be done. Thank you...\033[0m\n"
+        echo -e "${GREEN}Nothing to be done. Thank you...${RESET}\n"
         ;;
       *)
-        echo -e "\033[32mNo choice. Exiting script...\033[0m\n"
+        echo -e "${GREEN}No choice. Exiting script...${RESET}\n"
         exit 1
         ;;
     esac
@@ -387,7 +392,7 @@ gh_secret_set() {
     read -p "Do you want to delete secrets on private repo? (yes|no): " git_push
     case "$git_push" in
       yes|Y|y)
-        echo -e "\033[32mDeleting secrets...\033[0m\n"
+        echo -e "${GREEN}Deleting secrets...${RESET}\n"
         # check if argument is provided
         if [ $# -ne 1 ]; then
           read -p $'\nEnvfile not found... Enter path to env file: ' env
@@ -417,10 +422,10 @@ gh_secret_set() {
         fi
         ;;
       no|N|n)
-        echo -e "\033[32mNothing to be done. Thank you...\033[0m\n"
+        echo -e "${GREEN}Nothing to be done. Thank you...${RESET}\n"
         ;;
       *)
-        echo -e "\033[32mNo choice. Exiting script...\033[0m\n"
+        echo -e "${GREEN}No choice. Exiting script...${RESET}\n"
         exit 1
         ;;
     esac
@@ -461,7 +466,7 @@ gh_secret_set() {
           return 0
         }
 
-        echo -e "\033[32mSetting secrets...\033[0m\n"
+        echo -e "${GREEN}Setting secrets...${RESET}\n"
         # Check the GA_ENV_FILE variable
         if [ "$GA_ENV_FILE" = "release/prod" ]; then
           env="prod"
@@ -482,10 +487,10 @@ gh_secret_set() {
         fi
         ;;
       no|N|n)
-        echo -e "\033[32mNothing to be done. Thank you...\033[0m\n"
+        echo -e "${GREEN}Nothing to be done. Thank you...${RESET}\n"
         ;;
       *)
-        echo -e "\033[32mNo choice. Exiting script...\033[0m\n"
+        echo -e "${GREEN}No choice. Exiting script...${RESET}\n"
         exit 1
         ;;
     esac
@@ -496,7 +501,7 @@ gh_secret_set() {
     read -p "Do you want to delete secrets on public repo? (yes|no): " git_push
     case "$git_push" in
       yes|Y|y)
-        echo -e "\033[32mDeleting secrets...\033[0m\n"
+        echo -e "${GREEN}Deleting secrets...${RESET}\n"
         # check if argument is provided
         if [ $# -ne 1 ]; then
           read -p $'\nEnvfile not found... Enter path to env file: ' env
@@ -531,10 +536,10 @@ gh_secret_set() {
         fi
         ;;
       no|N|n)
-        echo -e "\033[32mNothing to be done. Thank you...\033[0m\n"
+        echo -e "${GREEN}Nothing to be done. Thank you...${RESET}\n"
         ;;
       *)
-        echo -e "\033[32mNo choice. Exiting script...\033[0m\n"
+        echo -e "${GREEN}No choice. Exiting script...${RESET}\n"
         exit 1
         ;;
     esac
@@ -545,7 +550,7 @@ gh_secret_set() {
     read -p "Do you want to set variables on private repo? (yes|no): " git_push
     case "$git_push" in
       yes|Y|y)
-        echo -e "\033[32mSetting variables...\033[0m\n"
+        echo -e "${GREEN}Setting variables...${RESET}\n"
         vhost=${GA_NGX_VHOST}
         gh variable set NGX < "$vhost"
         # Check return code and output result
@@ -557,10 +562,10 @@ gh_secret_set() {
         fi
         ;;
       no|N|n)
-        echo -e "\033[32mNothing to be done. Thank you...\033[0m\n"
+        echo -e "${GREEN}Nothing to be done. Thank you...${RESET}\n"
         ;;
       *)
-        echo -e "\033[32mNo choice. Exiting script...\033[0m\n"
+        echo -e "${GREEN}No choice. Exiting script...${RESET}\n"
         exit 1
         ;;
     esac
@@ -571,7 +576,7 @@ gh_secret_set() {
     read -p "Do you want to delete variables on private repo? (yes|no): " git_push
     case "$git_push" in
       yes|Y|y)
-        echo -e "\033[32mDeleting variables...\033[0m\n"
+        echo -e "${GREEN}Deleting variables...${RESET}\n"
         vhost=${GA_NGX_VHOST}
         gh variable delete NGX < "$vhost"
         # Check return code and output result
@@ -583,10 +588,10 @@ gh_secret_set() {
         fi
         ;;
       no|N|n)
-        echo -e "\033[32mNothing to be done. Thank you...\033[0m\n"
+        echo -e "${GREEN}Nothing to be done. Thank you...${RESET}\n"
         ;;
       *)
-        echo -e "\033[32mNo choice. Exiting script...\033[0m\n"
+        echo -e "${GREEN}No choice. Exiting script...${RESET}\n"
         exit 1
         ;;
     esac
@@ -597,7 +602,7 @@ gh_secret_set() {
     read -p "Do you want to set variables on public repo? (yes|no): " git_push
     case "$git_push" in
       yes|Y|y)
-        echo -e "\033[32mSetting variables...\033[0m\n"
+        echo -e "${GREEN}Setting variables...${RESET}\n"
         # Check the GA_ENV_FILE variable
         if [ "$GA_ENV_FILE" = "release/prod" ]; then
           env="prod"
@@ -618,10 +623,10 @@ gh_secret_set() {
         fi
         ;;
       no|N|n)
-        echo -e "\033[32mNothing to be done. Thank you...\033[0m\n"
+        echo -e "${GREEN}Nothing to be done. Thank you...${RESET}\n"
         ;;
       *)
-        echo -e "\033[32mNo choice. Exiting script...\033[0m\n"
+        echo -e "${GREEN}No choice. Exiting script...${RESET}\n"
         exit 1
         ;;
     esac
@@ -632,7 +637,7 @@ gh_secret_set() {
     read -p "Do you want to delete variables on public repo? (yes|no): " git_push
     case "$git_push" in
       yes|Y|y)
-        echo -e "\033[32mDeleting variables...\033[0m\n"
+        echo -e "${GREEN}Deleting variables...${RESET}\n"
         # Check the GA_ENV_FILE variable
         if [ "$GA_ENV_FILE" = "release/prod" ]; then
           env="prod"
@@ -653,10 +658,10 @@ gh_secret_set() {
         fi
         ;;
       no|N|n)
-        echo -e "\033[32mNothing to be done. Thank you...\033[0m\n"
+        echo -e "${GREEN}Nothing to be done. Thank you...${RESET}\n"
         ;;
       *)
-        echo -e "\033[32mNo choice. Exiting script...\033[0m\n"
+        echo -e "${GREEN}No choice. Exiting script...${RESET}\n"
         exit 1
         ;;
     esac
@@ -683,14 +688,14 @@ git_repo_push() {
   read -p "Do you want to push your commit to GitHub? (yes|no): " git_push
   case "$git_push" in
     yes|Y|y)
-      echo -e "\033[32mPushing commit to GitHub...\033[0m\n"
+      echo -e "${GREEN}Pushing commit to GitHub...${RESET}\n"
       git push
       ;;
     no|N|n)
-      echo -e "\033[32mNothing to be done. Thank you...\033[0m\n"
+      echo -e "${GREEN}Nothing to be done. Thank you...${RESET}\n"
       ;;
     *)
-      echo -e "\033[32mNo choice. Exiting script...\033[0m\n"
+      echo -e "${GREEN}No choice. Exiting script...${RESET}\n"
       exit 1
       ;;
   esac
@@ -708,10 +713,10 @@ docker_push() {
 	    docker push $DK_IMAGE
 			;;
 		no|N|n)
-			echo -e "\033[32mNothing to be done. Thank you...\033[0m"
+			echo -e "${GREEN}Nothing to be done. Thank you...${RESET}"
 			;;
 		*)
-			echo -e "\033[32mNo choice. Exiting script...\033[0m"
+			echo -e "${GREEN}No choice. Exiting script...${RESET}"
 			;;
 	esac
 }
@@ -956,15 +961,15 @@ git_repo_scan() {
 	read -p "Do you want to scan this repo? (yes|no): " repo_scan
 	case "$$repo_scan" in
 		yes|Y|y)
-			echo -e "\033[32mScanning repo for secrets...\033[0m\n"
+			echo -e "${GREEN}Scanning repo for secrets...${RESET}\n"
 			ggshield secret scan repo .
 			;;
 		no|N|n)
-			echo -e "\033[32mOkay. Thank you...\033[0m\n"
+			echo -e "${GREEN}Okay. Thank you...${RESET}\n"
 			exit 0
 			;;
 		*)
-			echo -e "\033[32mNo choice. Exiting script...\033[0m\n"
+			echo -e "${GREEN}No choice. Exiting script...${RESET}\n"
 			exit 1
 			;;
 	esac  
@@ -1018,11 +1023,11 @@ gh_repo_rename() {
         fi
         ;; 
       no|N|n) 
-        echo -e "\033[32mNothing to be done. Thank you...\033[0m\n"
+        echo -e "${GREEN}Nothing to be done. Thank you...${RESET}\n"
         exit 0
         ;;
       *)
-        echo -e "\033[32mNo choice. Exiting script...\033[0m\n"
+        echo -e "${GREEN}No choice. Exiting script...${RESET}\n"
         exit 1
         ;;
     esac
