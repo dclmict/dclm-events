@@ -60,7 +60,7 @@ commit_status() {
 
   # Check if the working tree is clean
   if [ -z "$(git status --porcelain)" ]; then
-    echo -e "Git Commit: ${GREEN}Working tree is clean.${RESET}"
+    echo -e "Repo Status: ${GREEN}Working tree is clean.${RESET}\n"
   else
     echo -e "\n${RED}There are uncommitted files.${RESET} Type ${GREEN}y|Y|yes${RESET} to fix."
     ./ops/sh/app.sh 3
@@ -518,15 +518,23 @@ gh_secret_set() {
           echo "Aha! No need then..."
           exit 0
         fi
+
+        # Initialize the ARGS array
+        ARGS=()
+
         # Read the envfile line by line and delete the secrets
         while IFS= read -r line; do
           # Skip lines starting with '#' (comments)
-          if [ -n "$line" ] && [[ $line != \#* ]]; then
+          if [ -n "$line" ] && [[ ! "$line" =~ ^\# ]]; then
             # Trim leading/trailing whitespaces
-            line=$(echo "$line" | xargs)
-            gh secret delete "$line" --repo $GH_REPO -e "$env"
+            # line=$(echo "$line" | xargs)
+            # gh secret delete "$line" --repo $GH_REPO -e "$env"
+            var_name=$(echo "$line" | cut -d'=' -f1)
+            ARGS+=("$var_name")
           fi
         done < "$envfile"
+        parallel --retries 3 --silent -j+0 gh secret delete ::: "${ARGS[@]}"
+        
         # Check return code and output result
         if [ $? -eq 0 ]; then
           echo -e "Secrets deleted successfully\n"
