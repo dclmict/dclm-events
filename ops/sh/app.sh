@@ -3,29 +3,35 @@
 # add envfile to shell
 source ./src/.env
 
+nginx_config() {
+  export APP_ID NGX_DOCROOT NGX_SERVER_NAME NGX_INDEX
+  # Generate config 
+  envsubst '${APP_ID},${NGX_DOCROOT},${NGX_SERVER_NAME},${NGX_INDEX}' < ./ops/nginx/app.template > ./ops/nginx/app.conf
+}
+
 # function to check which git branch
 git_branch() {
   # Get the current Git branch
   branch=$(git rev-parse --abbrev-ref HEAD)
 
-  # Check if branch is dclm-dev or dclm-prod
-  if [[ $branch != "dclm-dev" ]] && [[ $branch != "dclm-prod" ]]; then
+  # Check if branch is release/dev or release/prod
+  if [[ $branch != "release/dev" ]] && [[ $branch != "release/prod" ]]; then
     # Prompt the user to select a branch  
     echo "Current branch is $branch"
     echo "Please select branch:"
-    echo "1) dclm-dev" 
-    echo "2) dclm-prod"
+    echo "1) release/dev" 
+    echo "2) release/prod"
     read -p "Enter choice: " choice
 
     # Switch based on choice
     case $choice in
       1) 
-        echo "Switching to main branch"
-        git switch dclm-dev
+        echo "Switching to dev release branch"
+        git switch release/dev
         ;;
       2)
-        echo "Switching to dclm-dev branch" 
-        git switch dclm-prod
+        echo "Switching to prod release branch" 
+        git switch release/prod
         ;;
       *)
         echo "Invalid choice" >&2
@@ -200,9 +206,9 @@ docker_build() {
     read -p $'\nDo you want to remove image? (yes|no): ' dkr_rmi
     case "$dkr_rmi" in
       yes|Y|y)
-        if docker image inspect $DL_DIN &> /dev/null; then \
+        if docker image inspect $DK_IMAGE &> /dev/null; then \
           echo -e "\033[31mDeleting existing image...\033[0m"; \
-          docker rmi $DL_DIN; \
+          docker rmi $DK_IMAGE; \
         fi
         ;;
       no|N|n)
@@ -219,8 +225,8 @@ docker_build() {
     read -p $'\nDo you want to build image? (yes|no): ' dkr_build
     case "$dkr_build" in
       yes|Y|y)
-        echo -e "\033[32mBuilding $DL_DIN image\033[0m"
-        docker build -t $DL_DIN -f $DL_DFILE .
+        echo -e "\033[32mBuilding $DK_IMAGE image\033[0m"
+        docker build -t $DK_IMAGE -f $DL_DFILE .
         docker images | grep $DL_IU/$DL_IN
         ;;
       no|N|n)
@@ -243,7 +249,7 @@ docker_build() {
 git_push() {
   git_branch
   commit_status
-  ga_workflow_env $DL_ENV
+  ga_workflow_env $ENV_FILE
   gh_secret_set
   git_repo_push
 }
@@ -273,7 +279,7 @@ ga_workflow_env() {
       fi
 
       # Read .env file
-      IFS=' ' read -r -a exclude <<< "$DL_EXCLUDE"
+      IFS=' ' read -r -a exclude <<< "$GA_ENV_EXCLUDE"
       while IFS= read -r kv; do
         key=$(echo "$kv" | cut -d= -f1)
 
@@ -456,13 +462,13 @@ gh_secret_set() {
         }
 
         echo -e "\033[32mSetting secrets...\033[0m\n"
-        # Check the DL_ENV_ENV variable
-        if [ "$DL_ENV_ENV" = "dclm-prod" ]; then
+        # Check the GA_ENV_FILE variable
+        if [ "$GA_ENV_FILE" = "release/prod" ]; then
           env="prod"
-        elif [ "$DL_ENV_ENV" = "dclm-dev" ]; then
+        elif [ "$GA_ENV_FILE" = "release/dev" ]; then
           env="dev"
         else
-          echo "DL_ENV_ENV value not what is expected!"
+          echo "GA_ENV_FILE value not what is expected!"
           exit 0
         fi
         # Read the .env file and set the secrets
@@ -498,10 +504,10 @@ gh_secret_set() {
         else
           envfile="$1"
         fi
-        # Check the DL_ENV_ENV variable
-        if [ "$DL_ENV_ENV" = "dclm-prod" ]; then
+        # Check the GA_ENV_FILE variable
+        if [ "$GA_ENV_FILE" = "release/prod" ]; then
           env="prod"
-        elif [ "$DL_ENV_ENV" = "dclm-dev" ]; then
+        elif [ "$GA_ENV_FILE" = "release/dev" ]; then
           env="dev"
         else
           echo "Aha! No need then..."
@@ -540,7 +546,7 @@ gh_secret_set() {
     case "$git_push" in
       yes|Y|y)
         echo -e "\033[32mSetting variables...\033[0m\n"
-        vhost=${DL_VHOST_CONFIG}
+        vhost=${GA_NGX_VHOST}
         gh variable set NGX < "$vhost"
         # Check return code and output result
         if [ $? -eq 0 ]; then
@@ -566,7 +572,7 @@ gh_secret_set() {
     case "$git_push" in
       yes|Y|y)
         echo -e "\033[32mDeleting variables...\033[0m\n"
-        vhost=${DL_VHOST_CONFIG}
+        vhost=${GA_NGX_VHOST}
         gh variable delete NGX < "$vhost"
         # Check return code and output result
         if [ $? -eq 0 ]; then
@@ -592,16 +598,16 @@ gh_secret_set() {
     case "$git_push" in
       yes|Y|y)
         echo -e "\033[32mSetting variables...\033[0m\n"
-        # Check the DL_ENV_ENV variable
-        if [ "$DL_ENV_ENV" = "dclm-prod" ]; then
+        # Check the GA_ENV_FILE variable
+        if [ "$GA_ENV_FILE" = "release/prod" ]; then
           env="prod"
-        elif [ "$DL_ENV_ENV" = "dclm-dev" ]; then
+        elif [ "$GA_ENV_FILE" = "release/dev" ]; then
           env="dev"
         else
           echo "Haa! No need then..."
           exit 0
         fi
-        vhost=${DL_VHOST_CONFIG}
+        vhost=${GA_NGX_VHOST}
         gh variable set NGX < "$vhost" -e"$env"
         # Check return code and output result
         if [ $? -eq 0 ]; then
@@ -627,16 +633,16 @@ gh_secret_set() {
     case "$git_push" in
       yes|Y|y)
         echo -e "\033[32mDeleting variables...\033[0m\n"
-        # Check the DL_ENV_ENV variable
-        if [ "$DL_ENV_ENV" = "dclm-prod" ]; then
+        # Check the GA_ENV_FILE variable
+        if [ "$GA_ENV_FILE" = "release/prod" ]; then
           env="prod"
-        elif [ "$DL_ENV_ENV" = "dclm-dev" ]; then
+        elif [ "$GA_ENV_FILE" = "release/dev" ]; then
           env="dev"
         else
           echo "Haa! No need then..."
           exit 0
         fi
-        vhost=${DL_VHOST_CONFIG}
+        vhost=${GA_NGX_VHOST}
         gh variable delete NGX < "$vhost" -e"$env"
         # Check return code and output result
         if [ $? -eq 0 ]; then
@@ -658,13 +664,13 @@ gh_secret_set() {
 
   check="$(gh_repo_view)"
   if [ "$check" == "private" ]; then
-    gh_secret_private_rm argv $DL_ENV
-    gh_secret_private argv $DL_ENV
+    gh_secret_private_rm argv $ENV_FILE
+    gh_secret_private argv $ENV_FILE
     gh_variable_private_rm
     gh_variable_private
   elif [ "$check" == "public" ]; then
-    gh_secret_public_rm $DL_ENV
-    gh_secret_public $DL_ENV
+    gh_secret_public_rm $ENV_FILE
+    gh_secret_public $ENV_FILE
     gh_variable_public_rm
     gh_variable_public
   else
@@ -698,8 +704,8 @@ docker_push() {
 	read -p $'\nDo you want to push docker image? (yes|no): ' dkr_push
 	case "$dkr_push" in
 		yes|Y|y)
-			echo ${DL_DLP} | docker login -u ${DL_DLU} --password-stdin
-	    docker push $DL_DIN
+			echo ${DK_TOKEN} | docker login -u ${DK_HUB} --password-stdin
+	    docker push $DK_IMAGE
 			;;
 		no|N|n)
 			echo -e "\033[32mNothing to be done. Thank you...\033[0m"
@@ -717,16 +723,16 @@ docker_push() {
 create_dns_record() {
   # Run the AWS CLI command to list resource record sets
   record_sets=$(aws route53 list-resource-record-sets \
-    --hosted-zone-id "$HOSTED_ZONE_ID" \
-    --query "ResourceRecordSets[?Name == '$APP_URL.']" \
+    --hosted-zone-id "$AWS_R53_ZONE_ID" \
+    --query "ResourceRecordSets[?Name == '$GA_APP_URL.']" \
     --output json)
 
   # Check if the record_sets variable is empty (DNS entry doesn't exist)
-  if echo "$record_sets" | jq -e '.[].Name | test("'$URL1'\\.'$URL2'\\.'$URL3'")' > /dev/null; then
-    echo "DNS entry $APP_URL exists."
+  if echo "$record_sets" | jq -e '.[].Name | test("'$GA_URL1'\\.'$GA_URL2'\\.'$GA_URL3'")' > /dev/null; then
+    echo "DNS entry $GA_APP_URL exists."
     exit 0
   else
-    echo "Creating DNS entry for $APP_URL..."
+    echo "Creating DNS entry for $GA_APP_URL..."
     touch route53.json
   cat >route53.json <<EOF
   {
@@ -734,23 +740,23 @@ create_dns_record() {
     "Changes": [{
     "Action": "CREATE",
       "ResourceRecordSet": {
-        "Name": "$APP_URL",
+        "Name": "$GA_APP_URL",
         "Type": "A",
         "TTL": 300,
-        "ResourceRecords": [{ "Value": "$SERVER_IP"}]
+        "ResourceRecords": [{ "Value": "$HOST_IP"}]
     }}]
   }
 EOF
     cat route53.json
-    aws route53 change-resource-record-sets --hosted-zone-id "$HOSTED_ZONE_ID" --change-batch file://route53.json
+    aws route53 change-resource-record-sets --hosted-zone-id "$AWS_R53_ZONE_ID" --change-batch file://route53.json
   fi
 }
 
 # function to create directory to deploy app  
 create_app_dir() {
   # Set the target directory 
-  docker_dir="$CODE_HIVE"
-  app_dir="$IN"
+  docker_dir="$DK_DIR"
+  app_dir="$APP_ID"
 
   # Navigate into the docker directory
   cd "$docker_dir"
@@ -772,50 +778,44 @@ create_app_dir() {
 clone_app_repo() {
   # Check app dir
   echo -e "\nChecking if app directory exists.."
-  if [ ! -d "$APP_DIR" ]; then
+  if [ ! -d "$GA_APP_DIR" ]; then
     echo "Directory not found, creating..."
-    mkdir -p "$APP_DIR"
+    mkdir -p "$GA_APP_DIR"
   else
     echo "Directory already exists."
   fi
 
   # Enter into app dir
   echo -e "\nEntering app directory.."
-  cd "$APP_DIR"
+  cd "$GA_APP_DIR"
 
   # Clone app repo
   echo -e "\nCloning latest repo changes.."
   if [ ! -d .git ]; then
     echo "App repo not found. Cloning..."
-    git clone "$REPO" . \
-    && git switch "$GIT_BRANCH"
+    git clone "$GH_REPO" . \
+    && git switch "$GH_BRANCH"
   else
     echo "App repo exists..."
     git fetch --all \
-    && git switch "$GIT_BRANCH"
+    && git switch "$GH_BRANCH"
   fi
 }
 
 # function to create nginx vhost for app url
 create_nginx_vhost() {
   # enter directory
-  cd "$ENV_DEST"
+  cd "$GA_ENV_DEST"
 
   # another way
   ngxx="vhost.conf"
   ngx=$(cat "$ngxx")
-  # echo -e "Content of ngx:"
-  # echo "$VHOST"
-
   eval "VHOST=\"$ngx\""
-  # eval "VHOST=\"$VHOST_CONFIG\""
 
   # Create a temporary file with the provided configuration
   echo -e "\nCreating temporary file..."
   temp_file="$(mktemp)"
   echo "$VHOST" > "$temp_file"
-  # echo -e "Content of temporal file:"
-  # cat "$temp_file"
 
   # Extract the block identifier (the first line of the provided config)
   echo -e "\nExtracting the vhost block identifier..."
@@ -824,13 +824,13 @@ create_nginx_vhost() {
 
   # Check if the vhost configuration exists
   echo -e "\nChecking if vhost config exists..."
-  if grep -qF "$block_identifier" "$NGINX_CONF_DIR/$NGINX_CONF_FILE"; then
+  if grep -qF "$block_identifier" "$HOST_NGX_DIR/$GA_NGX_CONF"; then
     echo -e "Vhost config already exists."
 
     # Get the existing vhost block that matches the block identifier
     echo -e "\nExtracting existing vhost config..."
     end_pattern="^}"
-    existing_block="$(sed -n "/$block_identifier/,/$end_pattern/p" "$NGINX_CONF_DIR/$NGINX_CONF_FILE")"
+    existing_block="$(sed -n "/$block_identifier/,/$end_pattern/p" "$HOST_NGX_DIR/$GA_NGX_CONF")"
     echo -e "Content of existing vhost:\n$existing_block"
 
     # Compare the existing block with the provided configuration
@@ -840,12 +840,9 @@ create_nginx_vhost() {
     else
       # Delete the existing vhost configuration and append the provided config
       echo -e "\nDeleting existing vhost config..."
-      sed -i "/$block_identifier/,/$end_pattern/d" "$NGINX_CONF_DIR/$NGINX_CONF_FILE"
-
+      sed -i "/$block_identifier/,/$end_pattern/d" "$HOST_NGX_DIR/$GA_NGX_CONF"
       echo -e "\nUpdating vhost config..."
-      echo -e "\n$VHOST" | sudo tee -a "$NGINX_CONF_DIR/$NGINX_CONF_FILE"
-      # echo "$VHOST" | tr "\r" "\n" >> "$NGINX_CONF_DIR/$NGINX_CONF_FILE"
-      # echo -e "$VHOST\r" >> "$NGINX_CONF_DIR/$NGINX_CONF_FILE"
+      echo -e "\n$VHOST" | sudo tee -a "$HOST_NGX_DIR/$GA_NGX_CONF"
       echo "Nginx vhost configuration updated."
 
       # Test Nginx configuration for syntax errors
@@ -857,12 +854,12 @@ create_nginx_vhost() {
         sudo systemctl status nginx
       else
         echo "Nginx configuration is invalid. Not reloading Nginx."
-      fi 
+      fi
     fi
   else
     echo "Nginx vhost configuration not found."
-    echo "Creating Nginx vhost entry for $APP_URL..."
-    echo -e "\n$VHOST" | sudo tee -a "$NGINX_CONF_DIR/$NGINX_CONF_FILE"
+    echo "Creating Nginx vhost entry for $GA_APP_URL..."
+    echo -e "\n$VHOST" | sudo tee -a "$HOST_NGX_DIR/$GA_NGX_CONF"
 
     # Test Nginx configuration for syntax errors
     sudo nginx -t
@@ -886,7 +883,7 @@ create_nginx_vhost() {
 ga_deploy_app() {
   # Enter app dir
   echo -e "\nEntering app directory..."
-  cd "$APP_DIR"
+  cd "$GA_APP_DIR"
 
   # Pull repo changes
   echo -e "\nDownloading latest repo changes..."
@@ -991,7 +988,7 @@ gh_repo_rename() {
     # Make API call to rename repo
     curl \
       -X PATCH \
-      -H "Authorization: token ${DL_GH_TOKEN}" \
+      -H "Authorization: token ${GH_TOKEN}" \
       -d '{"name":"'"${NEW_NAME}"'"}' \
       ${API_ENDPOINT}
 
@@ -1056,7 +1053,7 @@ gh_repo_check() {
     repo=$1
   fi
 
-  status_code=$(curl -s -o /dev/null -w "%{http_code}" -H "Authorization: token ${DL_GH_TOKEN}" "https://api.github.com/repos/$repo")
+  status_code=$(curl -s -o /dev/null -w "%{http_code}" -H "Authorization: token ${GH_TOKEN}" "https://api.github.com/repos/$repo")
 
   code1=200
   code2=404
@@ -1107,7 +1104,9 @@ else
   choice="$1"
 fi
 
-if [ $choice -eq 1 ]; then
+if [ $choice -eq 0 ]; then
+  nginx_config
+elif [ $choice -eq 1 ]; then
   git_repo_create
 elif [ $choice -eq 2 ]; then
   gh_repo_create

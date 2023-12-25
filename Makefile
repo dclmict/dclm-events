@@ -13,14 +13,14 @@ SRC := $(shell \
 	fi; \
   if [[ "$$os" != "dclm" && "$$os" != "dclmict" ]]; then \
 		branch=$$(git rev-parse --abbrev-ref HEAD); \
-		if [[ $$branch == "bams-dev" ]]; then \
-			cp ./ops/bams-dev.env ./src/.env; \
-		elif [[ $$branch == "dclm-dev" ]]; then \
+		if [[ $$branch == "bams" ]]; then \
+			cp ./ops/bams.env ./src/.env; \
+		elif [[ $$branch == "release/dev" ]]; then \
 			cp ./ops/dclm-dev.env ./src/.env; \
-		elif [[ $$branch == "dclm-prod" ]]; then \
+		elif [[ $$branch == "release/prod" ]]; then \
 			cp ./ops/dclm-prod.env ./src/.env; \
 		else \
-			cp ./ops/bams-dev.env ./src/.env; \
+			cp ./ops/bams.env ./src/.env; \
 		fi; \
   fi; \
   chmod +x ./ops/sh/app.sh)
@@ -29,11 +29,11 @@ SRC := $(shell \
 include ./src/.env
 
 # load makefiles
-include ./ops/mk/init.mk
-include ./ops/mk/app.mk
-include ./ops/mk/deploy.mk
-include ./ops/mk/run.mk
-include ./ops/mk/utils.mk
+include ./ops/mk/0-init.mk
+include ./ops/mk/1-app.mk
+include ./ops/mk/2-push.mk
+include ./ops/mk/3-run.mk
+include ./ops/mk/4-utils.mk
 
 # remove double quotes from variable
 DL_STACK := $(subst ",,${DL_STACK})
@@ -47,7 +47,7 @@ init: init-app
 
 app: build-app
 
-deploy: deploy-app
+push: deploy-app
 
 run: run-app
 

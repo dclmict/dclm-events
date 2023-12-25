@@ -9,17 +9,24 @@ COPY --chown=www-data:www-data ./src /var/www
 # set permissions for laravel app
 RUN chmod -R ug+w /var/www/storage
 
-# copy configs/scripts
-COPY ./ops/sh/run.sh /var/docker/run.sh
-COPY ./ops/docker/supervisor.conf /etc/supervisord.conf
+# php config
 COPY ./ops/php/php.ini /usr/local/etc/php/conf.d/app.ini
+COPY ./ops/php/fpm.conf /usr/local/etc/php-fpm.d/www.conf
+
+# nginx config
 COPY ./ops/nginx/nginx.conf /etc/nginx/nginx.conf
-COPY ./ops/nginx/events.conf /etc/nginx/sites-enabled/default
+COPY ./ops/nginx/app.conf /etc/nginx/sites-enabled/default
 COPY ./ops/nginx/ssl.conf /etc/nginx/ssl.conf
 COPY ./ops/nginx/proxy /etc/nginx/proxy_params
 COPY ./ops/nginx/exploit.conf /etc/nginx/snippets/exploit_protection.conf
 COPY ./ops/nginx/optimize.conf /etc/nginx/snippets/site_optimization.conf
 COPY ./ops/nginx/log.conf /etc/nginx/snippets/logging.conf
+
+# scripts
+COPY ./ops/sh/run.sh /var/docker/run.sh
+
+# supervisor
+COPY ./ops/docker/supervisor.conf /etc/supervisord.conf
 
 ## deployment
 RUN composer update
@@ -33,5 +40,4 @@ find . -type d -exec chmod 2775 {} \; && \
 find . -type f -exec chmod 0664 {} \; && \
 rm -rf /var/www/html
 
-# EXPOSE 89
 ENTRYPOINT ["/var/docker/run.sh"]
