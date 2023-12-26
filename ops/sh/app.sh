@@ -62,7 +62,7 @@ commit_status() {
   if [ -z "$(git status --porcelain)" ]; then
     echo -e "Repo Status: ${GREEN}Working tree is clean.${RESET}\n"
   else
-    echo -e "\n${RED}There are uncommitted files.${RESET} Type ${GREEN}y|Y|yes${RESET} to fix."
+    echo -e "${RED}There are uncommitted files.${RESET} Type ${YELLOW}y, Y or yes${RESET} to fix."
     ./ops/sh/app.sh 3
   fi
 }
@@ -84,7 +84,7 @@ git_repo_create() {
 			fi
 			;;
 		no|N|n)
-			echo -e "${GREEN}Nothing to be done. Thank you...${RESET}"
+			echo -e "${GREEN}Alright. Thank you...${RESET}"
 			;;
 		*) \
 			echo -e "${GREEN}No choice. Exiting script...${RESET}"
@@ -140,16 +140,16 @@ git_commit() {
       yes|Y|y)
         echo -e "\n${RED}Untracked files found and listed below: ${RESET}"
         git status -s
-        echo -e "\n${GREEN}Please enter commit message:${RESET}"
-        read -r msg1
+        echo -e $'\n'"${GREEN}Please enter commit message${RESET}: \c"
+        read msg
         git add -A
-        git commit -m "$msg1"
+        git commit -m "$msg"
         ;;
       no|N|n)
-        echo -e "${GREEN}Nothing to be done. Thank you...${RESET}"
+        echo -e "${GREEN}Alright. Thank you...${RESET}\n"
         ;;
       *)
-        echo -e "${GREEN}No choice. Exiting script...${RESET}"
+        echo -e "${GREEN}No choice. Exiting script...${RESET}\n"
         ;;
     esac
   }
@@ -161,15 +161,15 @@ git_commit() {
       yes|Y|y)
         echo -e "\n${RED}Modified files found and listed below: ${RESET}"
         git status -s
-        echo -e "\n${GREEN}Please enter commit message:${RESET}"
-        read -r msg2
-        git commit -am "$msg2"
+        echo -e $'\n'"${GREEN}Please enter commit message${RESET}: \c"
+        read msg
+        git commit -am "$msg"
         ;;
       no|N|n)
-        echo -e "${GREEN}Nothing to be done. Thank you...${RESET}"
+        echo -e "${GREEN}Alright. Thank you...${RESET}\n"
         ;;
       *)
-        echo -e "${GREEN}No choice. Exiting script...${RESET}"
+        echo -e "${GREEN}No choice. Exiting script...${RESET}\n"
         ;;
     esac
   }
@@ -198,10 +198,10 @@ docker_build() {
         fi
         ;;
       no|N|n)
-        echo -e "${GREEN}Nothing to be done. Thank you...${RESET}"
+        echo -e "${GREEN}Alright. Thank you...${RESET}\n"
         ;;
       *)
-        echo -e "${GREEN}No choice. Exiting script...${RESET}"
+        echo -e "${GREEN}No choice. Exiting script...${RESET}\n"
         ;;
     esac
   }
@@ -217,10 +217,10 @@ docker_build() {
         fi
         ;;
       no|N|n)
-        echo -e "${GREEN}Nothing to be done. Thank you...${RESET}"
+        echo -e "${GREEN}Alright. Thank you...${RESET}\n"
         ;;
       *)
-        echo -e "${GREEN}No choice. Exiting script...${RESET}"
+        echo -e "${GREEN}No choice. Exiting script...${RESET}\n"
         ;;
     esac
   }
@@ -235,10 +235,10 @@ docker_build() {
         docker images | grep $DL_IU/$DL_IN
         ;;
       no|N|n)
-        echo -e "${GREEN}Nothing to be done. Thank you...${RESET}"
+        echo -e "${GREEN}Alright. Thank you...${RESET}\n"
         ;;
       *)
-        echo -e "${GREEN}No choice. Exiting script...${RESET}"
+        echo -e "${GREEN}No choice. Exiting script...${RESET}\n"
         ;;
     esac
   }
@@ -319,10 +319,10 @@ ga_workflow_env() {
       # Overwrite original 
       mv $ga_new $ga
       rm -f $vfile
-      echo -e "Actions worklow updated successfully!\n"
+      echo -e "${GREEN}Actions worklow updated successfully!${RESET}\n"
       ;;
     no|N|n)
-      echo -e "${GREEN}Nothing to be done. Thank you...${RESET}\n"
+      echo -e "${GREEN}Alright. Thank you...${RESET}\n"
       ;;
     *)
       echo -e "${GREEN}No choice. Exiting script...${RESET}"
@@ -378,7 +378,7 @@ gh_secret_set() {
         fi
         ;;
       no|N|n)
-        echo -e "${GREEN}Nothing to be done. Thank you...${RESET}\n"
+        echo -e "${GREEN}Alright. Thank you...${RESET}\n"
         ;;
       *)
         echo -e "${GREEN}No choice. Exiting script...${RESET}\n"
@@ -400,18 +400,19 @@ gh_secret_set() {
         else
           envfile="$1"
         fi
-        # Initialize the ARGS array
-        ARGS=()
 
-        while IFS= read -r line; do
-          # Check if the line is not empty and does not start with '#'
-          if [ -n "$line" ] && [[ ! "$line" =~ ^\# ]]; then
-            # Extract the variable name (part before the '=' sign)
-            var_name=$(echo "$line" | cut -d'=' -f1)
-            ARGS+=("$var_name")
-          fi
-        done < "$envfile"
-        parallel --retries 3 --silent -j+0 gh secret delete ::: "${ARGS[@]}"
+        # Get list of secrets 
+        secrets=$(gh secret list --repo ${GH_OWNER_REPO} --json name --jq '.[].name')
+
+        # Read secrets into array
+        readarray -t SECRETS <<<"$secrets"
+
+        # Delete secrets
+        for secret in "${SECRETS[@]}"; do
+          gh secret delete --repo ${GH_OWNER_REPO} "$secret"
+        done
+
+        # echo "Deleted secrets"
 
         # Check return code and output result
         if [ $? -eq 0 ]; then
@@ -422,7 +423,7 @@ gh_secret_set() {
         fi
         ;;
       no|N|n)
-        echo -e "${GREEN}Nothing to be done. Thank you...${RESET}\n"
+        echo -e "${GREEN}Alright. Thank you...${RESET}\n"
         ;;
       *)
         echo -e "${GREEN}No choice. Exiting script...${RESET}\n"
@@ -446,7 +447,7 @@ gh_secret_set() {
 
         # Set number of retries and delay between retries  
         MAX_RETRIES=3
-        RETRY_DELAY=5
+        RETRY_DELAY=2
         # Helper function to retry command on failure
         retry() {
           local retries=$1
@@ -456,10 +457,10 @@ gh_secret_set() {
             exit=$?
             count=$(($count + 1))
             if [ $count -lt $retries ]; then
-              echo "Command failed! Retrying in $RETRY_DELAY seconds..."
+              echo -e "Command failed! Retrying in $RETRY_DELAY seconds..."
               sleep $RETRY_DELAY 
             else
-              echo "Failed after $count retries."
+              echo -e "Failed after $count retries."
               return $exit
             fi
           done 
@@ -477,7 +478,7 @@ gh_secret_set() {
           exit 0
         fi
         # Read the .env file and set the secrets
-        retry $MAX_RETRIES gh secret set -f "$envfile" -e"$env"
+        retry $MAX_RETRIES gh secret set -f "$envfile" -e "$env"
         # Check return code and output result
         if [ $? -eq 0 ]; then
           echo -e "Secrets set successfully\n"
@@ -487,7 +488,7 @@ gh_secret_set() {
         fi
         ;;
       no|N|n)
-        echo -e "${GREEN}Nothing to be done. Thank you...${RESET}\n"
+        echo -e "${GREEN}Alright. Thank you...${RESET}\n"
         ;;
       *)
         echo -e "${GREEN}No choice. Exiting script...${RESET}\n"
@@ -519,25 +520,19 @@ gh_secret_set() {
           exit 0
         fi
 
-        # Initialize the ARGS array
-        ARGS=()
+        # Get list of secrets 
+        secrets=$(gh secret list --repo ${GH_OWNER_REPO} --env $env --json name --jq '.[].name')
 
-        # Read the envfile line by line and delete the secrets
-        while IFS= read -r line; do
-          # Skip lines starting with '#' (comments)
-          if [ -n "$line" ] && [[ ! "$line" =~ ^\# ]]; then
-            # Trim leading/trailing whitespaces
-            # line=$(echo "$line" | xargs)
-            # gh secret delete "$line" --repo $GH_OWNER_REPO -e "$env"
-            var_name=$(echo "$line" | cut -d'=' -f1)
-            ARGS+=("$var_name")
-          fi
-        done < "$envfile"
+        # Read secrets into array
+        SECRETS=()
+        while IFS= read -r secret; do
+          SECRETS+=("$secret") 
+        done <<< "$secrets"
 
-        # parallel --retries 3 --silent -j+4 gh secret delete ::: "${ARGS[@]}" --repo $GH_OWNER_REPO -e "$env"
-
-        parallel --retries 3 --silent -j+4 \
-          gh secret delete --repo "${GH_OWNER_REPO}" --env "${env}" ::: "${SECRETS[@]}"
+        # Delete secrets
+        for secret in "${SECRETS[@]}"; do
+          gh secret delete --repo ${GH_OWNER_REPO} --env $env "$secret"
+        done
 
         # Check return code and output result
         if [ $? -eq 0 ]; then
@@ -548,7 +543,7 @@ gh_secret_set() {
         fi
         ;;
       no|N|n)
-        echo -e "${GREEN}Nothing to be done. Thank you...${RESET}\n"
+        echo -e "${GREEN}Alright. Thank you...${RESET}\n"
         ;;
       *)
         echo -e "${GREEN}No choice. Exiting script...${RESET}\n"
@@ -574,7 +569,7 @@ gh_secret_set() {
         fi
         ;;
       no|N|n)
-        echo -e "${GREEN}Nothing to be done. Thank you...${RESET}\n"
+        echo -e "${GREEN}Alright. Thank you...${RESET}\n"
         ;;
       *)
         echo -e "${GREEN}No choice. Exiting script...${RESET}\n"
@@ -589,8 +584,8 @@ gh_secret_set() {
     case "$git_push" in
       yes|Y|y)
         echo -e "${GREEN}Deleting variables...${RESET}\n"
-        vhost=${GA_NGX_VHOST}
-        gh variable delete NGX < "$vhost"
+        gh variable delete NGX --repo ${GH_OWNER_REPO} --env $env
+
         # Check return code and output result
         if [ $? -eq 0 ]; then
           echo -e "Variables deleted successfully\n"
@@ -600,7 +595,7 @@ gh_secret_set() {
         fi
         ;;
       no|N|n)
-        echo -e "${GREEN}Nothing to be done. Thank you...${RESET}\n"
+        echo -e "${GREEN}Alright. Thank you...${RESET}\n"
         ;;
       *)
         echo -e "${GREEN}No choice. Exiting script...${RESET}\n"
@@ -635,7 +630,7 @@ gh_secret_set() {
         fi
         ;;
       no|N|n)
-        echo -e "${GREEN}Nothing to be done. Thank you...${RESET}\n"
+        echo -e "${GREEN}Alright. Thank you...${RESET}\n"
         ;;
       *)
         echo -e "${GREEN}No choice. Exiting script...${RESET}\n"
@@ -659,8 +654,9 @@ gh_secret_set() {
           echo "Haa! No need then..."
           exit 0
         fi
-        vhost=${GA_NGX_VHOST}
-        gh variable delete NGX < "$vhost" -e"$env"
+
+        gh variable delete NGX --repo ${GH_OWNER_REPO} --env $env
+
         # Check return code and output result
         if [ $? -eq 0 ]; then
           echo -e "Variables deleted successfully\n"
@@ -670,7 +666,7 @@ gh_secret_set() {
         fi
         ;;
       no|N|n)
-        echo -e "${GREEN}Nothing to be done. Thank you...${RESET}\n"
+        echo -e "${GREEN}Alright. Thank you...${RESET}\n"
         ;;
       *)
         echo -e "${GREEN}No choice. Exiting script...${RESET}\n"
@@ -704,7 +700,7 @@ git_repo_push() {
       git push
       ;;
     no|N|n)
-      echo -e "${GREEN}Nothing to be done. Thank you...${RESET}\n"
+      echo -e "${GREEN}Alright. Thank you...${RESET}\n"
       ;;
     *)
       echo -e "${GREEN}No choice. Exiting script...${RESET}\n"
@@ -725,7 +721,7 @@ docker_push() {
 	    docker push $DK_IMAGE
 			;;
 		no|N|n)
-			echo -e "${GREEN}Nothing to be done. Thank you...${RESET}"
+			echo -e "${GREEN}Alright. Thank you...${RESET}"
 			;;
 		*)
 			echo -e "${GREEN}No choice. Exiting script...${RESET}"
@@ -1035,7 +1031,7 @@ gh_repo_rename() {
         fi
         ;; 
       no|N|n) 
-        echo -e "${GREEN}Nothing to be done. Thank you...${RESET}\n"
+        echo -e "${GREEN}Alright. Thank you...${RESET}\n"
         exit 0
         ;;
       *)
