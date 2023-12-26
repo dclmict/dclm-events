@@ -305,7 +305,7 @@ ga_workflow_env() {
       # Find the Generate envfile step in deploy.yml
       envfile_line=$(grep -n "uses: SpicyPizza/create-envfile@v2.0" $ga | cut -d: -f1)
       envfile_line=$((envfile_line+1))
-      tail_line=$(grep -n "directory: \$GA_ENV_SRC" $ga | cut -d: -f1)
+      tail_line=$(grep -n "directory: \${{ env.GA_ENV_SRC}}" $ga | cut -d: -f1)
 
       # Generate new file with variables
       {
@@ -346,7 +346,7 @@ gh_secret_set() {
 
         # Set number of retries and delay between retries  
         MAX_RETRIES=3
-        RETRY_DELAY=5
+        RETRY_DELAY=2
         # Helper function to retry command on failure
         retry() {
           local retries=$1
