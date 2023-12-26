@@ -15,7 +15,7 @@ COPY ./ops/php/fpm.conf /usr/local/etc/php-fpm.d/www.conf
 
 # nginx config
 COPY ./ops/nginx/nginx.conf /etc/nginx/nginx.conf
-COPY ./ops/nginx/app.conf /etc/nginx/sites-enabled/default
+COPY ./ops/nginx/events.conf /etc/nginx/sites-enabled/default
 COPY ./ops/nginx/ssl.conf /etc/nginx/ssl.conf
 COPY ./ops/nginx/proxy /etc/nginx/proxy_params
 COPY ./ops/nginx/exploit.conf /etc/nginx/snippets/exploit_protection.conf
