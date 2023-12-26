@@ -769,7 +769,7 @@ EOF
 create_app_dir() {
   # Navigate into the docker directory
   cd "$DK_DIR"
-  
+
   # Check if target folder exists
   if [ ! -d "$APP_ID" ]; then
     # Folder doesn't exist, create it
@@ -777,7 +777,7 @@ create_app_dir() {
     mkdir -p "$APP_ID"
   else
     # Folder exists, print message
-    echo "Folder $app_dir already exists"
+    echo "Folder $APP_ID already exists"
   fi
 }
 

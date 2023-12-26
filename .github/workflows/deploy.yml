@@ -15,7 +15,7 @@ on:
 env:
   APP_ID: ${{ secrets.APP_ID }}
   HOST_URL: ${{ secrets.HOST_URL }}
-  HOST_USER: ${{ secrets.HOST_SSH_ID }}
+  HOST_USER: ${{ secrets.HOST_USER }}
   GA_APP_URL: ${{ secrets.GA_APP_URL }}
   GA_APP_DIR: ${{ secrets.GA_APP_DIR }}
   GA_ENV_FILE: ${{ secrets.GA_ENV_FILE }}
