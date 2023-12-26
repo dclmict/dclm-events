@@ -83,6 +83,7 @@ jobs:
           # Create app directory
           ssh -T -o "StrictHostKeyChecking=no" "$HOST_USER@$HOST_URL" \
           "APP_ID=$APP_ID" \
+          "DK_DIR=$DK_DIR" \
           'bash -s' < ./app.sh 8
         working-directory: ${{ env.GA_WORK_DIR }}
   

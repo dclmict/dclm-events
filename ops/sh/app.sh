@@ -767,23 +767,17 @@ EOF
 
 # function to create directory to deploy app  
 create_app_dir() {
-  # Set the target directory 
-  docker_dir="$DK_DIR"
-  app_dir="$APP_ID"
-
   # Navigate into the docker directory
-  cd "$docker_dir"
-
+  cd "$DK_DIR"
+  
   # Check if target folder exists
-  if [ ! -d "$app_dir" ]; then
+  if [ ! -d "$APP_ID" ]; then
     # Folder doesn't exist, create it
-    echo "Creating folder $app_dir"  
-    mkdir -p "$app_dir"
-
+    echo "Creating folder $APP_ID"  
+    mkdir -p "$APP_ID"
   else
     # Folder exists, print message
     echo "Folder $app_dir already exists"
-
   fi
 }
 
