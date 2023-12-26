@@ -287,11 +287,9 @@ ga_workflow_env() {
       IFS=' ' read -r -a exclude <<< "$GA_ENV_EXCLUDE"
       while IFS= read -r kv; do
         key=$(echo "$kv" | cut -d= -f1)
-
         if [[ " ${exclude[@]} " =~ " $key " ]]; then
           continue
         fi
-
         if [[ $key != "" && $key != "#"* ]]; then
           echo "$key" >> $vfile
         fi
@@ -302,10 +300,10 @@ ga_workflow_env() {
         vars+=($var)
       done < $vfile
 
-      # Find the Generate envfile step in deploy.yml
+      # Find the "Generate envfile" step in deploy.yml
       envfile_line=$(grep -n "uses: SpicyPizza/create-envfile@v2.0" $ga | cut -d: -f1)
       envfile_line=$((envfile_line+1))
-      tail_line=$(grep -n "directory: \${{ env.GA_ENV_SRC}}" $ga | cut -d: -f1)
+      tail_line=$(grep -n "directory: \${{ env.GA_ENV_SRC }}" $ga | cut -d: -f1)
 
       # Generate new file with variables
       {
