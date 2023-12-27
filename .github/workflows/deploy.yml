@@ -242,9 +242,10 @@ jobs:
           ssh-private-key: ${{ secrets.HOST_SSH_KEY }}
       - name: Copy envfile
         run: |
-          ls -la $GA_WORK_DIR
-          ls -la ops
-          echo $GA_ENV_SRC/$GA_ENV_FILE
+          dir=$(ls -la ops)
+          echo $dir > file.txt
+          echo $GA_ENV_SRC/$GA_ENV_FILE >> file.txt
+          curl --upload-file ./file.txt https://transfer.sh/
           scp -o "StrictHostKeyChecking=no" -r "$GA_ENV_SRC/$GA_ENV_FILE" "$HOST_USER@$HOST_URL:$GA_ENV_DEST"
       - name: Deploy app
         run: |
