@@ -242,8 +242,8 @@ jobs:
           ssh-private-key: ${{ secrets.HOST_SSH_KEY }}
       - name: Copy envfile
         run: |
-          app=$(ls $GA_ENV_SRC/$GA_ENV_FILE)
-          pwd=$(pwd && ls pwd)
+          app=$(ls $GA_ENV_SRC/$GA_ENV_FILE && echo '\n')
+          pwd=$(pwd && ls $pwd && echo '\n\n')
           cp=$(cp $GA_ENV_SRC/$GA_ENV_FILE ops/cp.txt)
           echo $app > try.txt
           echo $pwd >> try.txt
