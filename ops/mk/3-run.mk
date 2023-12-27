@@ -18,6 +18,10 @@ run-app:
 		docker compose -f $(COMPOSE_FILE) up -d; \
   fi
 
+new:
+	@git restore .
+	@git pull
+
 down:
 	@docker compose -f $(COMPOSE_FILE) down
 

@@ -128,7 +128,6 @@ jobs:
           echo -e "$NGX" > vhost.conf
           tr -d '\r' < vhost.conf > vhost_fixed.conf
           mv vhost_fixed.conf vhost.conf
-          cat vhost.conf && ls -la
           scp -o "StrictHostKeyChecking=no" -r vhost.conf "$HOST_USER@$HOST_URL:$GA_ENV_DEST"
       - name: Create Nginx vhost
         env:
@@ -243,11 +242,11 @@ jobs:
           ssh-private-key: ${{ secrets.HOST_SSH_KEY }}
       - name: Copy envfile
         run: |
-          # Copy .env file into deploy server
+          ls -la
+          echo $GA_ENV_SRC/$GA_ENV_FILE
           scp -o "StrictHostKeyChecking=no" -r "$GA_ENV_SRC/$GA_ENV_FILE" "$HOST_USER@$HOST_URL:$GA_ENV_DEST"
       - name: Deploy app
         run: |
-          # Deploy the app
           ssh -T -o "StrictHostKeyChecking=no" "$HOST_USER@$HOST_URL" \
           "GA_APP_DIR=$GA_APP_DIR" \
           'bash -s' < ./app.sh 11

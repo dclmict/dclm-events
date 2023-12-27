@@ -1,4 +1,4 @@
-ops-utils:
+app-utils:
 	@\
 	echo "1. Copy envfile"; \
 	echo "2. Create Nginx vhost"
@@ -26,10 +26,6 @@ ops-utils:
 		echo "Invalid choice"; \
 		exit 1; \
 	fi
-
-new:
-	@git restore .
-	@git pull
 
 cmd:
 	@echo -e "\033[31mEnter command to run inside container: \033[0m"; \

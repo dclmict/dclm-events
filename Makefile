@@ -51,4 +51,4 @@ push: deploy-app
 
 run: run-app
 
-utils: ops-utils
+utils: app-utils
