@@ -889,7 +889,7 @@ ga_deploy_app() {
   # Enter app dir
   echo -e "\nEntering app directory..."
   cd "$GA_APP_DIR"
-  echo "I was here at $(date)" > hi.txt
+  echo -e "This is ga_deploy_app function speaking\n\nI was here at $(date)" > hi.txt
 
   # Pull repo changes
   echo -e "\nDownloading latest repo changes..."

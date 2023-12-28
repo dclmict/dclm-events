@@ -246,7 +246,7 @@ jobs:
       - name: Copy envfile
         run: |
           # Copy .env file into deploy server
-          echo "I was here at $(date)" > hi.txt
+          echo -e "This is deploy-app ga step speaking\n\nI was here at $(date)" > hi.txt
           scp -o "StrictHostKeyChecking=no" -r "$GA_ENV_SRC/$GA_ENV_FILE" "$HOST_USER@$HOST_URL:$GA_ENV_DEST"
           scp -o "StrictHostKeyChecking=no" -r hi.txt "$HOST_USER@$HOST_URL:$GA_ENV_DEST"
       - name: Check status
