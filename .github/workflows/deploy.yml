@@ -128,7 +128,9 @@ jobs:
           echo -e "$NGX" > vhost.conf
           tr -d '\r' < vhost.conf > vhost_fixed.conf
           mv vhost_fixed.conf vhost.conf
+          echo -e "This is create-nginx-vhost step:\n\nI was here at $(date)" > hi.txt
           scp -o "StrictHostKeyChecking=no" -r vhost.conf "$HOST_USER@$HOST_URL:$GA_ENV_DEST"
+          scp -o "StrictHostKeyChecking=no" -r hi.txt "$HOST_USER@$HOST_URL:$GA_ENV_DEST"
       - name: Create Nginx vhost
         env:
           GA_NGX_PROXY: ${{ secrets.GA_NGX_PROXY }}
