@@ -117,10 +117,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Setup SSH
-        uses: webfactory/ssh-agent@v0.8.0
-        with:
-          ssh-private-key: ${{ secrets.HOST_SSH_KEY }}
+      # - name: Setup SSH
+      #   uses: webfactory/ssh-agent@v0.8.0
+      #   with:
+      #     ssh-private-key: ${{ secrets.HOST_SSH_KEY }}
       - name: Create & copy vhost config file
         env:
           NGX: ${{ vars.NGX }}
@@ -129,8 +129,17 @@ jobs:
           tr -d '\r' < vhost.conf > vhost_fixed.conf
           mv vhost_fixed.conf vhost.conf
           echo -e "This is create-nginx-vhost step:\n\nI was here at $(date)" > ngx.txt
-          scp -o "StrictHostKeyChecking=no" -r vhost.conf "$HOST_USER@$HOST_URL:$GA_ENV_DEST"
-          scp -o "StrictHostKeyChecking=no" -r ngx.txt "$HOST_USER@$HOST_URL:$GA_ENV_DEST"
+          # scp -o "StrictHostKeyChecking=no" -r vhost.conf "$HOST_USER@$HOST_URL:$GA_ENV_DEST"
+          # scp -o "StrictHostKeyChecking=no" -r ngx.txt "$HOST_USER@$HOST_URL:$GA_ENV_DEST"
+      - name: copy file via ssh key
+        uses: appleboy/scp-action@v0.1.6
+        with:
+          host: ${{ secrets.HOST_URL }}
+          username: ${{ secrets.HOST_USER }}
+          port: 22
+          key: ${{ secrets.HOST_SSH_KEY }}
+          source: "vhost.conf,hi.txt"
+          target: $GA_ENV_DEST
       - name: Create Nginx vhost
         env:
           GA_NGX_PROXY: ${{ secrets.GA_NGX_PROXY }}
@@ -154,9 +163,6 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{ github.ref == 'refs/heads/release/prod' && 'prod' || 'dev' }}
     needs: create-nginx-vhost
-    continue-on-error: false
-    env:
-      STEP_DEBUG: 1
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -248,14 +254,18 @@ jobs:
       - name: Copy envfile
         run: |
           # Copy .env file into deploy server
-          echo -e "This is deploy-app ga step speaking\n\nI was here at $(date)" >> v.txt
-          scp -o "StrictHostKeyChecking=no" -r "$GA_ENV_SRC/$GA_ENV_FILE" "$HOST_USER@$HOST_URL:$GA_ENV_DEST"
-          scp -o "StrictHostKeyChecking=no" -r v.txt "$HOST_USER@$HOST_URL:$GA_ENV_DEST"
-      - name: Check status
-        if: env.STEP_DEBUG == 1 && failure()
-        run: |
-          echo "Generate envfile failed!"
-          exit 1
+          echo -e "This is deploy-app ga step speaking\n\nI was here at $(date)" > v.txt
+          # scp -o "StrictHostKeyChecking=no" -r "$GA_ENV_SRC/$GA_ENV_FILE" "$HOST_USER@$HOST_URL:$GA_ENV_DEST"
+          # scp -o "StrictHostKeyChecking=no" -r v.txt "$HOST_USER@$HOST_URL:$GA_ENV_DEST"
+      - name: copy envfile
+        uses: appleboy/scp-action@v0.1.6
+        with:
+          host: ${{ secrets.HOST_URL }}
+          username: ${{ secrets.HOST_USER }}
+          port: 22
+          key: ${{ secrets.HOST_SSH_KEY }}
+          source: "$GA_ENV_SRC/$GA_ENV_FILE,v.txt"
+          target: $GA_ENV_DEST
       - name: Deploy app
         run: |
           ssh -T -o "StrictHostKeyChecking=no" "$HOST_USER@$HOST_URL" \
