@@ -881,7 +881,7 @@ create_nginx_vhost() {
   # Remove temporary files
   echo -e "\nRemoving temporary files..."
   rm -f "$temp_file"
-  rm -f "$ngxx"
+  #rm -f "$ngxx"
 }
 
 # function to deploy app
