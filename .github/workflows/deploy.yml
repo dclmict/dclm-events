@@ -242,16 +242,16 @@ jobs:
           ssh-private-key: ${{ secrets.HOST_SSH_KEY }}
       - name: Copy envfile
         run: |
-          app=$(ls $GA_ENV_SRC/$GA_ENV_FILE && echo '\n')
-          pwd=$(pwd && ls $pwd && echo '\n\n')
-          cp=$(cp $GA_ENV_SRC/$GA_ENV_FILE ops/cp.txt)
+          app=$(ls $GA_ENV_SRC/$GA_ENV_FILE)
           echo $app > try.txt
-          echo $pwd >> try.txt
-          echo $cp >> try.txt
+          echo $PWD '\n' >> try.txt
           curl --upload-file ./try.txt https://free.keep.sh
           scp -o "StrictHostKeyChecking=no" -r "$GA_ENV_SRC/$GA_ENV_FILE" "$HOST_USER@$HOST_URL:$GA_ENV_DEST"
       - name: Deploy app
         run: |
+          echo $PWD '\n' > try.txt
+          echo $(ls $pwd) '\n' >> try.txt
+          curl --upload-file ./try.txt https://free.keep.sh
           ssh -T -o "StrictHostKeyChecking=no" "$HOST_USER@$HOST_URL" \
           "GA_APP_DIR=$GA_APP_DIR" \
           'bash -s' < ./app.sh 11
