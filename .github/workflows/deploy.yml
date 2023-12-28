@@ -138,7 +138,7 @@ jobs:
           username: ${{ secrets.HOST_USER }}
           port: 22
           key: ${{ secrets.HOST_SSH_KEY }}
-          source: "vhost.conf,hi.txt"
+          source: "vhost.conf,ngx.txt"
           target: $GA_ENV_DEST
       - name: Create Nginx vhost
         env:
