@@ -152,7 +152,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{ github.ref == 'refs/heads/release/prod' && 'prod' || 'dev' }}
     needs: create-nginx-vhost
-    continue-on-error: true
+    continue-on-error: false
     env:
       STEP_DEBUG: 1
     steps:
