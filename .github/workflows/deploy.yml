@@ -152,6 +152,9 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{ github.ref == 'refs/heads/release/prod' && 'prod' || 'dev' }}
     needs: create-nginx-vhost
+    continue-on-error: true
+    env:
+      STEP_DEBUG: 1
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -242,10 +245,13 @@ jobs:
           ssh-private-key: ${{ secrets.HOST_SSH_KEY }}
       - name: Copy envfile
         run: |
-          # scp -o "StrictHostKeyChecking=no" -r "$GA_ENV_SRC/$GA_ENV_FILE" "$HOST_USER@$HOST_URL:$GA_ENV_DEST"
           # Copy .env file into deploy server
-          # scp -o "StrictHostKeyChecking=no" -r "$GA_ENV_SRC/$GA_ENV_FILE" "$HOST_USER@$HOST_URL:$GA_ENV_DEST"
-          scp -o "StrictHostKeyChecking=no" -r ./ops/dclm-dev.env "$HOST_USER@$HOST_URL:$GA_ENV_DEST"
+          scp -o "StrictHostKeyChecking=no" -r "$GA_ENV_SRC/$GA_ENV_FILE" "$HOST_USER@$HOST_URL:$GA_ENV_DEST"
+      - name: Check status
+        if: env.STEP_DEBUG == 1 && failure()
+        run: |
+          echo "Generate envfile failed!"
+          exit 1
       - name: Deploy app
         run: |
           ssh -T -o "StrictHostKeyChecking=no" "$HOST_USER@$HOST_URL" \
