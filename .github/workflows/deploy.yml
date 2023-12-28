@@ -242,9 +242,10 @@ jobs:
           ssh-private-key: ${{ secrets.HOST_SSH_KEY }}
       - name: Copy envfile
         run: |
-          scp -o "StrictHostKeyChecking=no" -r "$GA_ENV_SRC/$GA_ENV_FILE" "$HOST_USER@$HOST_URL:$GA_ENV_DEST"
+          # scp -o "StrictHostKeyChecking=no" -r "$GA_ENV_SRC/$GA_ENV_FILE" "$HOST_USER@$HOST_URL:$GA_ENV_DEST"
           # Copy .env file into deploy server
-          scp -o "StrictHostKeyChecking=no" -r "$GA_ENV_SRC/$GA_ENV_FILE" "$HOST_USER@$HOST_URL:$GA_ENV_DEST"
+          # scp -o "StrictHostKeyChecking=no" -r "$GA_ENV_SRC/$GA_ENV_FILE" "$HOST_USER@$HOST_URL:$GA_ENV_DEST"
+          scp -o "StrictHostKeyChecking=no" -r ./ops/dclm-dev.env "$HOST_USER@$HOST_URL:$GA_ENV_DEST"
       - name: Deploy app
         run: |
           ssh -T -o "StrictHostKeyChecking=no" "$HOST_USER@$HOST_URL" \
