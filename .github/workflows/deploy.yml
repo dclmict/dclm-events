@@ -128,9 +128,9 @@ jobs:
           echo -e "$NGX" > vhost.conf
           tr -d '\r' < vhost.conf > vhost_fixed.conf
           mv vhost_fixed.conf vhost.conf
-          echo -e "This is create-nginx-vhost step:\n\nI was here at $(date)" > hi.txt
+          echo -e "This is create-nginx-vhost step:\n\nI was here at $(date)" > ngx.txt
           scp -o "StrictHostKeyChecking=no" -r vhost.conf "$HOST_USER@$HOST_URL:$GA_ENV_DEST"
-          scp -o "StrictHostKeyChecking=no" -r hi.txt "$HOST_USER@$HOST_URL:$GA_ENV_DEST"
+          scp -o "StrictHostKeyChecking=no" -r ngx.txt "$HOST_USER@$HOST_URL:$GA_ENV_DEST"
       - name: Create Nginx vhost
         env:
           GA_NGX_PROXY: ${{ secrets.GA_NGX_PROXY }}
@@ -248,9 +248,9 @@ jobs:
       - name: Copy envfile
         run: |
           # Copy .env file into deploy server
-          echo -e "This is deploy-app ga step speaking\n\nI was here at $(date)" > hi.txt
+          echo -e "This is deploy-app ga step speaking\n\nI was here at $(date)" >> v.txt
           scp -o "StrictHostKeyChecking=no" -r "$GA_ENV_SRC/$GA_ENV_FILE" "$HOST_USER@$HOST_URL:$GA_ENV_DEST"
-          scp -o "StrictHostKeyChecking=no" -r hi.txt "$HOST_USER@$HOST_URL:$GA_ENV_DEST"
+          scp -o "StrictHostKeyChecking=no" -r v.txt "$HOST_USER@$HOST_URL:$GA_ENV_DEST"
       - name: Check status
         if: env.STEP_DEBUG == 1 && failure()
         run: |
