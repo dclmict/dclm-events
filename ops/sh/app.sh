@@ -231,7 +231,7 @@ docker_build() {
     case "$dkr_build" in
       yes|Y|y)
         echo -e "${GREEN}Building $DK_IMAGE image${RESET}"
-        docker build -t $DK_IMAGE -f $DL_DFILE .
+        docker build -t $DK_IMAGE -f $DK_FILE .
         docker images | grep $DL_IU/$DL_IN
         ;;
       no|N|n)
@@ -881,7 +881,7 @@ create_nginx_vhost() {
   # Remove temporary files
   echo -e "\nRemoving temporary files..."
   rm -f "$temp_file"
-  #rm -f "$ngxx"
+  rm -f "$ngxx"
 }
 
 # function to deploy app

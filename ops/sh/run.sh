@@ -11,7 +11,7 @@
 # Based on https://gist.github.com/2206527
 
 # load .env
-source ./.env
+# source ./.env
 
 # laravel things
 laravel() {
@@ -26,10 +26,10 @@ laravel() {
 nodejs() {
   echo "\033[31mInstalling dependencies\033[0m"
   # for development
-  if [ "$NODE_ENV" == "development"]
+  if [ "$NODE_ENV" == "development"]; then
     npm install
   # for production
-  elif [ "$NODE_ENV" == "production" ]
+  elif [ "$NODE_ENV" == "production" ]; then
     npm ci --only=production
   else
     echo "Nodejs NODE_ENV variable not defined"
@@ -45,7 +45,7 @@ supervisor() {
 
 
 # run
-if ["$DL_STACK" == "laravel" ]; then
+if [ "$DL_STACK" == "laravel" ]; then
   laravel
   supervisor
 elif [ "$DL_STACK" == "nodejs" ]; then
