@@ -1,11 +1,7 @@
 # files
-.cache_ggshield
-dclm-events
-/ops/bams-dev.env
-/ops/dclm-dev.env
-/ops/dclm-prod.env
-/ops/dclm-v1.env
+dclm-*
+.cache*
+**/*.env*
 
 # folders
 _
-
